@@ -1,0 +1,119 @@
+--------------------------------------------------------------------------------
+Codebook for NHGIS data file 'nhgis0025_ds231_2005_county'
+--------------------------------------------------------------------------------
+ 
+Contents
+    - Data Summary
+    - Data Dictionary
+    - Citation and Use
+ 
+Additional documentation on NHGIS data sources is available at: 
+    https://www.nhgis.org/documentation/tabular-data 
+ 
+--------------------------------------------------------------------------------
+Data Summary
+--------------------------------------------------------------------------------
+ 
+Year:             2005
+Geographic level: County (by State)
+Dataset:          1970-2007 Vital Statistics: Natality & Mortality Data [US, States & Counties]
+   NHGIS code:    1970_2007_cVS
+   NHGIS ID:      ds231
+ 
+Tables:
+ 
+1. Births
+   Universe:    Births
+   Source code: NT002
+   NHGIS code:  AGWE
+ 
+2. Infant Deaths Under One Year [1990-2007]
+   Universe:    Deaths under 1 year of age
+   Source code: NT006
+   NHGIS code:  AGWI
+ 
+3. Infant Deaths per 10,000 Live Births [1990-2007]
+   Universe:    Deaths under 1 year of age
+   Source code: NT007
+   NHGIS code:  AGWJ
+ 
+--------------------------------------------------------------------------------
+Data Dictionary
+--------------------------------------------------------------------------------
+ 
+Context Fields 
+    GISJOIN:     GIS Join Match Code
+    YEAR:        Data File Year
+    AREANAME:    State/county name
+    STATE:       State Name
+    STATEA:      State Code
+    COUNTY:      County Name
+    COUNTYA:     County Code
+    DATAFLAG:    Data flag
+    NOTECODE:    Note code: For details, see http://assets.nhgis.org/original-data/usa-counties/NHGIS_1970_2007_cVS_notes.pdf
+ 
+Table 1:     Births
+Universe:    Births
+Source code: NT002
+NHGIS code:  AGWE
+    AGWE001:     Births: Total
+ 
+Table 2:     Infant Deaths Under One Year [1990-2007]
+Universe:    Deaths under 1 year of age
+Source code: NT006
+NHGIS code:  AGWI
+    AGWI001:     Infant deaths (under 1 year)
+ 
+Table 3:     Infant Deaths per 10,000 Live Births [1990-2007]
+Universe:    Deaths under 1 year of age
+Source code: NT007
+NHGIS code:  AGWJ
+    AGWJ001:     Infant death rate
+ 
+--------------------------------------------------------------------------------
+Citation and Use of NHGIS Data
+--------------------------------------------------------------------------------
+ 
+All persons are granted a limited license to use this documentation and the
+accompanying data, subject to the following conditions:
+
+* REDISTRIBUTION: You will not redistribute the data without permission.
+
+  You may publish a subset of the data to meet journal requirements for accessing 
+  data related to a particular publication. Contact us for permission for any other 
+  redistribution; we will consider requests for free and commercial redistribution.
+
+* CITATION: You will cite NHGIS appropriately.
+
+    * Publications and research reports employing NHGIS data (either tabular or GIS) 
+      should include the following citation:
+
+        Steven Manson, Jonathan Schroeder, David Van Riper, Tracy Kugler, and Steven Ruggles. 
+        IPUMS National Historical Geographic Information System: Version 16.0 
+        [dataset]. Minneapolis, MN: IPUMS. 2021. 
+        http://doi.org/10.18128/D050.V16.0
+
+    * For policy briefs, online resources, or articles in the popular press, we 
+      recommend that you cite the use of NHGIS data as follows:
+
+        IPUMS NHGIS, University of Minnesota, www.nhgis.org.
+
+These terms of use are a legally binding agreement. You can use the data only in 
+accordance with these terms, and any other use is a violation of the agreement. 
+Violations may result in revocation of the agreement and prohibition from using other 
+IPUMS data. If IPUMS or our partners are harmed from your violation, you are 
+responsible for all damages, including reasonable attorney's fees and expenses.
+        
+In addition, we request that users send us a copy of any publications, research
+reports, or educational material making use of the data or documentation.
+
+Send electronic material to: nhgis@umn.edu
+
+Printed matter should be sent to:
+
+    IPUMS NHGIS
+    Institute for Social Research and Data Innovation
+    University of Minnesota
+    50 Willey Hall
+    225 19th Ave S
+    Minneapolis, MN 55455

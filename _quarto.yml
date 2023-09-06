@@ -1,0 +1,28 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Applied Demographic Data Analysis"
+  author: "Corey S. Sparks, PhD"
+  date: last-modified
+  #cover-image: images/coverpage.png
+  date-format: "[Last Updated on] DD MMMM, YYYY"
+  chapters:
+    - index.qmd
+    - preface.qmd
+    - rintro.qmd
+    - survey.qmd
+    - macro.qmd
+    - micro.qmd
+
+bibliography: book.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+

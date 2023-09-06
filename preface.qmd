@@ -1,0 +1,64 @@
+---
+title: "Preface"
+---
+
+```{r, include=FALSE, message=FALSE}
+library(ggplot2, quietly = T)
+theme_set(theme_classic())
+```
+
+# R in applied demography
+
+## Why R?
+
+I've used R for twenty years. I was also trained in SPSS and SAS along
+the way, by various mentors. Some tried to get me to learn more general
+purpose languages like Delphi (of all things) or Perl, or Basic, and
+I've been chastised for not knowing the depths of Python, but R presents
+a nimble and rigorous platform to *do* demography. My top three reasons
+for teaching and using R are:
+
+1.  It's free - This is important, because, why should we pass along
+    more costs to people, especially our students? This also make R code
+    accessible to people, worldwide.
+
+2.  It's the hotbed of methodological development. The R ecosystem has
+    thousands of packages that represent the bleeding edge of data
+    analysis, visualization and data science. This makes R attractive
+    because it can pivot quickly to adopt new methods, which often lag
+    in their development in other environments.
+
+3.  It has a supportive community of users. While there are some debates
+    over how friendly some R users are to new users, overall, after
+    spending 20 years in the R community, I've personally assisted
+    hundreds of users, and been personally helped by many others. The
+    open source nature of R lends itself to sharing of ideas and
+    collaboration between users.
+
+### My assumptions in this book
+
+In statistics we always make assumptions, often these are wrong, but we
+adapt to our mistakes daily. My assumptions about who is reading this
+book are:
+
+1.  You are interested in learning more about R.
+
+2.  You are likely a student or professional interested in demography or
+    population research.
+
+3.  You have likely been exposed to other statistical platforms and are
+    curious about R, in conjunction with 1 and 2 above.
+
+4.  You may be an avid R user from another strange and exotic
+    discipline, but are interested in how demographers do research.
+
+5.  You want to see *how* to do things instead of being bombarded with
+    theoretical and often unnecessary gate-keeping mathematical
+    treatments of statistical models.
+
+I think if any of these assumptions are true, you're in the right place.
+That being said, this book *is not* a review of all of statistics, nor
+is it an encyclopedic coverage of the R language and ecosystem. I image
+the latter being on the same scale of hopelessness as the search for the
+Holy Grail or the fountain of youth. People have died for such fool
+hearty quests, I'm not falling on my sword here folks.

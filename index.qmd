@@ -1,0 +1,30 @@
+# Preface {.unnumbered}
+
+## Why a book on statistics for demographers?
+Demographers have always been a mixture of sociologists, economists, statisticians, health researchers, and other broad sub-disciples of social science. As such, we bring with us a large amount of baggage from our respective academic life courses, and we often are trained by a wide variety of mentors and professors. It's my perspective that our interdisciplinary experience is one of our greatest strengths as a group. Given that our training is often in one of a core set of home disciplines, we often have methodological training from said discipline, and this may not be a broad enough perspective to firmly ground us in the types of methods that demographers commonly employ. This is not the fault of the departments that trained us, it's just a historical fact. So, why am I writing a book on statistics and data analysis aimed at demographers? I will give you three reasons:
+
+1. Demographers have to go beyond the sample. This is to say that our results and research is generally representative of a larger national or international population, and we do this explicitly in our models.
+
+2. We demographers don't use random samples for our analysis. Statistics books the world over are based on assumptions of random sampling and independence, while the data that we often have to, or desire to use, comes more than likely from a data source that was collected using a complex survey design. This is a big deal and we have to have training materials that instill this in our students early on in their careers.
+
+3. Weird data. As demographers, we often use data from lots of different places and if you were trained up to this point to believe that the linear model is the end-all be-all of statistical inference, I've got news for you friends, you've been misled. Categorical outcomes, counts, hierarchically structured, longitudinally collected, spatially referenced, just to name a few of such oddities, are ubiquitous in our field, and part of what makes our discipline so cool and interesting to newcomers. 
+
+My goal for this book is to take the lessons I've learned teaching statistics to a diverse and often cursorily trained group of students who have problems they care about, that they need to bring demographic data to bear upon. This is a challenge, and I have always been a stalwart proponent of teaching statistics and data analysis in a _very_ applied manner. As such, this book won't be going into rigorous proofs of estimators or devoting pages to expositions of icky algebra; instead it will focus on exploring modern methods of data analysis that in used by demographers every day, but not always taught in our training programs. 
+
+As someone who has learned much more of these methods by personal exploration than by formal study, I find that many of these methods are absent from the canon of social science statistics, but are both in great demand from people who hire us, and absolutely necessary to the demographer's analytic toolkit. It's a major goal of this book to de-mystify the process and to make it accessible to a wide audience, so I will always strive to illustrate the key aspects of the methods described herein, and ground the discussion of methods in applications. 
+
+### is this a cookbook?
+
+### Broader picture of what i'll cover
+
+### What's a demographer?
+
+### What is applied demography?
+
+### Why we need to see this stuff?
+
+### Why R is a good option for applied demography?
+
+#### why write code? 
+ 
+### Mention packages earlier - talk about later

@@ -1,0 +1,637 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+bibliography: book.bib
+---
+
+\newpage
+
+```{r, include = FALSE}
+library(tidyverse)
+library(tmap)
+library(ggplot2)
+library(tigris)
+library(sf)
+```
+
+# Macro demographic data analysis
+
+Prior to the advent in the 1960's of large scale social surveys like the General Social Survey (GSS), most demographic research was done not on individuals but on aggregates, because that's how data were available. If you look at texts such as @keyfitz_introduction_1968, all of the examples are for national level calculations, and many nations did not have sufficient data availability to produce quality statistical summaries of their populations, resulting in publications such as the United Nations Population Division's famous Manual X [-@united_nations_population_division_manual_1983], which gave pragmatic formulas to measure a wide variety of demographic indicators at the national level using basic inputs, usually available from census summaries.
+
+Paul Voss [-@voss_demography_2007] describes most demography (and certainly most demographic studies prior to the 1970's and 1980's) as **Macro** demography. Voss also mentions that prior to the availability of individual level microdata, all demography was macro-demography, and most demographic studies were spatial in nature, because demographic data were only available in spatial units corresponding to administrative areas. Typical types of geographic areas would be counties, census tracts, ZIP codes, state or nations.
+
+<<<<<<< Updated upstream
+In the macro-demographic perspective on demography, observations are typically places, areas, or some other aggregate level of individuals. We do not observe the individual people themselves often times. An example of this is if you were to have access to an aggregate count of deaths in a region, even if the deaths were classified by age and sex, you still would be dealing with data that ignores, or has no index to the more nuanced characteristics of the individual decedents themselves. That being said, data such as these are invaluable, and most demographic summaries of individual-level data would aggregate based on the characteristics of the individuals any way. The macro scale principal is illustrated below, where all of the variables we observe are a scale above the individual person.
+
+![Macro Level Proposition](images/macro2.png)
+
+Such **macro-level propositions** are hypothesized relationships among variables ($\rightarrow$) measured at a macro scale ($Z$ and $Y$), which ignores individual level data, mostly because we don't observe individuals ($x$ and $y$) in many of these kinds of analysis.
+
+If all we looked at were the individuals within the population, we would be overwhelmed by the variation that we would see, and we wouldn't be doing statistics anymore, we would be trying to process a million anecdotes, and the plural of anecdote is not data. By aggregating across basic demographic groups, such as age and sex, demographers begin to tease apart the differences that we are interested in. If we go a little further and, data willing, aggregate not only across these fundamental demographic groups, but also across some kind of place-based areal unit, then we adding an extremely important part of human existence: the **where** part of where we live.
+
+This presents an attractive view of populations and typically data on places are more widely available, but there are caveats we must be aware of. If we are using purely aggregate data in our analysis, meaning that we do not have access to the individual level microdata, then our ability to observe variation within a place is extremely limited, if not impossible.
+
+The goal of this chapter is to illustrate how places are a special unit of analysis, and the types of data we often see at the place level are very different from individual level surveys. Additionally, the analysis of place-based data is similar to survey data in that places are do not necessarily represent random observations, and so analyzing data on places often requires special modifications to statistical models. In this chapter, I show how the the linear regression model can be expanded in several ways and illustrate the generalized linear model as a very useful and extendable tool to analyze data on places and especially when we are analyzing rates as demographers often do.
+
+## Getting data on places
+
+In the macro-demographic perspective on demography, observations are typically places, areas, or some other aggregate level of individuals. We do not observe the individual people themselves often times. An example of this is if you were to have access to an aggregate count of deaths in a region, even if the deaths were classified by age and sex, you still would be dealing with data that ignores, or has no index to the more nuanced characteristics of the individual decedents themselves. That being said, data such as these are invaluable, and most demographic summaries of individual-level data would aggregate based on the characteristics of the individuals any way. The macro scale principal is illustrated below, where all of the variables we observe are a scale above the individual person. 
+
+![Macro Level Proposition](images/macro2.png)
+Such **macro-level propositions** are hypothesized relationships among variables ($\rightarrow$) measured at a macro scale ($Z$ and $Y$), which ignores individual level data, mostly because we don't observe individuals ($x$ and $y$) in many of these kinds of analysis.
+
+If all we looked at were the individuals within the population, we would be overwhelmed by the variation that we would see, and we wouldn't be doing statistics anymore, we would be trying to process a million anecdotes, and the plural of anecdote is not data. By aggregating across basic demographic groups, such as age and sex, demographers begin to tease apart the differences that we are interested in. If we go a little further and, data willing, aggregate not only across these fundamental demographic groups, but also across some kind of place-based areal unit, then we adding an extremely important part of human existence: the **where** part of where we live.
+
+This presents an attractive view of populations and typically data on places are more widely available, but there are caveats we must be aware of. If we are using purely aggregate data in our analysis, meaning that we do not have access to the individual level microdata, then our ability to observe variation within a place is extremely limited, if not impossible.
+
+The goal of this chapter is to illustrate how places are a special unit of analysis, and the types of data we often see at the place level are very different from individual level surveys. Additionally, the analysis of place-based data is similar to survey data in that places are do not necessarily represent random observations, and so analyzing data on places often requires special modifications to statistical models. In this chapter, I show how the the linear regression model can be expanded in several ways and illustrate the generalized linear model as a very useful and extendable tool to analyze data on places and especially when we are analyzing rates as demographers often do.
+
+## Getting data on places
+
+>>>>>>> Stashed changes
+Places in and of themselves can be thought of both in terms of data and in terms of the more philosophical form. I'm much better at dealing with the former than the latter, so I would urge you to consult other sources of literature on the relevance of place for human behavior [].
+
+Typically when thinking about data on places, we are really referring to some sort of administrative geography, such as nations, states, region, and census tracts. While these are often readily available (and I'll show some R package that can easily get data from the web), we often have to use these as proxy measures of more interesting social spaces like neighborhoods and other types of activity spaces. These social spaces are harder to get data on, typically because they are more fluid in their definitions, and there is generally not a systematic effort to produce data on socially defined spaces on national scales. This is a big part of doing macro demography, defining the scale and the unit of analysis, both because we need to define the scope of our work, but also we are very much constrained by the availability of data for our projects. For instance, I may want to look at national scale inequality in mortality risk in neighborhoods in the United States, but you immediately face a couple of hurdles. No national data source identifies sub-city residential location for death certificates, also, what are neighborhoods? Again, they're probably some socially defined space that may not be available from a national scale source. To get around this, we may have to settle for a state-level analysis, because state vital registration systems will often allow researchers to use more fine-scale geographic data on death certificates (such as latitude/longitude of the decedent's residence), and once we have very fine scale geographic data on the vital events, we could potentially find data on some more socially defined spaces, perhaps from cities who often maintain geographic data on neighborhoods specific to that city. OK, so that's fine, but then you still run into the "what's my denominator" problem, where you have no baseline population data on the age and sex breakdown of the population, or even the population size of these places, because federal agencies don't produce estimates for such small scale areas. *This is frustrating*. Often when advising students on their dissertation projects, I have to have this moment of truth where I lay out the problems of the mixing of geographic scales for their projects, and the hard reality of the lack of data on so many things they would like to study. Often what happens is that we have to proxy our ideal places with places for which we can find data. You see this a lot in the population health literature, where people want to analyze *neighborhoods* but all they have are census tracts. Tracts aren't social spaces! They're arbitrary areas of 3 to 5 thousand people, that change every 10 years, that the Census uses to count people. Likewise, counties are very rich areas to find data for, but they are not really activity spaces or neighborhoods, but they may be areas that have some policy making authority (such as county health departments) that *could* be relevant for something. States are also nice geographies, they're very large, so you loose the ability to contextualize behavior on a fine spatial scale, but states make a lot of decisions that affect the lives of their residents, often more than national decisions. States have become very popular units of analysis in the health literature again, primarily as a result of differential adoption of portions of the Patient Protection and Affordable Care Act of 2010 [@soni2017a; @courtemanche2019]. This being said, many times when we do an analysis on places, that analysis has lots of limitations, which we must acknowledge, and analyses such as these are often called *ecological* analyses because we are examining associations at the macro scale, and we do not observe individual level outcomes.
+
+<<<<<<< Updated upstream
+## US contexts
+
+The US Census bureau produces a wide variety of geographic data products that are the most widely used forms of geographic data for demographic studies in the United States. The TIGER Line Files data consist of geographic data with census bureau GEOIDs attached so they can be linked to any number of federal statistical products. They do not contain demographic data themselves, but are easily linked. The `tigris` package in R provides a direct way to download any TIGER line file data type directly in a R session as either a *simple feature* class or as a \*Spatial\_\_DataFrame\* [@tigris].
+
+Using the tigris package is very easy and its functions fit directly into the tidyverse as well. Below, I download two layers of information, first the state polygon for New York state, and the census tracts within the state and overlay the two datasets on each other. The package has a function for each type of geography that you would want, for example `states()` downloads state level geographies and `tracts()` does the same for census tracts. The functions have some common arguments, including `cb = TRUE/FALSE` so you can choose cartographic boundary files or not. Cartographic boundary files are lower resolution, smaller files that are often used for thematic mapping. Also `year =` will allow you to get different annual vintages of the data. The `tracts()` function also allows you to obtain geographies for specific counties within a state.
+
+```{r, results='hide'}
+library(tigris)
+
+nyst <- states(cb = TRUE,
+               year = 2010) %>%
+  filter(NAME == "New York")
+
+nyst_ct <- tracts(state = "NY",
+                  cb = TRUE,
+                  year = 2010)
+
+ggplot(data=nyst)+
+  geom_sf(color = "red", 
+          lwd = 2)+
+   geom_sf(data = nyst_ct,
+           fill = NA,
+           color = "blue") + 
+  ggtitle(label = "New York State Census Tracts")
+
+```
+
+### Tidycensus
+
+Another package the provides access to the US Census Bureau Decennial census summary file , the American Community Survey, Census population estimates, migration flow data and Census Public Use Microdata Sample (PUMS) data is `tidycensus` [@walker21]. The `tidycensus` package primarily works to allow users to use the Census Bureau's Application Programming Interface (API) to download Census summary file data for places within an R session. This removes the need to download separate files to your computer, and allows users to produce visualizations of Census data easily. The package is actively maintained and has several online tutorials on how to use it [^macrodem-1]. Depending on which data source you are interested in, there are functions that allow extracts from them. The ACS data is accessed through the `get_acs()` function, likewise the decennial census data is accessed using the `get_decennial()` function. The package also allows users to test for differences in ACS estimates either across time or between areas using the `significance()` function.
+
+The package requires users to obtain a developer API key from the Census Bureau's developer page[^macrodem-2] and install it on your local computer. The package has a function that helps you install the key to your `.Renviron` file. It is used like this:
+
+```{r, eval = FALSE}
+census_api_key(key = "yourkeyhere", install = TRUE)
+```
+
+which only needs to be done once.
+
+A basic use of the `tidycensus` package is to get data and produce maps of the indicators. This is done easily because `tidycensus` fits directly into general `dplyr` and `ggplot2` workflows. Below is an example of accessing 2019 ACS data on poverty rate estimates for New York census tracts from New York county.
+
+```{r, include = FALSE}
+options(tigris_use_cache = TRUE)
+```
+
+```{r, results = 'hide'}
+library(tidycensus)
+
+nyny <- get_acs(geography = "tract",
+                year = 2018,
+                state = "NY",
+                county = "061",
+                variables = "DP03_0119PE", 
+                output = "wide",
+                geometry = TRUE)
+
+nyny %>% 
+  rename (Poverty_Rt = DP03_0119PE)%>%
+  ggplot(aes(fill = Poverty_Rt))+
+  geom_sf()+
+  scale_color_viridis_c(option = "A")+
+  ggtitle ( label = "Poverty Rate in New York Census Tracts", 
+            subtitle = "2019 ACS Estimates")
+
+```
+
+The `tidycensus` package had a great array of functions and the author Kyle Walker has published a book on using it \<FILL IN CITATION\> which covers its many uses.
+
+[^macrodem-1]: $\bar{y}= \text{mean of y}$, $\bar{x}= \text{mean of x}$
+
+[^macrodem-2]: <http://api.census.gov/data/key_signup.html>
+
+### IPUMS NHGIS
+
+The IPUMS NHGIS project [^macrodem-3] is also a great source for demographic data on US places, and allows you to select many demographic tables for census data products going back to the 1790 census [@nhgis]. When you perform an extract from the site, you can get both data tables and ESRI shapefiles for your requested geographies. The IPUMS staff have created several tutorials which go through how to construct a query from their website [^macrodem-4]. Typical extracts include a series of CSV files and optional shapefiles containing the requested geographies.
+
+Below, I use the `sf` library to read in the geographic data from IPUMS and the tabular data and join them. Both the tabular data and the geographic data contain a key field named `GISJOIN` that allows for easy merging.
+
+```{r}
+library(sf)
+ipums_co <- read_sf("~/OneDrive - University of Texas at San Antonio/projects/book_data/US_county10_2000.shp")
+
+
+im_dat <- readr::read_csv("~/OneDrive - University of Texas at San Antonio/projects/book_data/nhgis0025_ds231_2005_county.csv")
+
+m_dat <- left_join(x = ipums_co,
+                   y = im_dat,
+                   by = c("GISJOIN" = "GISJOIN"))
+
+m_dat %>%
+  filter(STATE == "New York" )%>%
+  ggplot()+
+  geom_sf(aes (fill = AGWJ001))+
+  scale_color_viridis_c()+
+  ggtitle(label = "Infant Mortality Rate per 10,000 Live Births",
+          subtitle = "New York, 2005")
+```
+
+
+[^macrodem-3]: Link to AHRF codebook - ["https://data.hrsa.gov/DataDownload/AHRF/AHRF_USER_TECH_2019-2020.zip"](https://data.hrsa.gov/DataDownload/AHRF/AHRF_USER_TECH_2019-2020.zip)
+
+[^macrodem-4]: More on this below
+
+### International data
+
+Sources of international data exist in numerous sites on the internet. Personally, I frequently will use the DHS Spatial Data repository [^macrodem-5] to access data from DHS countries. They allow you to obtain both spatial administrative boundary data, as well as key indicators of maternal and child health at sub-national levels as either tabular data or as shapefiles. 
+
+The `rdhs` package allows you to perform queries from the spatial data repository and from the DHS microdata as well [@rdhs]. 
+
+\newpage
+
+[^macrodem-5]: More on this below
+
+## Statistical analysis of place-based data
+
+<<<<<<< HEAD:code/Secondpart of MacroDem.Rmd
+US
+
+International data
+>>>>>>> Stashed changes
+=======
+### Exploratory analysis of place-based data
+>>>>>>> d9a144b0e4fb2d2d34f1049c1c5fbf787609d5fa:03-MacroDem.Rmd
+
+## The linear model framework
+
+Probably the most used and often abused statistical model is the linear regression model, sometimes called the OLS model because it is typically estimated by the method of least squares. I do not plan on spending a lot of real estate in this this book talking about the linear model, mostly because lots of times it doesn't get us very far, and there are much more thorough books on this subject, one of my personal favorites being John Fox's text on applied regression [@fox_applied_2016].
+
+This model is typically shown as:
+
+$$y_i = \beta_0 +\sum_k \beta_k x_{ki} + \epsilon_i$$
+
+with the $\beta$'s being parameters that define the linear relationship between the independent variables $x_k$, and $y$, and $\epsilon_i$ being the unexplained, or residual portion of $y$ that is included in the model. The model has several assumptions that we need to worry about, first being normality of the residuals, or
+
+$$\epsilon_i \sim Normal(0, \sigma_\epsilon)$$
+
+Where $\sigma_\epsilon ^2$ is the residual variance, or mean square error of the model. Under the strict assumptions of the linear model, the Gauss-Markov theorem says that the unbiased and minimum variance estimates of the $\beta$'s is:
+
+<<<<<<< Updated upstream
+$$\beta_k = \frac{\sum (y_i - \bar{y})(x_i - \bar{x})}{\sum x_i - \bar{x}^2} = \frac{Cov(x,y)}{Var(x)}$$ [^macrodem-6]
+=======
+#$$\beta_k = \frac{\sum (y_i - \bar{y})(x_i - \bar{x})}{\sum x_i - \bar{x}^2} = \frac{Cov(x,y)}{Var(x)}$$ [^macrodem-1]
+>>>>>>> Stashed changes
+
+Which is often shown in the more compact matrix form:
+
+$$\beta_k = (X'X)^{-1} X'Y$$
+
+We could just as directly write the model in it's distributional form as:
+
+$$y_i \sim Normal(\beta_0 +\sum_k \beta_k x_{ki}, \sigma_\epsilon)$$ or even as:
+
+$$y_i \sim Normal(X' \beta, \sigma_\epsilon)$$
+
+Which I prefer because it sets up the regression equation as the **linear predictor**, or linear combination (in the linear algebra sense) of the predictors and the model parameters for the mean of the outcome. This term, linear predictor, is a useful one, because as you get more and more accustomed to regression, you will see this same structure in every regression model you ever do. This is the fundamental workhorse of regression, where we get an estimated value for every combination of the observed predictors. Moreover, below when I present the **Generalized Linear Model**, it will be apparent that the linear predictor can be placed within a number of so-called **link functions** to scale it with the mean of the outcome.
+
+<<<<<<< Updated upstream
+=======
+\newpage
+
+>>>>>>> Stashed changes
+The linear model has several assumptions that we need to be concerned with, notably:
+
+1)  Normality of residuals,
+2)  Constant variance in residuals, or **homoskedasticity**, and
+3)  Linearity of the regression function, and
+4)  Independence of observations
+
+If these assumptions are violated, then several things can happen. At best, our interpretation of the model coefficients could be wrong, meaning that, for instance a situation such as this arises:
+
+```{r, include=FALSE}
+n <- 100 # number of data points
+t <-  seq(from=0, to = 2*pi, length.out=100)
+a <- 3
+b <- 2
+c.norm <- rnorm(n, 0, .1)
+amp <- 1
+
+# generate data and calculate "y"
+set.seed(1)
+y2 <- a*sin(b*t)+c.norm*amp # Gaussian/normal error
+
+# plot results
+plot(t, y2, t="l",
+     ylim=range(y2)*c(1,1.2),
+     main="Terrible Linear Model, Fit to Nonlinear Data", 
+     ylab ="y", xlab= "x")
+abline(lm(y2~t), col=3)
+abline(a= mean(y2), b= 0, lty= 2)
+```
+
+Our poor linear model would predict a decline in the outcome, while the outcome itself is perfectly stationary, as shown by the dashed line. In a more social science sensibility, the interpretation of the beta coefficients for the effect of $x$ on $y$ in this case will provide us a false conclusion of the relationship in the data. This is a really dangerous outcome for us in social science, because that's why we're doing statistics in the first place, to answer questions. The normality assumption above primarily affect predictions from the model, which, since the normal distribution is bound on $-\infty$ to $\infty$, can easily lead to a prediction outside of the realm of possibility, say for a dichotomous outcome, or a count, neither of which can have predicted values beyond 0 and 1, or less than 0.
+
+<<<<<<< Updated upstream
+[^macrodem-6]: Link to AHRF codebook - ["https://data.hrsa.gov/DataDownload/AHRF/AHRF_USER_TECH_2019-2020.zip"](https://data.hrsa.gov/DataDownload/AHRF/AHRF_USER_TECH_2019-2020.zip)
+
+## Using the linear model in R
+
+The linear model is included in the base R `stats` package, and is accessed by the `lm()` function. In the example below, I use data from the U.S. Health Resources and Services Administration Area Health Resource File (AHRF), which is a produced annually and includes a wealth of information on current and historical data on health infrastructure in U.S. counties, as well as data from the Census Bureau, and the National Center for Health Statistics. The AHRF is publicly available, and we can read the data directly from the HHS website as a SAS format `.sas7bdat` data set within a ZIP archive. R can read this file to your local computer then extract it using the commands below. I would strongly encourage you consulting the AHRF codebook available from the HRSA website[^macrodem-7].
+=======
+[^macrodem-7]: $\bar{y}= \text{mean of y}$, $\bar{x}= \text{mean of x}$
+
+## Using the linear model in R
+
+The linear model is included in the base R `stats` package, and is accessed by the `lm()` function. In the example below, I use data from the U.S. Health Resources and Services Administration Area Health Resource File (AHRF), which is a produced annually and includes a wealth of information on current and historical data on health infrastructure in U.S. counties, as well as data from the Census Bureau, and the National Center for Health Statistics. The AHRF is publicly available, and we can read the data directly from the HHS website as a SAS format `.sas7bdat` data set within a ZIP archive. R can read this file to your local computer then extract it using the commands below. I would strongly encourage you consulting the AHRF codebook available from the HRSA website[^macrodem-8].
+>>>>>>> Stashed changes
+
+```{r, messages=FALSE}
+#create temoporary file on  your computer
+temp <- tempfile()
+
+#Download the SAS dataset as a ZIP compressed archive
+download.file("https://data.hrsa.gov/DataDownload/AHRF/AHRF_2019-2020_SAS.zip", temp)
+
+#Read SAS data into R
+ahrf<-haven::read_sas(unz(temp,
+                          filename = "ahrf2020.sas7bdat"))
+
+rm(temp)
+
+```
+
+```{r}
+library(tidyverse)
+
+ahrf2<-ahrf%>%
+  mutate(cofips = f00004, 
+         coname = f00010,
+         state = f00011,
+         births1618 =  f1254616, 
+         lowbw1618 = f1255316,
+         fampov14 =  f1443214,
+         lbrate1618 = f1255316/f1254616,
+         rucc = as.factor(f0002013),
+         hpsa16 = case_when(.$f0978716 == 0 ~ 'no shortage',
+                            .$f0978716 == 1 ~ 'whole county shortage',
+                            .$f0978716 == 2 ~ 'partial county shortage'),
+         obgyn15_pc= 1000*( f1168415/  f1198416 ) )%>%
+  dplyr::select(births1618,
+                lowbw1618,
+                lbrate1618,
+                state,
+                cofips,
+                coname,
+                fampov14,
+                rucc,
+                hpsa16,
+                obgyn15_pc)%>%
+  filter(complete.cases(.))%>%
+  as.data.frame()
+
+summary(ahrf2)
+```
+
+Here, we do a basic map of the outcome variable, and see the highest rates of low birth weight births in the US.
+
+```{r, results="hide"}
+
+
+options(tigris_class="sf")
+usco<-counties(cb = T, year= 2015)
+usco$cofips<-usco$GEOID
+sts<-states(cb = T, year = 2015)
+sts<-st_boundary(sts)%>%
+  filter(!STATEFP %in% c("02", "15", "60", "66", "69", "72", "78"))%>%
+  st_transform(crs = 2163)
+
+ahrf_m<-left_join(usco, ahrf2,
+                    by = "cofips")%>%
+  filter(is.na(lbrate1618)==F, 
+         !STATEFP %in% c("02", "15", "60", "66", "69", "72", "78"))%>%
+  st_transform(crs = 2163)
+
+```
+
+```{r}
+ahrf_m%>%
+  ggplot()+
+  geom_histogram(aes(lbrate1618))+
+  labs(title = "Distribution of Low Birth Weight Rates in US Counties",
+       subtitle = "2016 - 2018")+
+       xlab("Rate")+ ylab ("Frequency")
+```
+
+```{r, fig.height=10, fig.width=8}
+library(tmap)
+
+tm_shape(ahrf_m)+
+  tm_polygons(col = "lbrate1618",
+              border.col = NULL,
+              title="% Low Birth Weight",
+              palette="Blues",
+              style="quantile",
+              n=5 )+
+   tm_format("World",
+            title="US Low Birth Weight Rate by County",
+            legend.outside=T)+
+  tm_scale_bar()+
+  tm_compass()+
+tm_shape(sts)+
+  tm_lines( col = "black")
+ 
+
+```
+
+```{r, eval=FALSE}
+ahrf_m%>%
+  filter(!STATEFP %in% c("02", "15", "60", "66", "69", "72", "78"))%>%
+  mutate(lbrate=lowbw1416/births1416)%>%
+  mutate(lb_group = cut(lbrate, breaks=quantile(lbrate, p=seq(0,1,length.out = 6), na.rm=T ), include.lowest=T ))%>%
+  ggplot()+
+  geom_sf(aes(fill=lb_group, color=NA))+
+  scale_color_brewer(palette = "Blues")+
+  scale_fill_brewer(palette = "Blues",na.value = "grey50")+
+  geom_sf(data=sts["STATEFP"=="48",], color="black")+
+  coord_sf(crs =3083)+
+  ggtitle(label = "Proportion of births that were low birthweight, 2014-2016")
+
+```
+
+<<<<<<< Updated upstream
+Once our data start to violate the assumptions of the linear model, the model becomes less and less useful. For instance, why make all of the strict assumptions about homoskedastic (I am contractually required by the statistics union to say this at least once) variances in the model residuals in order to use OLS, when you can use it's friend and brother, **Generalized Least Squares** (GLS, of course), which allows you to make useful and pragmatic changes to the OLS model structure to accommodate all of the fun and annoying things about real data, but still use the normal distribution to model our outcomes[^macrodem-8].
+=======
+#Once our data start to violate the assumptions of the linear model, the model becomes less and less useful. For instance, why make all of the strict assumptions about homoskedastic (I am contractually required by the statistics union to say this at least once) variances in the model residuals in order to use OLS, when you can use it's friend and brother, **Generalized Least Squares** (GLS, of course), which allows you to make useful and pragmatic changes to the OLS model structure to accommodate all of the fun and annoying things about real data, but still use the normal distribution to model our outcomes[^macrodem-3].
+#>>>>>>> Stashed changes
+
+Generalized Least Squares adds a lot more flexibility to modeling normally distributed outcomes, basically by allowing us to modify the fundamental equations above to accommodate unequal variances, or the use of covariates on variances. Another way to write the OLS model above would be:
+
+$$\epsilon_i \sim Normal(X'\beta, I\sigma_\epsilon)$$ Where $I$ is the **identity matrix**, which implies that for each observation, the variances in the residuals are all the same:
+
+$$\sigma_{\epsilon}  = I * \sigma_{\epsilon} = \begin{bmatrix}
+1& 0& 0 \\
+0& 1& 0 \\
+0& 0& 1\\
+\end{bmatrix} *\sigma_{\epsilon} = \begin{bmatrix}
+\sigma_{\epsilon}& 0& 0 \\
+0& \sigma_{\epsilon}& 0 \\
+0& 0 & \sigma_{\epsilon} \\
+\end{bmatrix}$$
+
+Which shows the common variance for the three residuals. GLS allows us to relax this constant variance assumption, by at the minimum allowing the variances to be a function of a weighting variable (which produces **Weighted Least Squares**), or some covariate. In the most basic presentation of this principle, this makes the residuals have some other, non-constant form of:
+
+$$\sigma_{\epsilon}  = \Omega$$ which in turn modifies the estimation equation for the $\beta$'s to:
+
+$$\beta_{k_{GLS}} = (X' \Omega^{-1} X)^{-1} X' \Omega^{-1} Y$$ Applications of such models are more commonly seen in time series analysis, where the residuals of the model often have an autoregressive form, but when talking about place-based demography, more modifications of the model have been derived that allow for addressing another key assumption of independence among observations. This in fact is the realm of an entire field of econometrics, often called **spatial econometrics** [@anselin_spatial_1988; @chi_spatial_2020; @elhorst_spatial_2014; @lesage_introduction_2009]. In the next section, I show how some fundamental models that account for spatial association among observations can be estimates R packages.
+
+<<<<<<< Updated upstream
+
+[^macrodem-8]: Link to AHRF codebook - ["https://data.hrsa.gov/DataDownload/AHRF/AHRF_USER_TECH_2019-2020.zip"](https://data.hrsa.gov/DataDownload/AHRF/AHRF_USER_TECH_2019-2020.zip)
+
+#[^macrodem-9]: More on this below
+
+#### arf
+
+\newpage
+
+## Basics of Genearlized Linear Models
+
+Up until now, we have been relying on linear statistical models which assumed the Normal distribution for our outcomes. A broader class of regression models, are ***Generalized Linear Models*** [@nelder_generalized_1972; @mccullagh_generalized_1998], or **GLM**s, which allow for linear regression for outcomes that are not assumed to come from a Normal distribution.
+
+GLMs are a class of statistical models that link the mean of the specified distribution to a linear combination of covariates by some form of ***link function***. For example, the Normal distribution has the mean, $\mu$, which is typically estimated using the ***linear mean function*** :
+
+$$\mu = \beta_0 + \beta_1 x_1$$ Which describes the line that estimates the mean of the outcome variable as a linear function of the predictor variable $x_1$. This model uses an ***identity link*** meaning there is no transformation of the linear mean function as it is connected to the mean of the outcome.
+
+This can be written as:
+
+$$g(u) = g(E(Y)) = \beta_0 + \beta_1 x_1$$
+
+Where $g()$ is the link function, linking the mean of the Normal distribution to the linear mean function of the model.
+
+Different distributions have different link functions....
+
+The linear model is appropriate for the Normal distribution, because this distribution can take any value from $- \infty$ to $\infty$. Other distributions do not have this wide range, so transformations of the linear mean function must be used so that the linear model remains on the scale of the data.
+
+You have probably seen the binomial distribution in either a basic statistics course, remember the coin flips? Or in the context of a logistic regression model.
+
+There are two ways the binomial distribution is typically used, the first is the context of logistic regression, where a special case of the binomial is used, called the ***Bernoulli*** distribution. This is the case of the binomial when there is basically a single coin flip, and you're trying to figure out the probability that it is heads (or tails). This is said to be a single ***trial***, and the outcome is either 1 or 0 (heads or tails).
+
+The second way the binomial is used is when you have multiple trials, and you're trying to estimate the probability of the event occurring over multiple trials. In this case, your number of trials, $n$ can be large, and your number of successes, $y$ is the random variable under consideration. This is the basic makeup of a demographic rate, the count-based binomial.
+
+=======
+
+<!-- #[^macrodem-2]: Link to AHRF codebook - ["https://data.hrsa.gov/DataDownload/AHRF/AHRF_USER_TECH_2019-2020.zip"](https://data.hrsa.gov/DataDownload/AHRF/AHRF_USER_TECH_2019-2020.zip) -->
+
+#[^macrodem-3]: More on this below
+
+#### arf
+
+\newpage
+
+## Basics of Genearlized Linear Models
+
+Up until now, we have been relying on linear statistical models which assumed the Normal distribution for our outcomes. A broader class of regression models, are ***Generalized Linear Models*** [@nelder_generalized_1972; @mccullagh_generalized_1998], or **GLM**s, which allow for linear regression for outcomes that are not assumed to come from a Normal distribution.
+
+GLMs are a class of statistical models that link the mean of the specified distribution to a linear combination of covariates by some form of ***link function***. For example, the Normal distribution has the mean, $\mu$, which is typically estimated using the ***linear mean function*** :
+
+$$\mu = \beta_0 + \beta_1 x_1$$ Which describes the line that estimates the mean of the outcome variable as a linear function of the predictor variable $x_1$. This model uses an ***identity link*** meaning there is no transformation of the linear mean function as it is connected to the mean of the outcome.
+
+This can be written as:
+
+$$g(u) = g(E(Y)) = \beta_0 + \beta_1 x_1$$
+
+Where $g()$ is the link function, linking the mean of the Normal distribution to the linear mean function of the model.
+
+Different distributions have different link functions....
+
+The linear model is appropriate for the Normal distribution, because this distribution can take any value from $- \infty$ to $\infty$. Other distributions do not have this wide range, so transformations of the linear mean function must be used so that the linear model remains on the scale of the data.
+
+You have probably seen the binomial distribution in either a basic statistics course, remember the coin flips? Or in the context of a logistic regression model.
+
+There are two ways the binomial distribution is typically used, the first is the context of logistic regression, where a special case of the binomial is used, called the ***Bernoulli*** distribution. This is the case of the binomial when there is basically a single coin flip, and you're trying to figure out the probability that it is heads (or tails). This is said to be a single ***trial***, and the outcome is either 1 or 0 (heads or tails).
+
+The second way the binomial is used is when you have multiple trials, and you're trying to estimate the probability of the event occurring over multiple trials. In this case, your number of trials, $n$ can be large, and your number of successes, $y$ is the random variable under consideration. This is the basic makeup of a demographic rate, the count-based binomial.
+
+>>>>>>> Stashed changes
+The mean of the binomial distribution is a proportion or a probability, $\pi$, which tells you how likely it is that the event your interested in occurs. Any model using the binomial distributor will be geared towards estimating the probability.
+
+When a variable is coded as binary, meaning either 1 or 0, the Bernoulli distribution is used, as in the logistic regression model. When coded like this, the model tries to use the other measured information to predict the 1 value versus the 0 value. So in the basic sense, we want to construct a model like:
+
+$$Pr(y=1) =\pi =  \text{some function of predictors}$$
+
+The good thing is that, when we have count data, not just 1's and 0's, the same thing happens. The ratio or successes ($y$) to trials ($n$) is used to estimate $\pi$ and we build a model for that rate:
+
+$$\text{Binomial} \binom{n}{y} = \frac{y}{n} = \pi = \text{some function of predictors}$$
+
+## Binary outcome variables
+
+The ratio $\frac{y}{n}$ is a rate or probability, and as such has very strict bounds. Probabilities cannot be less than 0 or greater than 1, so again, we should not use the Normal distribution here, since it is valid for all real numbers. Instead, we are using the binomial, but we still run into the problem of having a strictly bounded value, $\pi$ that we are trying to estimate with a linear function.
+
+Enter the link function again.
+
+The binomial distribution typically uses either a [logit](https://en.wikipedia.org/wiki/Logit) or [probit](https://en.wikipedia.org/wiki/Probit) link function, but others such as the [complementary log-log link function](http://data.princeton.edu/wws509/notes/c3s7.html) are also used in certain circumstances. For now we will use the *logit* function.
+
+The logit transforms the probability, $\pi$, which is bound on the interval $[0,1]$ into a new limitless interval similar to the normal distribution of $[-\infty, \infty]$. The transformation is knows a the log-odds transformation, or logit for short.
+
+The odds of an event happening are the probability that something happens, divided by the probability it does not happen, in this case:
+
+$$\text{odds }{\pi} = \frac{\pi}{(1-\pi)}$$
+
+Which is bound on the interval $[0, \infty]$, when we take the natural log of the odds, the value is transformed into the linear space, of $[-\infty, \infty]$.
+
+$$\text{log-odds }{\pi} = log  \left ( \frac{\pi}{(1-\pi)}  \right) $$
+
+This can be modeled using a linear function of covariates now, without worrying about the original boundary problem:
+
+$$log  \left ( \frac{\pi}{(1-\pi)}  \right) = \beta_0 +\beta_1 x_1$$
+
+or more compactly:
+
+$$logit (\pi)  = \beta_0 +\beta_1 x_1$$
+
+## Binomial model for counts
+
+You have probably seen the binomial distribution in either a basic statistics course, remember the coin flips? Or in the context of a logistic regression model.
+
+There are two ways the binomial distribution is typically used, the first is the context of logistic regression, where a special case of the binomial is used, called the ***Bernoulli*** distribution. This is the case of the binomial when there is basically a single coin flip, and you're trying to figure out the probability that it is heads (or tails). This is said to be a single ***trial***, and the outcome is either 1 or 0 (heads or tails).
+
+The second way the binomial is used is when you have multiple trials, and you're trying to estimate the probability of the event occurring over multiple trials. In this case, your number of trials, $n$ can be large, and your number of successes, $y$ is the random variable under consideration. This is the basic makeup of a demographic rate, the count-based binomial.
+
+The mean of the binomial distribution is a proportion or a probability, $\pi$, which tells you how likely it is that the event your interested in occurs. Any model using the binomial distributor will be geared towards estimating the probability.
+
+When a variable is coded as binary, meaning either 1 or 0, the Bernoulli distribution is used, as in the logistic regression model. When coded like this, the model tries to use the other measured information to predict the 1 value versus the 0 value. So in the basic sense, we want to construct a model like:
+
+$$Pr(y=1) =\pi =  \text{some function of predictors}$$
+
+The good thing is that, when we have count data, not just 1's and 0's, the same thing happens. The ratio or successes ($y$) to trials ($n$) is used to estimate $\pi$ and we build a model for that rate:
+
+$$\text{Binomial} \binom{n}{y} = \frac{y}{n} = \pi = \text{some function of predictors}$$
+
+## Binomial regression models
+
+The ratio $\frac{y}{n}$ is a rate or probability, and as such has very strict bounds. Probabilities cannot be less than 0 or greater than 1, so again, we should not use the Normal distribution here, since it is valid for all real numbers. Instead, we are using the binomial, but we still run into the problem of having a strictly bounded value, $\pi$ that we are trying to estimate with a linear function.
+
+Enter the link function again.
+
+The binomial distribution typically uses either a [logit](https://en.wikipedia.org/wiki/Logit) or [probit](https://en.wikipedia.org/wiki/Probit) link function, but others such as the [complementary log-log link function](http://data.princeton.edu/wws509/notes/c3s7.html) are also used in certain circumstances. For now we will use the logit function.
+
+The logit transforms the probability, $\pi$, which is bound on the interval $[0,1]$ into a new limitless interval similar to the normal distribution of $[-\infty, \infty]$. The transformation is knows a the log-odds transformation, or logit for short.
+
+The odds of an event happening are the probability that something happens, divided by the probability it does not happen, in this case:
+
+$$\text{odds }{\pi} = \frac{\pi}{(1-\pi)}$$
+
+Which is bound on the interval $[0, \infty]$, when we take the natural log of the odds, the value is transformed into the linear space, of $[-\infty, \infty]$.
+
+$$\text{log-odds }{\pi} = log  \left ( \frac{\pi}{(1-\pi)}  \right) $$
+
+This can be modeled using a linear function of covariates now, without worrying about the original boundary problem:
+
+$$log  \left ( \frac{\pi}{(1-\pi)}  \right) = \beta_0 +\beta_1 x_1$$ or more compactly:
+
+$$log it(\pi)  = \beta_0 +\beta_1 x_1$$
+
+## Poisson distribution modeling
+
+The mean of the Poisson distribution, $(\lambda)$, is really the average count for the outcome ($y$). We have several ways of modeling the Poisson count:
+
+-   *Pure count model* If each area has the same risk set, or population size, then we can model the mean as-is. This would lead to a model that looks like:
+
+$$log(y)= \beta_0 + \beta_1 x_1$$
+
+When we see the $\beta_1$ parameter in this model in computer output, it is on the log-scale, since that is the scale of the outcome for the Poisson model. In order to interpret the $\beta_1$, we have to ***exponentiate*** it. When we do this, the parameter is interpreted as the percentage change in the mean of the outcome, for a 1 unit change in $x_1$. For instance if we estimate a model and see in the output that $\beta_1 = \text{.025}$, then $\exp(\beta_1) = \text{exp}(\text{.025}) = \text{1.025}$, or for a 1 unit increase in $x_1$, the mean of $y$ increases by 1.025. So if the mean of $y$ is 10, when $x_1$ = 0, then the mean is $10*(1.025*1)$ or $10.25$ when $x_1$ = 1.
+
+-   *Rate model* The second type of modeling strategy is a model for a rate of occurrence. This model includes an ***offset term*** in the model to incorporate unequal population sizes, this is the most common way the data are analyzed in demographic research. This offset term can be thought of as the denominator for the rate, and we can show how it is put into the model.
+
+If $n$ is the population size for each place, then, we want to do a regression on the rate of occurrence of our outcome. The rate is typically expressed as a proportion, or probability $rate = \frac{y}{n}$:
+
+$$log(y/n)= \beta_0 + \beta_1 x_1$$ $$log(y) - log(n)= \beta_0 + \beta_1 x_1$$
+
+$$log(y)= \beta_0 + \beta_1 x_1 + log(n)$$
+
+Similar to the example from before, when interpreting the effect of $\beta_1$ in this model, we also have to exponentiate it. In this case, the interpretation would not be related to the overall count, but to the rate of occurrence. So, if as before, the $\beta_1 = \text{.025}$, then $\exp(\beta_1) = \text{exp}(\text{.025}) = \text{1.025}$, or for a 1 unit increase in $x_1$, the ***rate*** of occurrence of $y$ increases by 1.025. If, in this case the average mortality rate was $10/500 = 0.02$ when $x_1$ = 0, then the rate is $0.02*(1.025*1)$ or $0.0205$ when $x_1$ = 1.
+
+## Relative risk analysis
+
+The third type of model for the Poisson distribution focuses on the idea of the relative risk of an event, and uses the ***Standardized risk ratio*** as its currency.
+
+-   The *Standardized risk ratio* incorporates differential exposure due to population size as an ***expected count*** of the outcome in the offset term, and are typically seen in epidemiological studies. The expected count $E$, incorporates the different population sizes of each area by estimating the number of events that should occur, if the area followed a given rate of occurrence.
+
+The expected count is calculated by multiplying the average rate of occurrence, $r$, by the population size, $n$: $E_i = r * n_i$, where $r = \frac{\sum y_i}{\sum n_i}$, is the overall rate in the population. This method is commonly referred to as ***internal standaridization*** because we are using the data at hand to estimate the overall rate of occurrence, versus using a rate from some other published source.
+
+The model for the mean of the outcome would look like this:
+
+$$log(y)= \beta_0 + \beta_1 x_1  + log(E)$$.
+
+## Overdispersion
+
+When using the Poisson GLM, you often run into *overdispersion* \* What's overdispersion? For the Poisson distribution, the mean and the variance are functions of one another (variance = mean for Poisson). So when you have more variability than you expect in your data, you have overdispersion. This basically says your data do not fit your model, and is a problem because overdispersion leads to standard errors for our model parameters that are too small. But, we can fit other models that do not make such assumptions, or allow there to be more variability.
+
+**An easy check on this is to compare the residual deviance to the residual degrees of freedom. They ratio should be 1 if the model fits the data.**
+
+## NOTE
+
+The `svyglm()` function includes a scaling term for overdispersion, so this is already taken into account. But if you have data that aren't a complex survey, we can measure this ourselves using the residual deviance.
+
+```{r, eval=FALSE}
+fit2<-glm(healthdays~factor(race_eth)+factor(educ)+factor(agec), data=brfss_17, family=poisson)
+summary(fit2)
+scale<-sqrt(fit2$deviance/fit2$df.residual)
+scale
+```
+
+The deviance can also be a test of model fit, using a chi square distribution, with degrees of freedom equal to the residual d.f. (n-p):
+
+```{r, eval=FALSE}
+1-pchisq(fit2$deviance, df = fit2$df.residual)
+```
+
+So, this p value is 0, which means the model does not fit the data.
+
+## Modeling Overdispersion via a Quasi distribution
+
+For the Poisson , we can fit a "quasi" distribution that adds an extra parameter to allow the mean-variance relationship to not be constant. For Poisson we get:
+
+$$var(Y) = \lambda * \phi$$ , instead of
+
+$$var(Y) = \lambda $$
+
+This allows us to include a rough proxy for a dispersion parameter for the distribution. Naturally this is fixed at 1 for basic models, and estimated in the quasi models, we can look to see if is much bigger than 1. If overdispersion is present and not accounted for you could identify a relationship as being significant when it is not!
+
+```{r, eval=FALSE}
+fit3<-glm(healthdays~factor(race_eth)+factor(educ)+factor(agec), data=brfss_17, family=quasipoisson)
+summary(fit3)
+```
+
+## Other count models - Negative binomial
+
+-   Of course, we could just fit other distributional models to our data, popular choices are:
+
+-   Negative binomial
+
+-   Effectively adds a shape parameter to Poisson
+
+$$Y \sim NB (\lambda, \lambda+\lambda^2/\theta),$$ $$\text{   } E(Y) = \lambda,$$ $$\text{   } var(Y) = \lambda+\lambda^2/\theta$$ $$\lambda = log(\eta)$$ $$\eta = \beta_0 + \beta_1 x_1+ log(n)$$
+
+Now, R will not fit negative binomial models using survey design, so, we will fit them using sample weights only, then calculate the robust standard errors. We standardize the weights to equal the sample size, as opposed to the population size by dividing each person's weight by the mean weight.
+
+## Extensions of the GLM framework when working with places
+
+## Construction of indices for places

@@ -1,0 +1,29 @@
+"State"	"State Code"	"Age Group"	"Age Group Code"	Deaths	Population	Crude Rate
+"California"	"06"	"< 1 year"	"1"	2057	498832	412.4
+"California"	"06"	"1-4 years"	"1-4"	397	1988540	20.0
+"California"	"06"	"5-9 years"	"5-9"	253	2539626	10.0
+"California"	"06"	"10-14 years"	"10-14"	277	2522475	11.0
+"California"	"06"	"15-19 years"	"15-19"	1076	2579986	41.7
+"California"	"06"	"20-24 years"	"20-24"	2090	2812191	74.3
+"California"	"06"	"25-34 years"	"25-34"	5201	5917785	87.9
+"California"	"06"	"35-44 years"	"35-44"	7032	5159932	136.3
+"California"	"06"	"45-54 years"	"45-54"	16370	5195297	315.1
+"California"	"06"	"55-64 years"	"55-64"	34176	4688718	728.9
+"California"	"06"	"65-74 years"	"65-74"	45834	3089002	1483.8
+"California"	"06"	"75-84 years"	"75-84"	59121	1535300	3850.8
+"California"	"06"	"85+ years"	"85+"	88331	722333	12228.6
+"California"	"06"	"Not Stated"	"NS"	25	Not Applicable	Not Applicable
+"Texas"	"48"	"< 1 year"	"1"	2287	405899	563.4
+"Texas"	"48"	"1-4 years"	"1-4"	433	1613272	26.8
+"Texas"	"48"	"5-9 years"	"5-9"	276	2038319	13.5
+"Texas"	"48"	"10-14 years"	"10-14"	319	2029062	15.7
+"Texas"	"48"	"15-19 years"	"15-19"	999	1970588	50.7
+"Texas"	"48"	"20-24 years"	"20-24"	1829	2005169	91.2
+"Texas"	"48"	"25-34 years"	"25-34"	4405	4085728	107.8
+"Texas"	"48"	"35-44 years"	"35-44"	6292	3726287	168.9
+"Texas"	"48"	"45-54 years"	"45-54"	13636	3519013	387.5
+"Texas"	"48"	"55-64 years"	"55-64"	28663	3116019	919.9
+"Texas"	"48"	"65-74 years"	"65-74"	37506	2008449	1867.4
+"Texas"	"48"	"75-84 years"	"75-84"	44144	957001	4612.7
+"Texas"	"48"	"85+ years"	"85+"	51173	387790	13196.1
+"Texas"	"48"	"Not Stated"	"NS"	Suppressed	Not Applicable	Not Applicable

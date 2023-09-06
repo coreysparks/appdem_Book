@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Applied Demographic Data Analysis - 5&nbsp; Event History Models for Microdemography</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./macro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./micro.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Event History Models for Microdemography</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Demographic Data Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rintro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survey.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Analysis of Survey Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./macro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Macrodemographic Analysis of Places</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./micro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Event History Models for Microdemography</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#micro-demography" id="toc-micro-demography" class="nav-link active" data-scroll-target="#micro-demography"><span class="header-section-number">6</span> Micro-demography</a>
+  <ul class="collapse">
+  <li><a href="#individual-level-focus" id="toc-individual-level-focus" class="nav-link" data-scroll-target="#individual-level-focus"><span class="header-section-number">6.0.1</span> Individual-level focus</a></li>
+  <li><a href="#individual-level-propositions" id="toc-individual-level-propositions" class="nav-link" data-scroll-target="#individual-level-propositions"><span class="header-section-number">6.0.2</span> Individual level propositions</a></li>
+  <li><a href="#continuous-outcomes" id="toc-continuous-outcomes" class="nav-link" data-scroll-target="#continuous-outcomes"><span class="header-section-number">6.0.3</span> Continuous outcomes</a></li>
+  <li><a href="#creating-a-longitudinal-dataset" id="toc-creating-a-longitudinal-dataset" class="nav-link" data-scroll-target="#creating-a-longitudinal-dataset"><span class="header-section-number">6.0.4</span> Creating a longitudinal dataset</a></li>
+  <li><a href="#event-history-framework" id="toc-event-history-framework" class="nav-link" data-scroll-target="#event-history-framework"><span class="header-section-number">6.1</span> Event history framework</a>
+  <ul class="collapse">
+  <li><a href="#when-to-conduct-an-event-history-analysis" id="toc-when-to-conduct-an-event-history-analysis" class="nav-link" data-scroll-target="#when-to-conduct-an-event-history-analysis"><span class="header-section-number">6.1.1</span> When to conduct an event history analysis?</a></li>
+  <li><a href="#basic-propositions" id="toc-basic-propositions" class="nav-link" data-scroll-target="#basic-propositions"><span class="header-section-number">6.1.2</span> Basic Propositions</a></li>
+  <li><a href="#focus-on-comparison" id="toc-focus-on-comparison" class="nav-link" data-scroll-target="#focus-on-comparison"><span class="header-section-number">6.1.3</span> Focus on comparison</a></li>
+  <li><a href="#some-terminology" id="toc-some-terminology" class="nav-link" data-scroll-target="#some-terminology"><span class="header-section-number">6.1.4</span> Some terminology</a></li>
+  <li><a href="#issues-in-event-history-data" id="toc-issues-in-event-history-data" class="nav-link" data-scroll-target="#issues-in-event-history-data"><span class="header-section-number">6.1.5</span> Issues in event history data</a></li>
+  </ul></li>
+  <li><a href="#time-scales" id="toc-time-scales" class="nav-link" data-scroll-target="#time-scales"><span class="header-section-number">6.2</span> Time Scales</a></li>
+  <li><a href="#kinds-of-studies-with-event-history-data" id="toc-kinds-of-studies-with-event-history-data" class="nav-link" data-scroll-target="#kinds-of-studies-with-event-history-data"><span class="header-section-number">6.3</span> Kinds of studies with event history data</a></li>
+  </ul></li>
+  <li><a href="#functions-of-survival-time" id="toc-functions-of-survival-time" class="nav-link" data-scroll-target="#functions-of-survival-time"><span class="header-section-number">7</span> Functions of Survival Time</a>
+  <ul class="collapse">
+  <li><a href="#some-arrangements-for-event-history-data" id="toc-some-arrangements-for-event-history-data" class="nav-link" data-scroll-target="#some-arrangements-for-event-history-data"><span class="header-section-number">7.1</span> Some arrangements for event history data</a>
+  <ul class="collapse">
+  <li><a href="#counting-process-data" id="toc-counting-process-data" class="nav-link" data-scroll-target="#counting-process-data"><span class="header-section-number">7.1.1</span> Counting process data</a></li>
+  <li><a href="#case---duration-or-person-level-data" id="toc-case---duration-or-person-level-data" class="nav-link" data-scroll-target="#case---duration-or-person-level-data"><span class="header-section-number">7.1.2</span> Case - duration, or person level data</a></li>
+  <li><a href="#person-period-data" id="toc-person-period-data" class="nav-link" data-scroll-target="#person-period-data"><span class="header-section-number">7.1.3</span> Person – Period data</a></li>
+  </ul></li>
+  <li><a href="#homage-to-the-life-table" id="toc-homage-to-the-life-table" class="nav-link" data-scroll-target="#homage-to-the-life-table"><span class="header-section-number">7.2</span> Homage to the life table</a>
+  <ul class="collapse">
+  <li><a href="#defining-the-functions" id="toc-defining-the-functions" class="nav-link" data-scroll-target="#defining-the-functions"><span class="header-section-number">7.2.1</span> Defining the functions</a></li>
+  <li><a href="#the-distribution-function-or-pdf" id="toc-the-distribution-function-or-pdf" class="nav-link" data-scroll-target="#the-distribution-function-or-pdf"><span class="header-section-number">7.2.2</span> The distribution function, or <em>pdf</em></a></li>
+  <li><a href="#survival-function" id="toc-survival-function" class="nav-link" data-scroll-target="#survival-function"><span class="header-section-number">7.2.3</span> Survival Function</a></li>
+  <li><a href="#the-hazard-function" id="toc-the-hazard-function" class="nav-link" data-scroll-target="#the-hazard-function"><span class="header-section-number">7.2.4</span> The hazard function</a></li>
+  </ul></li>
+  <li><a href="#relationships-among-the-three-functions" id="toc-relationships-among-the-three-functions" class="nav-link" data-scroll-target="#relationships-among-the-three-functions"><span class="header-section-number">7.3</span> Relationships among the three functions</a>
+  <ul class="collapse">
+  <li><a href="#more-on-the-hazard-function" id="toc-more-on-the-hazard-function" class="nav-link" data-scroll-target="#more-on-the-hazard-function"><span class="header-section-number">7.3.1</span> More on the hazard function…</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Event History Models for Microdemography</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div style="page-break-after: always;"></div>
+<section id="micro-demography" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Micro-demography</h1>
+<p>Demographic studies began to focus on individual level outcomes once the availability of individual level census and social/health survey data became more prevalent in the 1960’s and 1970’s. Corresponding with this availability of individual level data, demography began to be influenced by sociological thought, which brought a proper theoretical perspective to demographic studies, which, before this period were dominated by methodological issues and descriptions of macro scale demographic processes we saw in the previous chapter.</p>
+<p>This chapter focuses on how we model individual level observational data, with a focus on data from demographic surveys. In doing this, I focus on two primary goals, first to illustrate how to conduct commonly used regression analysis of demographic outcomes as measured in surveys, drawing heavily on data from the ******. Secondly, I describe the event-history framework that is used in much of social science when we analyze changes in outcomes between time points, or in describing the time to some demographic event, such as having a child or dying.</p>
+<section id="individual-level-focus" class="level3" data-number="6.0.1">
+<h3 data-number="6.0.1" class="anchored" data-anchor-id="individual-level-focus"><span class="header-section-number">6.0.1</span> Individual-level focus</h3>
+<p>In contrast to the macro-demographic perspective described in the previous chapter, the micro-demographic perspective is focused on the <strong>individual</strong> rather than the aggregate. Barbara Entwisle <span class="citation" data-cites="entwisle_2007">(<a href="#ref-entwisle_2007" role="doc-biblioref">2007</a>)</span> explains, micro-demography focuses on how individuals are modeled within demographic studies, which focus on individual level behaviors and outcomes as a prime importance. Most of the time in an individual, or micro-demographic focus, our hypotheses are related to how the individual outcome or behavior is influenced by characteristics of the individual, usually without concern or interest in the physical or social context in which the individual lives their life. For instance, in a micro-demographic study of mortality, the researcher may make ask: <em>Do individuals with a low level of education face higher risk of death, compared to people with a college education</em> This in and of itself says nothing about the spatial context in which the person lives, it is only concerned with characteristics of the person.</p>
+</section>
+<section id="individual-level-propositions" class="level3" data-number="6.0.2">
+<h3 data-number="6.0.2" class="anchored" data-anchor-id="individual-level-propositions"><span class="header-section-number">6.0.2</span> Individual level propositions</h3>
+<p>If we are concerned with how individual-level factors affect each person’s outcome, then we are stating an individual level, or micro, proposition. In this type of analysis, we have <em>y</em> and <em>x</em>, both measured on our individual level units. We may also have a variable <em>Z</em> measured on a second-level unit, but we’ll wait and discuss these in the next chapter. An example of this micro-level, or individual level, proposition would be that we think a persons health is affected by their level of education.</p>
+<p><img src="./images/indi.png" class="img-fluid" alt="Micro-level proposition"> ## Types of individual level outcomes In the analysis of micro-demographic outcomes, we encounter a wide variety of outcomes. Some are relatively simple recoding of existing survey data, other times the outcomes depend on repeated measures of some behavior in a longitudinal framework. At the heart of different outcomes are different assumed statistical distributions used to model them, and the choices that we face related to which outcome best suits a particular outcome. Based on the Generalized Linear Model framework introduced in the previous chapter, in this chapter my goal is to illustrate how to use this framework for analyzing a variety of different types of outcomes. Also, I show how to use appropriate corrections for using complex survey data in the context of the various outcome types, relying heavily on the <code>survey</code> and <code>svyVGAM</code> packages <span class="citation" data-cites="lumley2004 lumleysvyvgam">(<a href="#ref-lumley2004" role="doc-biblioref">Lumley 2004</a>, <a href="#ref-lumleysvyvgam" role="doc-biblioref">2021</a>)</span>.</p>
+</section>
+<section id="continuous-outcomes" class="level3" data-number="6.0.3">
+<h3 data-number="6.0.3" class="anchored" data-anchor-id="continuous-outcomes"><span class="header-section-number">6.0.3</span> Continuous outcomes</h3>
+<p>The workhorse for continuous outcomes in statistics is the Gaussian, or Normal distribution linear model, which was reviewed in the previous chapter. The Normal distribution is incredibly flexible in its form, and once certain restrictions are removed via techniques such as generalized least squares, the model becomes even more flexible. I do not intend to go over the details of the model estimation in this chapter, as this was covered previously. Instead, I will use a common demographic survey data source, the Demographic and Health Survey model data to illustrate how to include survey design information and estimate the models. In addition to the Normal distribution, other continuous distributions including the Student-t and Gamma distributions are also relevant for modeling heteroskedastic and skewed continuous outcomes, as described in the previous chapters.</p>
+<section id="data-for-examples" class="level4" data-number="6.0.3.1">
+<h4 data-number="6.0.3.1" class="anchored" data-anchor-id="data-for-examples"><span class="header-section-number">6.0.3.1</span> Data for examples</h4>
+</section>
+<section id="discrete" class="level4" data-number="6.0.3.2">
+<h4 data-number="6.0.3.2" class="anchored" data-anchor-id="discrete"><span class="header-section-number">6.0.3.2</span> Discrete</h4>
+</section>
+<section id="binary-logistic-regression-model" class="level4" data-number="6.0.3.3">
+<h4 data-number="6.0.3.3" class="anchored" data-anchor-id="binary-logistic-regression-model"><span class="header-section-number">6.0.3.3</span> Binary Logistic regression model</h4>
+</section>
+<section id="marginal-effects" class="level4" data-number="6.0.3.4">
+<h4 data-number="6.0.3.4" class="anchored" data-anchor-id="marginal-effects"><span class="header-section-number">6.0.3.4</span> Marginal effects</h4>
+</section>
+<section id="ordinal-logistic-regression-model" class="level4" data-number="6.0.3.5">
+<h4 data-number="6.0.3.5" class="anchored" data-anchor-id="ordinal-logistic-regression-model"><span class="header-section-number">6.0.3.5</span> Ordinal logistic regression model</h4>
+</section>
+<section id="multinomial-logistic-regression-model" class="level4" data-number="6.0.3.6">
+<h4 data-number="6.0.3.6" class="anchored" data-anchor-id="multinomial-logistic-regression-model"><span class="header-section-number">6.0.3.6</span> Multinomial logistic regression model</h4>
+</section>
+<section id="changes-in-an-outcome-over-time" class="level4" data-number="6.0.3.7">
+<h4 data-number="6.0.3.7" class="anchored" data-anchor-id="changes-in-an-outcome-over-time"><span class="header-section-number">6.0.3.7</span> Changes in an outcome over time</h4>
+</section>
+<section id="creating-an-event-history-dataset" class="level4" data-number="6.0.3.8">
+<h4 data-number="6.0.3.8" class="anchored" data-anchor-id="creating-an-event-history-dataset"><span class="header-section-number">6.0.3.8</span> Creating an event history dataset</h4>
+</section>
+</section>
+<section id="creating-a-longitudinal-dataset" class="level3" data-number="6.0.4">
+<h3 data-number="6.0.4" class="anchored" data-anchor-id="creating-a-longitudinal-dataset"><span class="header-section-number">6.0.4</span> Creating a longitudinal dataset</h3>
+</section>
+<section id="event-history-framework" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="event-history-framework"><span class="header-section-number">6.1</span> Event history framework</h2>
+<section id="when-to-conduct-an-event-history-analysis" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="when-to-conduct-an-event-history-analysis"><span class="header-section-number">6.1.1</span> When to conduct an event history analysis?</h3>
+<ul>
+<li>When you questions include
+<ul>
+<li>When or Whether</li>
+<li>When &gt; how long until an event occurs</li>
+<li>Whether &gt; does an event occur or not</li>
+</ul></li>
+<li>If your question does not include either of these ideas (or cannot be made to) then you do not need to do event history analysis</li>
+</ul>
+</section>
+<section id="basic-propositions" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="basic-propositions"><span class="header-section-number">6.1.2</span> Basic Propositions</h3>
+<ul>
+<li>Since most of the methods we will discuss originate from studies of mortality, they have morbid names
+<ul>
+<li>Survival – This is related to how long a case lasts until it experiences the event of interest</li>
+<li>How long does it take?</li>
+<li>Risk – How likely is it that the case will experience the event</li>
+<li>Will it happen or not?</li>
+</ul></li>
+</ul>
+</section>
+<section id="focus-on-comparison" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="focus-on-comparison"><span class="header-section-number">6.1.3</span> Focus on comparison</h3>
+<ul>
+<li>Most of the methods we consider are comparative by their nature</li>
+<li>How long does a case with trait x survive, compared to a case with trait y?</li>
+<li>How likely is it for a person who is married to die of homicide relative to someone who is single?</li>
+<li>Generally we are examining relative risk and relative survival</li>
+</ul>
+</section>
+<section id="some-terminology" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="some-terminology"><span class="header-section-number">6.1.4</span> Some terminology</h3>
+<ul>
+<li><strong>State</strong> – discrete condition an individual may occupy that occur within a state space. Most survival analysis methods assume a single state to state transition</li>
+<li><strong>State space</strong> – full set of state alternatives</li>
+<li><strong>Episodes/Events/Transitions</strong> – a change in states</li>
+<li><strong>Durations</strong> – length of an episode</li>
+<li><strong>Time axis</strong> – Metric for measuring durations (days, months, years)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="C:/Users/ozd504/GitHub/DEM7223/images/state_concepts.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">State Space Illustration</figcaption>
+</figure>
+</div>
+</section>
+<section id="issues-in-event-history-data" class="level3" data-number="6.1.5">
+<h3 data-number="6.1.5" class="anchored" data-anchor-id="issues-in-event-history-data"><span class="header-section-number">6.1.5</span> Issues in event history data</h3>
+<section id="censoring" class="level4" data-number="6.1.5.1">
+<h4 data-number="6.1.5.1" class="anchored" data-anchor-id="censoring"><span class="header-section-number">6.1.5.1</span> Censoring</h4>
+<ul>
+<li><strong>Censoring</strong> occurs when you do not actually observe the event of interest within the period of data collection
+<ul>
+<li>e.g.&nbsp;you know someone gets married, but you never observe them having a child</li>
+<li>e.g.&nbsp;someone leaves alcohol treatment and is never observed drinking again</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="C:/Users/ozd504/Documents/GitHub/DEM7223/images/censoring.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Censoring</figcaption>
+</figure>
+</div>
+</section>
+<section id="non-informative-censoring" class="level4" data-number="6.1.5.2">
+<h4 data-number="6.1.5.2" class="anchored" data-anchor-id="non-informative-censoring"><span class="header-section-number">6.1.5.2</span> Non-informative censoring</h4>
+<ul>
+<li>The individual is not observed because the observer ends the study period</li>
+<li>The censoring is not related to any trait or action of the case, but related to the observer
+<ul>
+<li>We want most of our censoring to be this kind</li>
+</ul></li>
+</ul>
+</section>
+<section id="informative-censoring" class="level4" data-number="6.1.5.3">
+<h4 data-number="6.1.5.3" class="anchored" data-anchor-id="informative-censoring"><span class="header-section-number">6.1.5.3</span> Informative censoring</h4>
+<ul>
+<li>The individual is not observed because they represent a special case</li>
+<li>The censoring IS related to something about the individual, and these people differ inherently from uncensored cases</li>
+<li>People that are censored ARE likely to have experience the event</li>
+</ul>
+</section>
+<section id="right-censoring" class="level4" data-number="6.1.5.4">
+<h4 data-number="6.1.5.4" class="anchored" data-anchor-id="right-censoring"><span class="header-section-number">6.1.5.4</span> Right censoring</h4>
+<ul>
+<li>An event time is unknown because it is not observed.
+<ul>
+<li>This is easier to deal with</li>
+</ul></li>
+</ul>
+</section>
+<section id="left-censoring" class="level4" data-number="6.1.5.5">
+<h4 data-number="6.1.5.5" class="anchored" data-anchor-id="left-censoring"><span class="header-section-number">6.1.5.5</span> Left censoring</h4>
+<ul>
+<li>An event time is unknown because it occurred prior to the beginning of data collection, but not when
+<ul>
+<li>This is difficult to deal with</li>
+</ul></li>
+</ul>
+</section>
+<section id="interval-censoring" class="level4" data-number="6.1.5.6">
+<h4 data-number="6.1.5.6" class="anchored" data-anchor-id="interval-censoring"><span class="header-section-number">6.1.5.6</span> Interval censoring</h4>
+<ul>
+<li>The event time is known to have occurred within a period of time, but it is unknown exactly when
+<ul>
+<li>This can be dealt with</li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="time-scales" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="time-scales"><span class="header-section-number">6.2</span> Time Scales</h2>
+<ul>
+<li>Continuous time
+<ul>
+<li>Time is measured in very precise, unique increments &gt; miles until a tire blows out</li>
+<li>Each observed duration is unique</li>
+</ul></li>
+<li>Discrete time
+<ul>
+<li>Time is measured in discrete lumps &gt; semester a student leaves college</li>
+<li>Each observed duration is not necessarily unique, and takes one of a set of discrete values</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/timescales.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Time Scales</figcaption>
+</figure>
+</div>
+<section id="making-continuous-outcomes-discrete" class="level4" data-number="6.2.0.1">
+<h4 data-number="6.2.0.1" class="anchored" data-anchor-id="making-continuous-outcomes-discrete"><span class="header-section-number">6.2.0.1</span> Making continuous outcomes discrete</h4>
+<ul>
+<li><p>Ideally you should measure the duration as finely as possible (see Freedman et al)</p></li>
+<li><p>Often you may choose to discretize the data &gt; take continuous time and break it into discrete chunks</p></li>
+<li><p>Problems</p>
+<ul>
+<li>This removes possibly informative information on duration variability</li>
+<li>Any discrete dividing point is arbitrary</li>
+<li>You may arrive at different conclusions given the interval you choose</li>
+<li>You lose information about late event occurrence</li>
+<li>Lose all information on mean or average durations</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="kinds-of-studies-with-event-history-data" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="kinds-of-studies-with-event-history-data"><span class="header-section-number">6.3</span> Kinds of studies with event history data</h2>
+<ul>
+<li><p>Cross sectional</p>
+<ul>
+<li>Measured at one time point (no change observed)</li>
+<li>Can measure lots of things at once</li>
+</ul></li>
+<li><p>Panel data</p>
+<ul>
+<li>Multiple measurements at discrete time points on the same individuals</li>
+<li>Can look at change over time</li>
+</ul></li>
+<li><p>Event history</p>
+<ul>
+<li>Continuous measurement of units over a fixed period of time, focusing on change in states</li>
+<li>Think clinical follow-ups</li>
+</ul></li>
+<li><p>Longitudinal designs</p>
+<ul>
+<li>Prospective designs</li>
+<li>Studies that follow a group (cohort) and follow them over time</li>
+<li>Expensive and take a long time, but can lead to extremely valuable information on changes in behaviors</li>
+</ul></li>
+<li><p>Retrospective designs</p></li>
+<li><p>Taken at a cross section</p></li>
+<li><p>Ask respondents about events that have previously occurred.</p></li>
+<li><p>Generate birth/migration/marital histories for individuals</p></li>
+<li><p>Problems with recall bias</p></li>
+<li><p>DHS includes a detailed history of births over the last 5 years</p></li>
+<li><p>Record linkage procedures</p>
+<ul>
+<li>Begin with an event of interest (birth, marriage) and follow individuals using various record types</li>
+<li>Birth &gt; Census 1880 &gt; Census 1890 &gt; Marriage &gt; Birth of children &gt; Census 1900 &gt; Tax records &gt;Death certificate</li>
+<li>Mostly used in historical studies</li>
+<li>Modern studies link health surveys to National Death Index (NHANES, NHIS)</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="functions-of-survival-time" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Functions of Survival Time</h1>
+<section id="some-arrangements-for-event-history-data" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="some-arrangements-for-event-history-data"><span class="header-section-number">7.1</span> Some arrangements for event history data</h2>
+<section id="counting-process-data" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="counting-process-data"><span class="header-section-number">7.1.1</span> Counting process data</h3>
+<ul>
+<li>This is what we are accustomed to in the life table</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>t1<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">Time_start=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">Time_end=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">Failing=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">15</span>,<span class="dv">12</span>,<span class="dv">20</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">At_Risk=</span><span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">75</span>, <span class="dv">60</span>, <span class="dv">40</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>t1<span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">border_left =</span> T, <span class="at">border_right =</span> T)<span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Time_start</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Time_end</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Failing</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">At_Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">25</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">15</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">12</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">60</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">5</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">20</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">40</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::kable(t1,format = "html", caption = "Counting Process data" ,align = "c", )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="case---duration-or-person-level-data" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="case---duration-or-person-level-data"><span class="header-section-number">7.1.2</span> Case - duration, or person level data</h3>
+<ul>
+<li>This is the general form of continuous time survival data.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>t2<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">ID =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">Duration=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">9</span> , <span class="dv">6</span>), </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">Event_Occurred=</span><span class="fu">c</span>(<span class="st">"Yes (1)"</span>,<span class="st">"Yes (1)"</span>,<span class="st">"No (0)"</span>, <span class="st">"Yes (1)"</span> ))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>t2<span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">border_left =</span> T, <span class="at">border_right =</span> T)<span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">row_label_position =</span> <span class="st">"c"</span>, <span class="at">position =</span> <span class="st">"center"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">ID</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Duration</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Event_Occurred</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">5</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Yes (1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Yes (1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">9</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">No (0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">6</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Yes (1)</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::kable(t2, format = "html", caption = "Case-duration data", align = "c")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This can be transformed into person-period data, or discrete time data.</p>
+</section>
+<section id="person-period-data" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="person-period-data"><span class="header-section-number">7.1.3</span> Person – Period data</h3>
+<ul>
+<li>Express exposure as discrete periods</li>
+<li>Event occurrence is coded at each period</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>t3<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">ID=</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="fu">rep</span>(<span class="dv">3</span>, <span class="dv">9</span>), <span class="fu">rep</span>(<span class="dv">4</span>, <span class="dv">6</span>)),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">Period =</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>), <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>), <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">Event=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>t3<span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">border_left =</span> T, <span class="at">border_right =</span> T)<span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">row_label_position =</span> <span class="st">"c"</span>, <span class="at">position =</span> <span class="st">"center"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">ID</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Period</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Event</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">5</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">5</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">6</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">7</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">8</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">9</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">2</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">3</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">5</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">4</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">6</td>
+<td style="text-align: right; border-left: 1px solid; border-right: 1px solid;">0</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+</section>
+<section id="homage-to-the-life-table" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="homage-to-the-life-table"><span class="header-section-number">7.2</span> Homage to the life table</h2>
+<p>In life tables, we had lots of functions of the death process. Some of these were more interesting than others, with two being of special interest to use here. These are the <span class="math inline">\(l(x)\)</span> and <span class="math inline">\(q(x, n)\)</span> functions. If you recall, <span class="math inline">\(l(x)\)</span> represents the population size of the stationary population that is alive at age <span class="math inline">\(x\)</span>, and the risk of dying between age <span class="math inline">\(x, x+n\)</span> is <span class="math inline">\(q(x, n)\)</span>.</p>
+<p>These are genearlized more in the event history analysis literature, but we can still describe the distrubion of survival time using three functions. These are the <strong>Survival Function</strong>, <span class="math inline">\(S(t)\)</span>, the <strong>probability density function</strong>, <span class="math inline">\(f(t)\)</span>, and the <strong>hazard function</strong>, <span class="math inline">\(h(t)\)</span>. These three are related and we can derive one from the others.</p>
+<p>Now we must generalize these ideas to incorporate them into the broader event-history framework</p>
+<p>Survival/duration times measure the <em>time to a certain event.</em></p>
+<p>These times are subject to random variations, and are considered to be random <em>iid</em> (independent and identically distributed; random) variates from some distribution</p>
+<ul>
+<li>The distribution of survival times is described by 3 functions</li>
+<li>The survivorship function, <span class="math inline">\(S(t)\)</span></li>
+<li>The probability density function, <span class="math inline">\(f(t)\)</span></li>
+<li>The hazard function, <span class="math inline">\(h(t)\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="C:/Users/ozd504/Documents/GitHub/DEM7223/images/functions.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">3 functions</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Ft<span class="ot">&lt;-</span><span class="fu">cumsum</span>(<span class="fu">dlnorm</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">110</span>, <span class="dv">1</span>), <span class="at">meanlog =</span> <span class="fl">4.317488</span>, <span class="at">sdlog =</span> <span class="fl">2.5</span>)) <span class="co">#mean of 75 years, sd of 12.1 years</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ft<span class="ot">&lt;-</span><span class="fu">diff</span>(Ft)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>St<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">-</span>Ft</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ht<span class="ot">&lt;-</span>ft<span class="sc">/</span>St[<span class="dv">1</span><span class="sc">:</span><span class="dv">110</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Ft, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(St, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="micro_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ht, <span class="at">col=</span><span class="st">"green"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="micro_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>These three are mathematically related, and if given one, we can calculate the others
+<ul>
+<li>These 3 functions each represent a different aspect of the survival time distribution.</li>
+</ul></li>
+<li>The fundamental problem in survival analysis is coming up with a way to estimate these functions.</li>
+</ul>
+<section id="defining-the-functions" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="defining-the-functions"><span class="header-section-number">7.2.1</span> Defining the functions</h3>
+<p>Let <em>T</em> denote the survival time, our goal is to characterize the distribution of <em>T</em> using these 3 functions.</p>
+<p>Let <em>T</em> be a discrete(or continuous) <em>iid</em> random variable and let <span class="math inline">\(t_i\)</span>, be an occurrence of that variable, such that <span class="math inline">\(Pr(t_i)=Pr(T=t_i)\)</span></p>
+</section>
+<section id="the-distribution-function-or-pdf" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="the-distribution-function-or-pdf"><span class="header-section-number">7.2.2</span> The distribution function, or <em>pdf</em></h3>
+<p>Like any other random variates survival times have a simple distribution function that gives the probability of observing a particular survival time within a finite interval</p>
+<p>The density function is defined as the limit of the probability that an individual fails (experiences the event) in a short interval <span class="math inline">\(t+\Delta t\)</span> (read delta t), per width of <span class="math inline">\(\Delta t\)</span>, or simply the probability of failure in a small interval per unit time, <span class="math inline">\(f(t_i) = Pr(T=t_i)\)</span>.</p>
+<p>If <span class="math inline">\(F(t)\)</span> is the cumulative distribution function for <em>T</em>, given by:</p>
+<p><span class="math display">\[ F(t) = \int_{0}^{t} f(u) du = Pr(T \leqslant t )\]</span> Which is the probability of observing a value of <em>T</em> prior to the current value, <em>t</em>.</p>
+<p>The density function is then:</p>
+<p><span class="math display">\[ f(t) = \frac{F(t)}{d(t)} = F'(t)\]</span> or</p>
+<p><span class="math display">\[ f(t) = \lim_{\delta t \rightarrow 0} \frac{F(t+\Delta t) - F(t)}{\Delta t}\]</span></p>
+<p>The density function gives the unconditional instantaneous failure rate in the (very small) interval between <em>t</em> and <em>dt</em>, <span class="math inline">\(\Delta t\)</span></p>
+</section>
+<section id="survival-function" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="survival-function"><span class="header-section-number">7.2.3</span> Survival Function</h3>
+<p>The survival function, <em>S(t)</em> is expressed:</p>
+<p><span class="math display">\[ S(t) = 1 - F(t) = Pr (T \geqslant t)\]</span></p>
+<p>Which is the probability that <em>T</em> takes a value larger than <em>t</em>. i.e.&nbsp;the event happens some time after the present time.</p>
+<p>At <span class="math inline">\(t = 0, S(t) =1 \text { and at } t= \infty, \text { and } S(t) =0\)</span></p>
+<p>As time passes, <em>S(t)</em> decreases, and is called a <em>strictly decreasing function of time</em>.</p>
+<p>Empirically, <em>S(t)</em> takes the form of a step function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>St<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">cumprod</span>(<span class="dv">1</span><span class="sc">-</span>(t1<span class="sc">$</span>Failing<span class="sc">/</span>t1<span class="sc">$</span>At_Risk)))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(St, <span class="at">type=</span><span class="st">"s"</span>, <span class="at">xlab =</span> <span class="st">"Time"</span>, <span class="at">ylab=</span><span class="st">"S(t)"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="micro_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="the-hazard-function" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="the-hazard-function"><span class="header-section-number">7.2.4</span> The hazard function</h3>
+<p>The hazard function relates death, <em>f(t)</em>, and survival, <em>S(t)</em>, to one another</p>
+<p><span class="math display">\[h(t) = \frac{f(t)}{S(t)}\]</span> <span class="math display">\[h(t) = \lim_{\Delta t \rightarrow 0} \frac{Pr(t \leqslant T \leqslant t + \Delta t | T \geqslant t)}{\Delta t}\]</span></p>
+<p>Which is the failure rate per unit time in the interval <em>t</em>, <span class="math inline">\(t+\Delta t\)</span>, the hazard may increase or decrease with time, or stay the same. This is really dependent on the distribution of failure times.</p>
+</section>
+</section>
+<section id="relationships-among-the-three-functions" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="relationships-among-the-three-functions"><span class="header-section-number">7.3</span> Relationships among the three functions</h2>
+<p>If <span class="math inline">\(ft = \frac{dF(t)}{dt}\)</span> and <span class="math inline">\(S(t) = 1- F(t)\)</span> and, <span class="math inline">\(h(t) = \frac{f(t)}{S(t)}\)</span>, then we can write:</p>
+<p><span class="math display">\[f(t) = \frac{-dS(t)}{dt}\]</span></p>
+<p>and the hazard function as:</p>
+<p><span class="math display">\[h(t) = \frac{-d \text{ log } S(t)}{dt}\]</span></p>
+<p>If we integrate this and let <span class="math inline">\(S(0)=1\)</span>, then</p>
+<p><span class="math display">\[S(t) = exp^{-\int_{0}^t h(u) du} = e^{-H(t)}\]</span></p>
+<p>where the quantity, <span class="math inline">\(H(t)\)</span> is called the <em>cumulative hazard function</em> and, <span class="math inline">\(H(t) = \int h(u) du\)</span>, then</p>
+<p><span class="math display">\[H(t) = -\text{log }  S(t)\]</span></p>
+<p>The density can be written as:</p>
+<p><span class="math display">\[f(t) = h(t) e ^{-H(t)}\]</span> and</p>
+<p><span class="math display">\[h(t) = \frac{h(t) e^{-H(t)}}{e^{-H(t)}} = \frac{f(t)}{S(t)}\]</span></p>
+<section id="more-on-the-hazard-function" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="more-on-the-hazard-function"><span class="header-section-number">7.3.1</span> More on the hazard function…</h3>
+<p>Unlike the <em>f(t)</em> or <em>S(t)</em>, <em>h(t)</em> describes the risk an individual faces of experiencing the event, given they have survived up to that time.</p>
+<p>This kind of conditional probability is of special interest to us.</p>
+<p>We can extend this framework to include effects of <em>individual characteristics on one’s risk</em>, thus not only introducing dependence on time, but also on these characteristics (covariates).</p>
+<p>We can re-express the hazard rate with both these conditions as:</p>
+<p><span class="math display">\[h(t|x) = \lim_{\Delta t \rightarrow 0} \frac{Pr(t \leqslant T \leqslant t + \Delta t | T \geqslant t, x)}{\Delta t}\]</span> ## Logistic regression When a variable is coded as binary, meaning either 1 or 0, the Bernoulli distribution is used, as in the logistic regression model. When coded like this, the model tries to use the other measured information to predict the 1 value versus the 0 value. So in the basic sense, we want to construct a model like:</p>
+<p><span class="math display">\[Pr(y=1) =\pi =  \text{some function of predictors}\]</span></p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-entwisle_2007" class="csl-entry" role="listitem">
+Entwisle, Barbara. 2007. <span>“Putting People into Place.”</span> <em>Demography</em> 44 (4): 687–703. <a href="https://doi.org/10.1353/dem.2007.0045">https://doi.org/10.1353/dem.2007.0045</a>.
+</div>
+<div id="ref-lumley2004" class="csl-entry" role="listitem">
+Lumley, Thomas. 2004. <span>“Analysis of Complex Survey Samples.”</span> <em>Journal of Statistical Software</em> 9 (1): 1–19.
+</div>
+<div id="ref-lumleysvyvgam" class="csl-entry" role="listitem">
+———. 2021. <em>svyVGAM: Design-Based Inference in Vector Generalised Linear Models</em>. <a href="https://CRAN.R-project.org/package=svyVGAM">https://CRAN.R-project.org/package=svyVGAM</a>.
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./macro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Macrodemographic Analysis of Places</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
