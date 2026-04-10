@@ -71,6 +71,12 @@ jobs:
             any::texreg
             any::tidycensus
             any::tigris
+            any::psych
+            any::formatR
+            any::Hmisc
+            any::scales
+            any::skimr
+            any::stargazer
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
