@@ -114,7 +114,7 @@ library(ipumsr)
 
 ddi <- read_ipums_ddi(ddi_file = "data/usa_00097.xml")
 ipums <- read_ipums_micro(ddi = ddi)
-ipums <- zap_labels(ipums) 
+ipums <- haven::zap_labels(ipums) 
 ```
 
 Will read in the data, in this case, it is a subset of the 2008 to 2012 single year ACS. This extract is not all of the variables from the ACS, as that would be a very large file and for my purposes here, I don't need that. My goal for the rest of the chapter is to illustrate how to use the IPUMS as an example of a complex survey design data set and the steps necessary to do so.
