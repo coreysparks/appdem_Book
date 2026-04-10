@@ -67,7 +67,6 @@ jobs:
             any::patchwork
             any::sandwich
             any::sjPlot
-            any::splines
             any::svyVGAM
             any::texreg
             any::tidycensus
