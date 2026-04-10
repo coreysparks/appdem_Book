@@ -78,6 +78,8 @@ jobs:
             any::skimr
             any::stargazer
             any::huxtable
+            any::broom
+            any::broom.helpers
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
