@@ -44,7 +44,6 @@ jobs:
             any::sf
             any::tmap
             any::car
-            any::lme4
             any::survival
             any::knitr
             any::kableExtra
@@ -52,6 +51,27 @@ jobs:
             any::dplyr
             any::readr
             any::forcats
+            any::pander
+            any::MASS
+            any::VGAM
+            any::betareg
+            any::broom
+            any::dispmod
+            any::emmeans
+            any::gamlss
+            any::gt
+            any::gtsummary
+            any::ipumsr
+            any::lmtest
+            any::nlme
+            any::patchwork
+            any::sandwich
+            any::sjPlot
+            any::splines
+            any::svyVGAM
+            any::texreg
+            any::tidycensus
+            any::tigris
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
