@@ -105,11 +105,7 @@ The fundamentals of using `ipumsr` is to specify the name of your `.xml` file fr
 
 ![](images/ipums_files.png)
 ```{r ch21xa, results='hide', message=FALSE, warning=FALSE, include=FALSE}
-library(ipumsr)
-
-ddi <- read_ipums_ddi(ddi_file = "/Users/coreysparks/Documents/GitHub//usa_00097.xml")
-ipums <- read_ipums_micro(ddi = ddi)
-
+ipums <- arrow::read_parquet("data/usa_00097.parquet")
 ```
 
 ```{r ch2_2x,eval=FALSE,results='hide', message=FALSE, warning=FALSE, include=TRUE}
@@ -622,7 +618,8 @@ surv.est<-ipums %>%
          met_name = haven::as_factor(MET2013)) %>%
   as_survey_design(cluster = CLUSTER,
                    strata = STRATA,
-                   weights = PERWT) %>%
+                   weights = PERWT, 
+                   nest=TRUE) %>%
   group_by(met_name)%>%
   summarize(emp_rate = survey_mean(I(employed)=="Employed")) %>%  
   #rename(emp_rate_surv = emp_rate, emp_rate_se_surv = emp_rate_se)%>%
@@ -642,7 +639,7 @@ p1<-merged%>%
   geom_line(aes(group = met_name),
             col = "grey")+
   scale_y_continuous(labels = scales::percent)+
-  scale_color_discrete( name = "Estimate Type")%>%
+  scale_color_discrete( name = "Estimate Type")+
   labs(x = "MSA", 
        y = "Employment Rate Estimate",
        title = "Employment rate in Texas MSAs",
@@ -655,7 +652,7 @@ p2<-merged%>%
              cex=2)+
   geom_line(aes(group = met_name),
             col = "grey")+
-  scale_color_discrete()%>%
+  scale_color_discrete()+
   labs(x = "MSA", 
        y = "Standard Error",
        title = "",
@@ -732,9 +729,7 @@ The Demographic and Health Survey (DHS) data have been collected since the mid 1
 The DHS household file is arrayed with a column for every child, so we must reshape the data from wide to long format using `pivot_longer` for the variables for child height relative to the WHO standard (`hc70`), child gender `hc27`, and child age `hc1`. The other variables are common to the household, so we do not have to reshape them (per the `cols=` line below). We then recode the outcome and the predictors for our regression example.
 
 ```{r}
-dhs_model_hh <- readRDS(
-  url("https://github.com/coreysparks/data/blob/master/dhs_model_hh.rds?raw=true")
-  )
+dhs_model_hh <- arrow::read_parquet("data/dhs_model_hh.parquet")
 
 dhs_model_hh_sub <- dhs_model_hh%>%
   select(hc27_01:hc27_20, 

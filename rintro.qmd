@@ -122,7 +122,7 @@ or to include output tables directly into a document:
 
 ```{r, echo = FALSE, results='hide', message = FALSE }
 library(readr, quietly = TRUE)
-prb <- read_csv(file = "https://github.com/coreysparks/r_courses/raw/master/data/2018_WPDS_Data_Table_FINAL.csv")
+prb <- read_csv(file = "data/2018_WPDS_Data_Table_FINAL.csv")
 names(prb) <- tolower(names(prb))
 ```
 
@@ -874,7 +874,7 @@ same task.
 
 ```{r, echo= TRUE, results='hide', message = FALSE, tidy= TRUE}
 prb <- read.csv(
-  file = "https://github.com/coreysparks/r_courses/raw/master/data/2018_WPDS_Data_Table_FINAL.csv", 
+  file = "data/2018_WPDS_Data_Table_FINAL.csv",
   stringsAsFactors = TRUE)
 ```
 
@@ -883,7 +883,7 @@ directory, I could read it in like so:
 
 ```{r, eval = FALSE}
 
-prb <- read_csv("path/to/file/2018_WPDS_Data_Table_FINAL.csv")
+prb <- read_csv("data/2018_WPDS_Data_Table_FINAL.csv")
 
 ```
 
@@ -896,9 +896,9 @@ reads Stata files, `read_sav()` to read SPSS data files.
 
 ```{r, eval = FALSE}
 library(haven)
-prb_stata <- read_dta("path/to/file/prb2018.dta")
+prb_stata <- read_dta("data/prb2018.dta")
 
-prb_spss <- read_sav("path/to/file/prb_2018.sav")
+prb_spss <- read_sav("data/prb_2018.sav")
 
 
 ```

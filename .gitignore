@@ -4,3 +4,27 @@
 .Ruserdata
 
 /.quarto/
+
+**/*.quarto_ipynb
+
+# Large data files exceeding GitHub 100MB limit
+data/*.shp
+data/*.shx
+data/*.dbf
+data/*.prj
+data/*.shp.xml
+data/nhgis0025_shapefile_tl2010_us_county_2000.zip
+data/usa_00097.dat.gz
+
+# Original data files superseded by parquet versions
+data/ZZIR62FL.DTA
+data/brfss20sm.rds
+data/brfss_2017.Rdata
+data/dhs_model_hh.rds
+data/usa_00097.xml
+data/usa_00086.xml
+data/usa_00095.xml
+data/usa_00096.xml
+
+# Temp conversion scripts
+convert_ipums.R

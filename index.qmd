@@ -13,18 +13,37 @@ My goal for this book is to take the lessons I've learned teaching statistics to
 
 As someone who has learned much more of these methods by personal exploration than by formal study, I find that many of these methods are absent from the canon of social science statistics, but are both in great demand from people who hire us, and absolutely necessary to the demographer's analytic toolkit. It's a major goal of this book to de-mystify the process and to make it accessible to a wide audience, so I will always strive to illustrate the key aspects of the methods described herein, and ground the discussion of methods in applications. 
 
-### is this a cookbook?
-
 ### Broader picture of what i'll cover
 
 ### What's a demographer?
+A demographer is a person who studies the size, structure, and distribution of human populations, and how they change over time due to births, deaths, migration, and aging. Demographers use statistical methods to analyze data on population dynamics and to make predictions about future population trends. They often work in fields such as public health, social science, economics, and government policy.
 
 ### What is applied demography?
-
-### Why we need to see this stuff?
+Applied demography is the application of demographic methods and techniques to real-world problems and issues. It involves using demographic data and analysis to inform policy decisions, program planning, and resource allocation in various fields, such as public health, urban planning, and social services. Applied demographers often work with large datasets and use statistical software to analyze and interpret demographic data, with the goal of providing insights and recommendations for decision-makers.
 
 ### Why R is a good option for applied demography?
+R is a powerful and flexible programming language that is widely used in the field of applied demography for several reasons:
 
-#### why write code? 
- 
-### Mention packages earlier - talk about later
+1. **Open Source**: R is free and open-source, making it accessible to a wide range of users, including those in academia, government, and non-profit organizations.
+
+2. **Statistical Packages**: R has a rich ecosystem of packages specifically designed for statistical analysis and data visualization. This includes packages for handling complex survey data, which is often used in demography.
+
+3. **Data Visualization**: R excels at data visualization, allowing demographers to create informative and aesthetically pleasing graphics to communicate their findings effectively.
+
+4. **Reproducibility**: R promotes reproducible research practices through the use of scripts and R Markdown, enabling demographers to document their analysis workflows and share their code with others.
+
+5. **Community Support**: R has a large and active user community, providing a wealth of resources, tutorials, and forums for users to seek help and share knowledge.
+
+#### Why write code as a demographer?
+As a demographer, writing code is essential for several reasons:
+
+1. **Efficiency**: Writing code allows demographers to automate repetitive tasks and analyze large datasets more efficiently than manual methods.
+
+2. **Reproducibility**: Code enables demographers to document their analysis workflows, making it easier to reproduce results and share methods with others.
+
+3. **Flexibility**: Coding provides the flexibility to customize analyses and create tailored solutions for specific research questions.
+
+4. **Collaboration**: Code can be easily shared and collaborated on with other researchers, facilitating teamwork and knowledge exchange.
+
+5. **Integration**: Writing code allows demographers to integrate various data sources and analytical tools, enhancing the overall analysis process.
+
