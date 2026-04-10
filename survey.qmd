@@ -105,7 +105,7 @@ The fundamentals of using `ipumsr` is to specify the name of your `.xml` file fr
 
 ![](images/ipums_files.png)
 ```{r ch21xa, results='hide', message=FALSE, warning=FALSE, include=FALSE}
-ipums <- arrow::read_parquet("data/usa_00097.parquet")
+ipums <- arrow::read_parquet("data/usa_00097.parquet") |> haven::zap_labels()
 ```
 
 ```{r ch2_2x,eval=FALSE,results='hide', message=FALSE, warning=FALSE, include=TRUE}
