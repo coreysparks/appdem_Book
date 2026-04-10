@@ -241,7 +241,8 @@ knitr::kable(fake_survey)
 
 If we attempt to make a survey design from this, R would show an error.
 
-```{r, error=TRUE}
+```{r}
+#| error: true
 fake_design<- fake_survey%>%
   as_survey_design(ids = psu,
                     strata=strata,
@@ -272,7 +273,8 @@ se1<-ipums%>%
   filter(STATEFIP==48, PERNUM==1)%>%
   as_survey_design(cluster= CLUSTER,
                    strata = STRATA,
-                   weights = HHWT)%>%
+                   weights = HHWT,
+                   nest=TRUE)%>%
   summarize(tothh = survey_total())%>%
   select(tothh_se)
 ```
