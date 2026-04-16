@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -L -o /c/Users/corey/Github/appdem_Book/data/brfss20sm.rds \"https://github.com/coreysparks/DEM7283/blob/master/data/brfss20sm.rds?raw=true\")",
+      "Bash(curl -L -o /c/Users/corey/Github/appdem_Book/data/brfss_2017.Rdata \"https://github.com/coreysparks/data/blob/master/brfss_2017.Rdata?raw=true\")",
+      "Bash(curl -L -o /c/Users/corey/Github/appdem_Book/data/dhs_model_hh.rds \"https://github.com/coreysparks/data/blob/master/dhs_model_hh.rds?raw=true\")",
+      "Bash(Rscript -e \"cat\\(system.file\\(package=''arrow''\\), ''\\\\n''\\); cat\\(system.file\\(package=''haven''\\), ''\\\\n''\\)\")",
+      "Bash(Rscript.exe -e \"library\\(arrow\\); library\\(haven\\); dat <- read_dta\\(''data/ZZIR62FL.DTA''\\); write_parquet\\(dat, ''data/ZZIR62FL.parquet''\\); cat\\(''Done\\\\n''\\)\")",
+      "Bash(Rscript.exe -e \"library\\(arrow\\); brfss20 <- readRDS\\(''data/brfss20sm.rds''\\); write_parquet\\(as.data.frame\\(brfss20\\), ''data/brfss20sm.parquet''\\); cat\\(''Done\\\\n''\\)\")",
+      "Bash(Rscript.exe -e \"library\\(arrow\\); dhs <- readRDS\\(''data/dhs_model_hh.rds''\\); write_parquet\\(as.data.frame\\(dhs\\), ''data/dhs_model_hh.parquet''\\); cat\\(''Done\\\\n''\\)\")",
+      "Bash(Rscript.exe -e \"library\\(arrow\\); e <- new.env\\(\\); load\\(''data/brfss_2017.Rdata'', envir=e\\); nm <- ls\\(e\\); cat\\(''Objects:'', nm, ''\\\\n''\\); obj <- get\\(nm[1], envir=e\\); write_parquet\\(as.data.frame\\(obj\\), paste0\\(''data/'', nm[1], ''.parquet''\\)\\); cat\\(''Done:'', nm[1], ''\\\\n''\\)\")",
+      "Bash(grep -oE \"[a-zA-Z0-9\\\\.]+$\")",
+      "Bash(grep -hE \"library\\\\\\([a-zA-Z0-9\\\\.]+\" c:/Users/corey/Github/appdem_Book/*.qmd)",
+      "Bash(grep -hEo \"[a-zA-Z0-9]+::\" c:/Users/corey/Github/appdem_Book/*.qmd)",
+      "Bash(ls -lh c:/Users/corey/Github/appdem_Book/data/usa_00097*)",
+      "Bash(Rscript.exe -e \":*)",
+      "Bash(Rscript.exe convert_ipums.R)",
+      "Bash(grep -n \"ipums$\\\\|ipums %>%\\\\|select.*ipums\\\\|ipums\\\\[\" c:/Users/corey/Github/appdem_Book/survey.qmd)",
+      "Bash(grep -Eo '\\\\b[A-Z][A-Z0-9_]{2,}\\\\b' c:/Users/corey/Github/appdem_Book/survey.qmd)"
+    ]
+  }
+}

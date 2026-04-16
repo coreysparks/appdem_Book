@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Applied Demographic Data Analysis - 3&nbsp; Analysis of Survey Data</title>
+<title>3&nbsp; Analysis of Survey Data – Applied Demographic Data Analysis</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -21,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -85,22 +89,29 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./macro.html" rel="next">
 <link href="./rintro.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,30 +120,58 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Analysis of Survey Data</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Analysis of Survey Data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -141,7 +180,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Applied Demographic Data Analysis</a> 
@@ -193,7 +232,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -244,7 +283,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <div style="page-break-after: always;"></div>
 <section id="survey-data" class="level1" data-number="4">
@@ -265,7 +306,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/MLdata.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure 1</figcaption>
+<figcaption>Figure 1</figcaption>
 </figure>
 </div>
 </section>
@@ -289,7 +330,7 @@ div.csl-indent {
 <p>Let’s look at an example of these ideas in a real data source. Throughout the book I will use several complex survey design data sources to illustrate various topics, in this chapter I will use data from the US Census Bureau’s American Community Survey (ACS) public use microdata sample (PUMS). We can actually use the <code>tidycensus</code> package <span class="citation" data-cites="walker21">(<a href="#ref-walker21" role="doc-biblioref">Walker and Herman 2021</a>)</span> to download ACS PUMS directly from the Census Bureau.</p>
 <p>This example shows how to extract the 2018 single-year PUMS for the state of Texas, and only keep variables related to person-records. The ACS has information on both people and households, but for now we’ll only look at the person records. Help on these functions can be found by typing <code>?pums_variables</code> and <code>?get_pums</code> in <code>R</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pums_vars_18<span class="ot">&lt;-</span> pums_variables <span class="sc">%&gt;%</span></span>
@@ -301,12 +342,12 @@ div.csl-indent {
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"PUMA"</span>, <span class="st">"SEX"</span>, <span class="st">"AGEP"</span>, <span class="st">"CIT"</span>, <span class="st">"JWTR"</span>,<span class="st">"JWRIP"</span>, <span class="st">"HISP"</span>),</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="st">"AL"</span>,</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">survey =</span> <span class="st">"acs1"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="dv">2018</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="dv">2018</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(TX_pums),</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">'html'</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>These data are also easily available from the Integrated Public Use Microdata Series (IPUMS) project housed at the University of Minnesota <span class="citation" data-cites="Ruggles2021">(<a href="#ref-Ruggles2021" role="doc-biblioref">Ruggles et al. 2021</a>)</span>. The IPUMS version of the data adds additional information to the data and homogenizes the data across multiple years to make using it easier. The following example will use the <code>ipumsr</code> package to read in an extract from IPUMS-USA.</p>
 <p>After you create an IPUMS extract, right click on the DDI link and save that file to your computer. Then repeat this for the .DAT file. If you need help creating an IPUMS extract, their staff have created a tutorial for doing so (<a href="https://usa.ipums.org/usa/tutorials.shtml" class="uri">https://usa.ipums.org/usa/tutorials.shtml</a>).</p>
 <p>This will save the xml file that contains all the information on the data (what is contained in the data file) to your computer. When using IPUMS, it will have a name like <code>usa_xxxxx.xml</code> where the x’s represent the extract number.</p>
@@ -315,10 +356,10 @@ div.csl-indent {
 <p>The fundamentals of using <code>ipumsr</code> is to specify the name of your <code>.xml</code> file from your extract, and as long as your <code>.tar.gz</code> file from your extract is in the same location, R will read the data. The files on my computer:</p>
 <p><img src="images/ipums_files.png" class="img-fluid"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ipumsr)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ipumsr)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ddi <span class="ot">&lt;-</span> <span class="fu">read_ipums_ddi</span>(<span class="at">ddi_file =</span> <span class="st">"data/usa_00097.xml"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ipums <span class="ot">&lt;-</span> <span class="fu">read_ipums_micro</span>(<span class="at">ddi =</span> ddi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ipums <span class="ot">&lt;-</span> <span class="fu">read_ipums_micro</span>(<span class="at">ddi =</span> ddi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Will read in the data, in this case, it is a subset of the 2008 to 2012 single year ACS. This extract is not all of the variables from the ACS, as that would be a very large file and for my purposes here, I don’t need that. My goal for the rest of the chapter is to illustrate how to use the IPUMS as an example of a complex survey design data set and the steps necessary to do so.</p>
 </section>
@@ -326,21 +367,21 @@ div.csl-indent {
 <h2 data-number="4.6" class="anchored" data-anchor-id="basics-of-analyzing-survey-data"><span class="header-section-number">4.6</span> Basics of analyzing survey data</h2>
 <p>A fundamental part of analyzing complex survey data are knowing the variables within the data that contain the survey design information. The US Census Bureau has documented the design of the survey in a publication <span class="citation" data-cites="uscensusbureau2014">(<a href="#ref-uscensusbureau2014" role="doc-biblioref">US Census Bureau 2014</a>)</span> The IPUMS version of the ACS has two variables <code>STRATA</code> and <code>CLUSTER</code> that describe the two stage process by which the data are collected. Here are a the first few lines of these from the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(ipums[, <span class="fu">c</span>(<span class="st">"SERIAL"</span>, <span class="st">"STRATA"</span>, <span class="st">"CLUSTER"</span>)],</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">n=</span><span class="dv">10</span>),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">14</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">14</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For the ACS, the strata variable is named, ironically <code>STRATA</code> and the cluster variable <code>CLUSTER</code>. The IPUMS creates the <code>STRATA</code> variable based on the sampling strata in the ACS, and the <code>CLUSTER</code> variable based on households within a stratum. Often in surveys, the clusters may not be households, they could be smaller population aggregates, such as neighborhoods and villages, as in the DHS.</p>
 <p>The data also come with housing unit weights and person unit weights, so your analysis can be either representative of housing units or people.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(ipums[, <span class="fu">c</span>(<span class="st">"SERIAL"</span>, <span class="st">"STRATA"</span>, <span class="st">"CLUSTER"</span>, <span class="st">"HHWT"</span>, <span class="st">"PERWT"</span>)],</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(ipums[, <span class="fu">c</span>(<span class="st">"SERIAL"</span>, <span class="st">"STRATA"</span>, <span class="st">"CLUSTER"</span>, <span class="st">"HHWT"</span>, <span class="st">"PERWT"</span>)],</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">n=</span><span class="dv">10</span>),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">14</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">14</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: right;">SERIAL</th>
@@ -427,7 +468,7 @@ div.csl-indent {
 </div>
 <p>As can be seen in the first few cases, the <code>HHWT</code> variable is the same for everyone in a given household, but each person has a unique person weight showing that they each represent different numbers of people in the population. Further investigation of the housing and person weights allow us to see what these values actually look like.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ipums<span class="sc">$</span>PERWT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ipums<span class="sc">$</span>PERWT)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     1.0    49.0    78.0   106.3   128.0  2376.0 </code></pre>
@@ -435,22 +476,26 @@ div.csl-indent {
 </div>
 <p>Here we see the minimum person weight is 1 and the maximum is 2376, which tells us that at least on person in the data represents 2376 people in the population that year. A histogram of the weights can also show us the distribution of weights in the sample.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ipums<span class="sc">%&gt;%</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> PERWT)) <span class="sc">+</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of ACS Person Weights, 2019"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of ACS Person Weights, 2019"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<p><img src="survey_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="survey_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We can see how the weights inflate each person or household to the population by summing the weights. Below, I sum the person weights for the state of Texas, the sum is 28,995,881 million people, which is the same as the official estimate of the population in 2019 (<a href="https://www.census.gov/quickfacts/TX" class="uri">https://www.census.gov/quickfacts/TX</a>), we also see, by using the <code>n()</code> function, that there were 272,776 persons in the sample in 2019 living in Texas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ipums<span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(STATEFIP <span class="sc">==</span> <span class="dv">48</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tot_pop =</span> <span class="fu">sum</span>( PERWT ) , <span class="at">n_respond =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tot_pop =</span> <span class="fu">sum</span>( PERWT ) , <span class="at">n_respond =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
    tot_pop n_respond
@@ -460,10 +505,10 @@ div.csl-indent {
 </div>
 <p>For housing units, we have to select a single person from the household in order for the same process to work, otherwise we would misrepresent the number of households in the state. We see there are 10,585,803 million housing units, and 114,016 unique households in the data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ipums<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ipums<span class="sc">%&gt;%</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(STATEFIP <span class="sc">==</span> <span class="dv">48</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         PERNUM <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tothh =</span> <span class="fu">sum</span>( HHWT ) , <span class="at">n_housing =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tothh =</span> <span class="fu">sum</span>( HHWT ) , <span class="at">n_housing =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
      tothh n_housing
@@ -476,7 +521,7 @@ div.csl-indent {
 <p>The way these packages work, is that you provide the name of your data frame, and the survey design variables that are in your data and the package code performs the requested analysis, correcting for survey design and weighting to the appropriate population. The code below illustrates how to enter the survey design for the IPUMS-USA ACS. Some surveys will not have both a cluster and stratification variable, so again, it’s important to consult your survey documentation to find these for your data.</p>
 <p>The function <code>as_survey_design()</code> in this case takes three arguments, since we are piping the 2019 ACS into it, we don’t have to specify the name of the data. <code>ids</code> is the argument for the cluster variable, if your survey doesn’t have one, just leave it out. <code>strata</code> is where you specify the name of the survey stratification variable, and <code>weights</code> is where you specify the name of the appropriate weighting variable. In this case, I’m replicating the estimate of the housing units in Texas from above, so I’ll use the <code>HHWT</code> variable. The easiest way to get a total population estimate is to use the <code>survey_total()</code> function, which is equivalent to summing the weights as shown above, although in the case of the survey analysis commands in the <code>survey</code> and <code>srvyr</code> packages, the total will also be estimated with a standard error of the estimate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>ipums<span class="sc">%&gt;%</span></span>
@@ -484,7 +529,7 @@ div.csl-indent {
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">cluster=</span> CLUSTER,</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">strata =</span> STRATA,</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">weights =</span> HHWT)<span class="sc">%&gt;%</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tothh =</span> <span class="fu">survey_total</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tothh =</span> <span class="fu">survey_total</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <style>
 div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
@@ -492,16 +537,16 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <div class="blue">
 <p><strong>A short aside about survey design options</strong> The core definition of the ACS survey design is shown in the code above, and I highly recommend that you inspect the help file for the survey design functions <code>?as_survey_design</code> or <code>?svydesign</code>. An important option that often has to be specified is the <code>nest=TRUE</code> option. This if often necessary if PSU identifiers are not unique across strata. For example, the fictional data shown below has the PSU’s values the same across strata.}</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fake_survey<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fake_survey<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>             <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>),</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">psu =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>),</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> <span class="fu">rpois</span>(<span class="at">n =</span> <span class="dv">12</span>, <span class="at">lambda =</span> <span class="dv">20</span>))</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(fake_survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(fake_survey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: right;">strata</th>
@@ -513,32 +558,32 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <tr class="odd">
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">14</td>
+<td style="text-align: right;">23</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">19</td>
+<td style="text-align: right;">18</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">12</td>
+<td style="text-align: right;">18</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">21</td>
-</tr>
-<tr class="odd">
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">24</td>
 </tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">19</td>
+</tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">25</td>
+<td style="text-align: right;">23</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
@@ -548,27 +593,27 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <tr class="even">
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: right;">16</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">24</td>
+<td style="text-align: right;">13</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">21</td>
+<td style="text-align: right;">15</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">18</td>
+<td style="text-align: right;">22</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">27</td>
+<td style="text-align: right;">16</td>
 </tr>
 </tbody>
 </table>
@@ -576,31 +621,33 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 </div>
 <p>If we attempt to make a survey design from this, R would show an error.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fake_design<span class="ot">&lt;-</span> fake_survey<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fake_design<span class="ot">&lt;-</span> fake_survey<span class="sc">%&gt;%</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">ids =</span> psu,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">strata=</span>strata,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">weights =</span> weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">weights =</span> weight)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in svydesign.default(ids, probs, strata, variables, fpc, .data, : Clusters not nested in strata at top level; you may want nest=TRUE.</code></pre>
+<pre><code>Error in `svydesign.default()`:
+! Clusters not nested in strata at top level; you may want nest=TRUE.</code></pre>
 </div>
 </div>
 <p>But if we include the <code>nest = TRUE</code> option, R doesn’t give us the error:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fake_design<span class="ot">&lt;-</span> fake_survey<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fake_design<span class="ot">&lt;-</span> fake_survey<span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">ids =</span> psu,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strata=</span>strata,</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weights =</span> weight, </span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nest =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>fake_design</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>fake_design</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Stratified 1 - level Cluster Sampling design (with replacement)
 With (6) clusters.
 Called via srvyr
 Sampling variables:
- - ids: psu
- - strata: strata
- - weights: weight
-Data variables: strata (dbl), psu (dbl), weight (int)</code></pre>
+  - ids: psu 
+  - strata: strata 
+  - weights: weight 
+Data variables: 
+  - strata (dbl), psu (dbl), weight (int)</code></pre>
 </div>
 </div>
 <p>The ACS from IPUMS has unique CLUSTERs across strata, so we don’t have to specify that argument when we declare our survey design.</p>
@@ -610,7 +657,7 @@ Data variables: strata (dbl), psu (dbl), weight (int)</code></pre>
 <p>If your data come with replicate weights instead of strata and cluster variables, this can be specified using the <code>as_survey_rep()</code> command instead <code>as_survey_design()</code>. In this case, we have to specify all of the columns which correspond to the replicate weights in the data. There are likely many ways to do this, but below, I use a method that matches the column names using a regular expression, where we are looking for the string <code>REPWT</code>, followed by any number of numeric digits, that is what the <code>[0-9]+</code> portion tells R to do. Also, the ACS uses a balanced replicate weight construction, which also requires the case weight as well <span class="citation" data-cites="Ruggles2021">(<a href="#ref-Ruggles2021" role="doc-biblioref">Ruggles et al. 2021</a>)</span>, so we specify the replicate weight type as <code>BRR</code>. Again, this is specific to the ACS, and you need to consult your own code book for your survey for your design information.</p>
 <p>In this case, we get the same estimate for the total number of housing units, but a smaller variance in the estimate, which is often seen when using replicate weights.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ipums<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ipums<span class="sc">%&gt;%</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(STATEFIP <span class="sc">==</span> <span class="dv">48</span>, PERNUM <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">%&gt;%</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_rep</span>(<span class="at">weight =</span> HHWT,</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">repweights =</span><span class="fu">matches</span>(<span class="st">"REPWT[0-9]+"</span>),</span>
@@ -618,7 +665,7 @@ Data variables: strata (dbl), psu (dbl), weight (int)</code></pre>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">scale =</span> <span class="dv">4</span><span class="sc">/</span><span class="dv">80</span>,</span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">rscales =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">80</span>),</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mse =</span> <span class="cn">TRUE</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tothh =</span> <span class="fu">survey_total</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tothh =</span> <span class="fu">survey_total</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
      tothh tothh_se
@@ -627,7 +674,7 @@ Data variables: strata (dbl), psu (dbl), weight (int)</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>rw<span class="ot">&lt;-</span>ipums<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>rw<span class="ot">&lt;-</span>ipums<span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(STATEFIP<span class="sc">==</span><span class="dv">48</span>, PERNUM<span class="sc">==</span><span class="dv">1</span>)<span class="sc">%&gt;%</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(REPWT1<span class="sc">:</span>REPWT50)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -639,7 +686,7 @@ Data variables: strata (dbl), psu (dbl), weight (int)</code></pre>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>t1<span class="sc">$</span>variables<span class="sc">$</span>ones<span class="ot">&lt;-</span><span class="dv">1</span></span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="fu">svytotal</span>(<span class="sc">~</span>ones, <span class="at">design=</span>t1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="fu">svytotal</span>(<span class="sc">~</span>ones, <span class="at">design=</span>t1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        total    SE
 ones 10585803 11850</code></pre>
@@ -647,12 +694,12 @@ ones 10585803 11850</code></pre>
 </div>
 <p>We can also define the survey design outside of a dplyr pipe if we want using the <code>survey</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>acs_design <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span> CLUSTER, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>acs_design <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span> CLUSTER, </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">strata=</span> <span class="sc">~</span> STRATA, </span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">weights =</span> <span class="sc">~</span> PERWT, </span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data=</span>ipums)</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>acs_design</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>acs_design</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Stratified 1 - level Cluster Sampling design (with replacement)
 With (114016) clusters.
@@ -676,7 +723,7 @@ svydesign(ids = ~CLUSTER, strata = ~STRATA, weights = ~PERWT,
 <h2 data-number="4.9" class="anchored" data-anchor-id="weighted-frequencies-and-rates"><span class="header-section-number">4.9</span> Weighted frequencies and rates</h2>
 <p>Basic frequency tables are very useful tools for examining bivariate associations in survey data. In the survey analysis packages in R, the basic tools for doing this are the <code>svytable()</code> function in <code>survey</code>, or via the <code>survey_total()</code> function in <code>srvyr</code>. First I will recode two variables in the ACS, the employment status to indicate if a respondent is currently employed, and the <code>MET2013</code> variable, which is the metropolitan area where the respondent was living. This will give us the ACS estimate for the employed and unemployed population in each Texas MSA. I first have to filter the data to be people of working age, who are in the labor force and living in a MSA.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>, </span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>         MET2013 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
@@ -688,7 +735,7 @@ svydesign(ids = ~CLUSTER, strata = ~STRATA, weights = ~PERWT,
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">weights =</span> PERWT) <span class="sc">%&gt;%</span></span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(met_name, employed)<span class="sc">%&gt;%</span></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">emp_rate =</span> <span class="fu">survey_total</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
 # Groups:   met_name [3]
@@ -704,7 +751,7 @@ svydesign(ids = ~CLUSTER, strata = ~STRATA, weights = ~PERWT,
 </div>
 <p>This is OK, but if we want the totals in columns versus rows, we need to reshape the data. To go from the current “long” form of the variables to a wide form, we can use <code>pivot_wider</code> in <code>dplyr</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>wide<span class="ot">&lt;-</span>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>wide<span class="ot">&lt;-</span>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>, </span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>         MET2013 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
@@ -721,7 +768,7 @@ svydesign(ids = ~CLUSTER, strata = ~STRATA, weights = ~PERWT,
 <span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="fu">c</span>(emp_rate, emp_rate_se) ) <span class="sc">%&gt;%</span></span>
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
 <span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>wide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
 # Groups:   met_name [6]
@@ -743,11 +790,11 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <p><strong>A note about pivoting data</strong> The previous example used the <code>pivot_wider()</code> function to take observations that were in rows and pivot them into columns. This process, along with the <code>pivot_longer()</code> function are fundamental to working with many types of demographic data where we either need to format the data so observations are distributed over columns (as in the above example), or where we have multiple columns and we need to put those into multiple rows. The <code>pivot_wider()</code> function has lots of arguments that can be used, but the key ones are <code>id_cols</code> which identifies the unique identifier for each observation, here being the city or <code>met_name</code>. After that is identified, the <code>names_from</code> option tells R what the labels are in the current rows that will become separate column names. Here these are <code>Employed</code> and <code>Unemployed</code>. From these new columns, we can have multiple values provided to <code>values_from</code>, provided as a vector of current column names. Here these are <code>emp_rate</code> and the standard error <code>emp_rate_se</code>.</p>
 <p>To return the data to their original form, with repeated observations in the rows, we can use the <code>pivot_longer()</code> function. In this case I will just provide the columns in the wide data that I want to be in rows in the long data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>wide<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>wide<span class="sc">%&gt;%</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"emp_rate_"</span>), </span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"rate"</span>),</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">._"</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>rate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
 # Groups:   met_name [6]
@@ -766,7 +813,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 </div>
 <p>Of course, if we want rates, this would imply us having to divide these columns to calculate the rate, but we can also get R to do this for us using <code>survey_mean()</code>. Since the <code>employed</code> variable is dichotomous, if we take the mean of its various levels, we get a proportion, in this case the employment and unemployment rates, respectively.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>, </span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>         MET2013 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
@@ -781,7 +828,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> met_name,</span>
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> employed,</span>
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="fu">c</span>(emp_rate, emp_rate_se) ) <span class="sc">%&gt;%</span></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
 # Groups:   met_name [6]
@@ -798,7 +845,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 </div>
 <p>Which gets us the employment rate and the unemployment rate for each metropolitan area, with their associated standard errors. This is a general process that would work well for any grouping variable. If we create an object from this calculation, in this case I’ll call it <code>tx_rates</code>, then we can also easily feed it into <code>ggplot</code> to visualize the rates with their associated 95% confidence intervals. The <code>geom_errorbar</code> addition to a <code>ggplot</code> object can add errors to estimates, which are great because we convey the uncertainty in the rates.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tx_rates<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tx_rates<span class="sc">%&gt;%</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>met_name, <span class="at">y =</span> emp_rate_Unemployed), <span class="at">stat =</span> <span class="st">"identity"</span>)<span class="sc">+</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">x=</span>met_name,</span>
@@ -809,15 +856,19 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MSA"</span>, </span>
 <span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Unemployment Rate"</span>,</span>
 <span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Unmployment rate in Texas MSAs"</span>)<span class="sc">+</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<p><img src="survey_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="survey_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We see that among the first 6 MSAs in the state (that are in the ACS microdata), Corpus Christi has the highest unemployment rate a %, and College Station-Bryan has the lowest unemployment rate at %.</p>
 <p>We can also use these functions for continuous variables, say with incomes. In the code below, I pipe all the elements of the analysis together to illustrate the workflow that we can do to calculate the median income in each MSA and plot it along with its error.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>, </span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>         MET2013 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
@@ -839,9 +890,13 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MSA"</span>, </span>
 <span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Median Wage"</span>,</span>
 <span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Median wage in Texas MSAs"</span>)<span class="sc">+</span></span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<p><img src="survey_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="survey_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Which shows that Austin-Round Rock has the highest median wage and Brownsville-Harlingen has the lowest median wage.</p>
@@ -849,7 +904,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <section id="creating-tables-from-survey-data-analysis" class="level2" data-number="4.10">
 <h2 data-number="4.10" class="anchored" data-anchor-id="creating-tables-from-survey-data-analysis"><span class="header-section-number">4.10</span> Creating tables from survey data analysis</h2>
 <p>Tabular output from our survey data analysis is possible through several different means. When using dplyr, our intermediate output of the analysis is always a data frame, and so any R method for printing data frames would work for simple tabular display. For instance, if we just use <code>knitr::kable()</code> on our workflow from above instead of piping into a plot we would get something like this:</p>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>, </span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>         MET2013 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
@@ -865,13 +920,10 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">digits =</span> <span class="dv">0</span>,</span>
 <span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"Median Wages in Texas MSAs"</span>,</span>
 <span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">align =</span> <span class="st">'c'</span>,</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">col.names =</span><span class="fu">c</span>(<span class="st">"MSA Name"</span>, <span class="st">"Median Wage"</span>, <span class="st">"Median Wage SE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-</div>
-<p>Which is OK, but there are other ways to make tables for reports. The <code>gt</code> package <span class="citation" data-cites="Iannone2021">(<a href="#ref-Iannone2021" role="doc-biblioref">Iannone, Cheng, and Schloerke 2021</a>)</span> is built using tidyverse principles, and build tables in much the same way that <code>ggplot</code> builds plots, and fits easily into a dplyr workflow. Here, I use <code>gt</code> to produce a similar table to that from <code>knitr::kable</code> from above.</p>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">col.names =</span><span class="fu">c</span>(<span class="st">"MSA Name"</span>, <span class="st">"Median Wage"</span>, <span class="st">"Median Wage SE"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Which is OK, but there are other ways to make tables for reports. The <code>gt</code> package <span class="citation" data-cites="Iannone2021">(<a href="#ref-Iannone2021" role="doc-biblioref">Iannone et al. 2021</a>)</span> is built using tidyverse principles, and build tables in much the same way that <code>ggplot</code> builds plots, and fits easily into a dplyr workflow. Here, I use <code>gt</code> to produce a similar table to that from <code>knitr::kable</code> from above.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt, <span class="at">quietly =</span> T)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt, <span class="at">quietly =</span> T)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
@@ -891,26 +943,25 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">median_wage =</span> <span class="st">"Median Wage"</span>,</span>
 <span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">median_wage_se =</span> <span class="st">"Median Wage SE"</span>)<span class="sc">%&gt;%</span></span>
 <span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>( median_wage,  median_wage_se), </span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>                 <span class="at">decimals =</span> <span class="dv">0</span>, <span class="at">use_seps =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>                 <span class="at">decimals =</span> <span class="dv">0</span>, <span class="at">use_seps =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-
-<div id="jfduxgtsfd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jfduxgtsfd table {
+<div id="aylomzmmvf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#aylomzmmvf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jfduxgtsfd thead, #jfduxgtsfd tbody, #jfduxgtsfd tfoot, #jfduxgtsfd tr, #jfduxgtsfd td, #jfduxgtsfd th {
+#aylomzmmvf thead, #aylomzmmvf tbody, #aylomzmmvf tfoot, #aylomzmmvf tr, #aylomzmmvf td, #aylomzmmvf th {
   border-style: none;
 }
 
-#jfduxgtsfd p {
+#aylomzmmvf p {
   margin: 0;
   padding: 0;
 }
 
-#jfduxgtsfd .gt_table {
+#aylomzmmvf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -936,12 +987,12 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-left-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_caption {
+#aylomzmmvf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jfduxgtsfd .gt_title {
+#aylomzmmvf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -953,7 +1004,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-bottom-width: 0;
 }
 
-#jfduxgtsfd .gt_subtitle {
+#aylomzmmvf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -965,7 +1016,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-top-width: 0;
 }
 
-#jfduxgtsfd .gt_heading {
+#aylomzmmvf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -977,13 +1028,13 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-right-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_bottom_border {
+#aylomzmmvf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_col_headings {
+#aylomzmmvf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -998,7 +1049,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-right-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_col_heading {
+#aylomzmmvf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1018,7 +1069,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   overflow-x: hidden;
 }
 
-#jfduxgtsfd .gt_column_spanner_outer {
+#aylomzmmvf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1030,15 +1081,15 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   padding-right: 4px;
 }
 
-#jfduxgtsfd .gt_column_spanner_outer:first-child {
+#aylomzmmvf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jfduxgtsfd .gt_column_spanner_outer:last-child {
+#aylomzmmvf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jfduxgtsfd .gt_column_spanner {
+#aylomzmmvf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1050,11 +1101,11 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   width: 100%;
 }
 
-#jfduxgtsfd .gt_spanner_row {
+#aylomzmmvf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jfduxgtsfd .gt_group_heading {
+#aylomzmmvf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1080,7 +1131,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   text-align: left;
 }
 
-#jfduxgtsfd .gt_empty_group_heading {
+#aylomzmmvf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1095,15 +1146,15 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   vertical-align: middle;
 }
 
-#jfduxgtsfd .gt_from_md > :first-child {
+#aylomzmmvf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jfduxgtsfd .gt_from_md > :last-child {
+#aylomzmmvf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jfduxgtsfd .gt_row {
+#aylomzmmvf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1122,7 +1173,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   overflow-x: hidden;
 }
 
-#jfduxgtsfd .gt_stub {
+#aylomzmmvf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1135,7 +1186,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   padding-right: 5px;
 }
 
-#jfduxgtsfd .gt_stub_row_group {
+#aylomzmmvf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1149,15 +1200,15 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   vertical-align: top;
 }
 
-#jfduxgtsfd .gt_row_group_first td {
+#aylomzmmvf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jfduxgtsfd .gt_row_group_first th {
+#aylomzmmvf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jfduxgtsfd .gt_summary_row {
+#aylomzmmvf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1167,16 +1218,16 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   padding-right: 5px;
 }
 
-#jfduxgtsfd .gt_first_summary_row {
+#aylomzmmvf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_first_summary_row.thick {
+#aylomzmmvf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jfduxgtsfd .gt_last_summary_row {
+#aylomzmmvf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1186,7 +1237,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-bottom-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_grand_summary_row {
+#aylomzmmvf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1196,7 +1247,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   padding-right: 5px;
 }
 
-#jfduxgtsfd .gt_first_grand_summary_row {
+#aylomzmmvf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1206,7 +1257,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-top-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_last_grand_summary_row_top {
+#aylomzmmvf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1216,11 +1267,11 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-bottom-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_striped {
+#aylomzmmvf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jfduxgtsfd .gt_table_body {
+#aylomzmmvf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1229,7 +1280,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-bottom-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_footnotes {
+#aylomzmmvf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1243,7 +1294,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-right-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_footnote {
+#aylomzmmvf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1252,7 +1303,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   padding-right: 5px;
 }
 
-#jfduxgtsfd .gt_sourcenotes {
+#aylomzmmvf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1266,7 +1317,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   border-right-color: #D3D3D3;
 }
 
-#jfduxgtsfd .gt_sourcenote {
+#aylomzmmvf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1274,108 +1325,128 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
   padding-right: 5px;
 }
 
-#jfduxgtsfd .gt_left {
+#aylomzmmvf .gt_left {
   text-align: left;
 }
 
-#jfduxgtsfd .gt_center {
+#aylomzmmvf .gt_center {
   text-align: center;
 }
 
-#jfduxgtsfd .gt_right {
+#aylomzmmvf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jfduxgtsfd .gt_font_normal {
+#aylomzmmvf .gt_font_normal {
   font-weight: normal;
 }
 
-#jfduxgtsfd .gt_font_bold {
+#aylomzmmvf .gt_font_bold {
   font-weight: bold;
 }
 
-#jfduxgtsfd .gt_font_italic {
+#aylomzmmvf .gt_font_italic {
   font-style: italic;
 }
 
-#jfduxgtsfd .gt_super {
+#aylomzmmvf .gt_super {
   font-size: 65%;
 }
 
-#jfduxgtsfd .gt_footnote_marks {
+#aylomzmmvf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jfduxgtsfd .gt_asterisk {
+#aylomzmmvf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jfduxgtsfd .gt_indent_1 {
+#aylomzmmvf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jfduxgtsfd .gt_indent_2 {
+#aylomzmmvf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jfduxgtsfd .gt_indent_3 {
+#aylomzmmvf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jfduxgtsfd .gt_indent_4 {
+#aylomzmmvf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jfduxgtsfd .gt_indent_5 {
+#aylomzmmvf .gt_indent_5 {
   text-indent: 25px;
 }
+
+#aylomzmmvf .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#aylomzmmvf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
 </style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_heading">
-      <td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">Median Wages in Texas MSAs</td>
-    </tr>
-    
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="MSA Name">MSA Name</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Median Wage">Median Wage</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Median Wage SE">Median Wage SE</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="met_name" class="gt_row gt_center">Amarillo, TX</td>
-<td headers="median_wage" class="gt_row gt_right">33,000</td>
-<td headers="median_wage_se" class="gt_row gt_right">1,529</td></tr>
-    <tr><td headers="met_name" class="gt_row gt_center">Austin-Round Rock, TX</td>
-<td headers="median_wage" class="gt_row gt_right">42,000</td>
-<td headers="median_wage_se" class="gt_row gt_right">1,020</td></tr>
-    <tr><td headers="met_name" class="gt_row gt_center">Beaumont-Port Arthur, TX</td>
-<td headers="median_wage" class="gt_row gt_right">40,000</td>
-<td headers="median_wage_se" class="gt_row gt_right">1,784</td></tr>
-    <tr><td headers="met_name" class="gt_row gt_center">Brownsville-Harlingen, TX</td>
-<td headers="median_wage" class="gt_row gt_right">25,200</td>
-<td headers="median_wage_se" class="gt_row gt_right">1,020</td></tr>
-    <tr><td headers="met_name" class="gt_row gt_center">College Station-Bryan, TX</td>
-<td headers="median_wage" class="gt_row gt_right">30,000</td>
-<td headers="median_wage_se" class="gt_row gt_right">1,529</td></tr>
-    <tr><td headers="met_name" class="gt_row gt_center">Corpus Christi, TX</td>
-<td headers="median_wage" class="gt_row gt_right">34,000</td>
-<td headers="median_wage_se" class="gt_row gt_right">1,428</td></tr>
-  </tbody>
-  
-  
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border">Median Wages in Texas MSAs</td>
+</tr>
+<tr class="gt_col_headings even">
+<th id="met_name" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">MSA Name</th>
+<th id="median_wage" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Median Wage</th>
+<th id="median_wage_se" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Median Wage SE</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_center" headers="met_name">Amarillo, TX</td>
+<td class="gt_row gt_right" headers="median_wage">33,000</td>
+<td class="gt_row gt_right" headers="median_wage_se">1,529</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="met_name">Austin-Round Rock, TX</td>
+<td class="gt_row gt_right" headers="median_wage">42,000</td>
+<td class="gt_row gt_right" headers="median_wage_se">1,020</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="met_name">Beaumont-Port Arthur, TX</td>
+<td class="gt_row gt_right" headers="median_wage">40,000</td>
+<td class="gt_row gt_right" headers="median_wage_se">1,784</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="met_name">Brownsville-Harlingen, TX</td>
+<td class="gt_row gt_right" headers="median_wage">25,200</td>
+<td class="gt_row gt_right" headers="median_wage_se">1,020</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="met_name">College Station-Bryan, TX</td>
+<td class="gt_row gt_right" headers="median_wage">30,000</td>
+<td class="gt_row gt_right" headers="median_wage_se">1,529</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="met_name">Corpus Christi, TX</td>
+<td class="gt_row gt_right" headers="median_wage">34,000</td>
+<td class="gt_row gt_right" headers="median_wage_se">1,428</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
 <p>In general, the <code>gt</code> tables are much easier to make look nice, compared to basic tables, because they’re much more customizable. The <code>gtsummary</code> package extends the table functionality by combining the summary functions like <code>dplyr</code> with the table structures of <code>gt</code>. Additionally, it will recognize survey design objects so that information can also be integrated into your workflow. The <code>gtsummary</code> presents a more descriptive statistical summary of the variables included, and actually uses <code>dplyr</code> tools under the hood of the package.</p>
 <p>In the code below, I first filter and mutate the IPUMS data to contain working age people who are employed, and who live in the six Texas cities featured in the examples above. I also create a new income variable that excludes all zero incomes, and drop levels of the <code>MET2013</code> variable that aren’t in the list I specified. This pipes into the survey design function from the <code>survey</code> package, which pipes into the <code>tbl_svysummary</code> function which summarizes income for each MSA. This function has a lot of options to specify its output, and I recommend you consult the examples at the author’s website<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">filter</span>(EMPSTAT <span class="sc">==</span> <span class="dv">1</span>,</span>
@@ -1394,35 +1465,33 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">missing =</span> <span class="st">"no"</span>,</span>
 <span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">include =</span> <span class="fu">c</span>(met_name, income), </span>
 <span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="fu">list</span>(<span class="at">income =</span> <span class="st">"Median Wage"</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_hux_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_hux_table</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table id="tab:unnamed-chunk-27" class="huxtable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
+<colgroup><col><col><col><col><col><col><col></colgroup><thead>
+<tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: normal;"><p><strong>Characteristic</strong></p>
+</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: normal;"><p><strong>Amarillo, TX</strong><br>
+N = 114,201</p>
+</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: normal;"><p><strong>Austin-Round Rock, TX</strong><br>
+N = 1,193,654</p>
+</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: normal;"><p><strong>Beaumont-Port Arthur, TX</strong><br>
+N = 163,936</p>
+</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: normal;"><p><strong>Brownsville-Harlingen, TX</strong><br>
+N = 161,922</p>
+</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: normal;"><p><strong>College Station-Bryan, TX</strong><br>
+N = 111,576</p>
+</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: normal;"><p><strong>Corpus Christi, TX</strong><br>
+N = 208,801</p>
+</th></tr>
+</thead>
 <tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"><p><strong>Characteristic</strong></p></td>
-<td data-quarto-table-cell-role="th" style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"><p><strong>Amarillo, TX</strong>, N = 114,201</p></td>
-<td data-quarto-table-cell-role="th" style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"><p><strong>Austin-Round Rock, TX</strong>, N = 1,193,654</p></td>
-<td data-quarto-table-cell-role="th" style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"><p><strong>Beaumont-Port Arthur, TX</strong>, N = 163,936</p></td>
-<td data-quarto-table-cell-role="th" style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"><p><strong>Brownsville-Harlingen, TX</strong>, N = 161,922</p></td>
-<td data-quarto-table-cell-role="th" style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"><p><strong>College Station-Bryan, TX</strong>, N = 111,576</p></td>
-<td data-quarto-table-cell-role="th" style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"><p><strong>Corpus Christi, TX</strong>, N = 208,801</p></td>
-</tr>
-<tr class="even">
-<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Median Wage</td>
-<td style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">34,000 (19,200, 56,000)</td>
-<td style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">43,000 (24,000, 75,000)</td>
-<td style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">40,000 (20,000, 67,000)</td>
-<td style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">26,000 (14,000, 47,000)</td>
-<td style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">30,000 (14,000, 51,111)</td>
-<td style="text-align: center; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">35,000 (20,000, 58,000)</td>
-</tr>
-<tr class="odd">
-<td colspan="7" style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Median (IQR)</td>
-</tr>
+<tr>
+<td class="huxtable-cell" style="border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt;">Median Wage</td><td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt;">34,000 (19,200, 56,000)</td><td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt;">43,000 (24,000, 75,000)</td><td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt;">40,000 (20,000, 67,000)</td><td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt;">26,000 (14,000, 47,000)</td><td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt;">30,000 (14,000, 52,000)</td><td class="huxtable-cell" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0.8pt 0pt;">35,000 (20,000, 58,000)</td></tr>
+<tr>
+<td class="huxtable-cell" colspan="7" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;">Median (Q1, Q3)</td></tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 <p class="comment">
@@ -1435,7 +1504,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <h3 data-number="4.10.2" class="anchored" data-anchor-id="how-do-weights-affect-our-estimates"><span class="header-section-number">4.10.2</span> How do weights affect our estimates?</h3>
 <p>In the code example below, I illustrate how not including sample weights affects the estimates generated. This in effect is how traditional statistical analysis assuming random sampling would do things. So in order to compare the weighted estimates to the unweighted estimates, all we need to do is use a non-survey design oriented method to produce our estimate, and compare it to the survey design oriented method. Note that many surveys are designed to be <em>self-weighting</em>, so weights are not provided nor necessary, again, read the documentation for your specific survey for what it recommends.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>srs<span class="ot">&lt;-</span>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>srs<span class="ot">&lt;-</span>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>, </span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>         MET2013 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
@@ -1449,10 +1518,10 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>   <span class="co">#            names_from = employed,</span></span>
 <span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>   <span class="co">#            values_from = c(emp_rate, emp_rate_se) ) %&gt;%</span></span>
 <span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>srs<span class="sc">$</span>estimate<span class="ot">&lt;-</span><span class="st">"Unweighted"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>srs<span class="sc">$</span>estimate<span class="ot">&lt;-</span><span class="st">"Unweighted"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>surv.est<span class="ot">&lt;-</span>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>surv.est<span class="ot">&lt;-</span>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>, </span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>         MET2013 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
@@ -1461,16 +1530,17 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">met_name =</span> haven<span class="sc">::</span><span class="fu">as_factor</span>(MET2013)) <span class="sc">%&gt;%</span></span>
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">cluster =</span> CLUSTER,</span>
 <span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">strata =</span> STRATA,</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">weights =</span> PERWT) <span class="sc">%&gt;%</span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(met_name)<span class="sc">%&gt;%</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">emp_rate =</span> <span class="fu">survey_mean</span>(<span class="fu">I</span>(employed)<span class="sc">==</span><span class="st">"Employed"</span>)) <span class="sc">%&gt;%</span>  </span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#rename(emp_rate_surv = emp_rate, emp_rate_se_surv = emp_rate_se)%&gt;%</span></span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>surv.est<span class="sc">$</span>estimate<span class="ot">&lt;-</span><span class="st">"Weighted"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">weights =</span> PERWT, </span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nest=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(met_name)<span class="sc">%&gt;%</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">emp_rate =</span> <span class="fu">survey_mean</span>(<span class="fu">I</span>(employed)<span class="sc">==</span><span class="st">"Employed"</span>)) <span class="sc">%&gt;%</span>  </span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">#rename(emp_rate_surv = emp_rate, emp_rate_se_surv = emp_rate_se)%&gt;%</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>surv.est<span class="sc">$</span>estimate<span class="ot">&lt;-</span><span class="st">"Weighted"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">rbind</span>(srs, surv.est)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">rbind</span>(srs, surv.est)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span>merged<span class="sc">%&gt;%</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> emp_rate, <span class="at">x =</span> met_name , <span class="at">color =</span> estimate))<span class="sc">+</span></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat=</span><span class="st">"identity"</span>,</span>
@@ -1478,7 +1548,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> met_name),</span>
 <span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"grey"</span>)<span class="sc">+</span></span>
 <span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent)<span class="sc">+</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>( <span class="at">name =</span> <span class="st">"Estimate Type"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>( <span class="at">name =</span> <span class="st">"Estimate Type"</span>)<span class="sc">+</span></span>
 <span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MSA"</span>, </span>
 <span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Employment Rate Estimate"</span>,</span>
 <span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Employment rate in Texas MSAs"</span>,</span>
@@ -1491,7 +1561,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">cex=</span><span class="dv">2</span>)<span class="sc">+</span></span>
 <span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> met_name),</span>
 <span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"grey"</span>)<span class="sc">+</span></span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>()<span class="sc">+</span></span>
 <span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MSA"</span>, </span>
 <span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Standard Error"</span>,</span>
 <span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">""</span>,</span>
@@ -1500,9 +1570,13 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">+</span> p2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">+</span> p2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<p><img src="survey_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="survey_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We see that the difference in the weighted and unweighted estimates do vary by MSA, as do the standard errors of the estimates, with the survey-design calculated standard errors nearly always being higher than those assuming simple random sampling. If our data came from a survey with more extreme oversampling we would likely see larger differences in these estimates, and it is generally advisable to include both weights and survey design elements in all analysis of complex survey data.</p>
@@ -1513,7 +1587,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <h2 data-number="4.11" class="anchored" data-anchor-id="basic-statistical-testing-on-survey-data."><span class="header-section-number">4.11</span> Basic statistical testing on survey data.</h2>
 <p>To perform basic bivariate statistical tests for frequency tables, the <code>srvyr::svychisq</code> and <code>survey::svy_chisq</code> are the primary tools you need. These will test for basic independence among rows and columns of a frequency table. Below is an example on how you would test for independence of labor force participation and gender in the IPUMS ACS data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">!=</span> <span class="dv">0</span>,</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lab_force_part =</span> <span class="fu">ifelse</span> (<span class="at">test =</span> EMPSTAT <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
@@ -1526,7 +1600,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>                   <span class="at">strata =</span> STRATA,</span>
 <span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>                   <span class="at">weights =</span> PERWT) <span class="sc">%&gt;%</span></span>
 <span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">svychisq</span>(<span class="sc">~</span>lab_force_part<span class="sc">+</span>gender,</span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">design =</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">design =</span> .)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's X^2: Rao &amp; Scott adjustment
@@ -1537,7 +1611,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
 </div>
 <p>The output above is for the survey adjusted chi square test <span class="citation" data-cites="rao_chi-squared_1984">(<a href="#ref-rao_chi-squared_1984" role="doc-biblioref">Rao and Scott 1984</a>)</span>, which is actually calculated as an F-test in this case. We see a large F-test value, and a very small p value, which indicates that men and women have different labor force participation rates. Using our workflow from above, we can calculate the actual rates as well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ipums <span class="sc">%&gt;%</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EMPSTAT <span class="sc">!=</span> <span class="dv">0</span>,</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>         AGE <span class="sc">&gt;=</span> <span class="dv">16</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;=</span> <span class="dv">65</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lab_force_part =</span> <span class="fu">ifelse</span> (<span class="at">test =</span> EMPSTAT <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
@@ -1558,26 +1632,25 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
 <span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">lf_part_rate =</span> <span class="st">"Labor Force Participation Rate"</span>,</span>
 <span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>                <span class="at">lf_part_rate_se =</span> <span class="st">"SE"</span>)<span class="sc">%&gt;%</span></span>
 <span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>( lf_part_rate,  lf_part_rate_se), </span>
-<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>                 <span class="at">decimals =</span> <span class="dv">3</span>, <span class="at">use_seps =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>                 <span class="at">decimals =</span> <span class="dv">3</span>, <span class="at">use_seps =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-
-<div id="cjzyyebwef" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cjzyyebwef table {
+<div id="ckqqjrnyih" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ckqqjrnyih table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#cjzyyebwef thead, #cjzyyebwef tbody, #cjzyyebwef tfoot, #cjzyyebwef tr, #cjzyyebwef td, #cjzyyebwef th {
+#ckqqjrnyih thead, #ckqqjrnyih tbody, #ckqqjrnyih tfoot, #ckqqjrnyih tr, #ckqqjrnyih td, #ckqqjrnyih th {
   border-style: none;
 }
 
-#cjzyyebwef p {
+#ckqqjrnyih p {
   margin: 0;
   padding: 0;
 }
 
-#cjzyyebwef .gt_table {
+#ckqqjrnyih .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1603,12 +1676,12 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_caption {
+#ckqqjrnyih .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#cjzyyebwef .gt_title {
+#ckqqjrnyih .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1620,7 +1693,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-bottom-width: 0;
 }
 
-#cjzyyebwef .gt_subtitle {
+#ckqqjrnyih .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1632,7 +1705,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-top-width: 0;
 }
 
-#cjzyyebwef .gt_heading {
+#ckqqjrnyih .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1644,13 +1717,13 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_bottom_border {
+#ckqqjrnyih .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_col_headings {
+#ckqqjrnyih .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1665,7 +1738,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_col_heading {
+#ckqqjrnyih .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1685,7 +1758,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   overflow-x: hidden;
 }
 
-#cjzyyebwef .gt_column_spanner_outer {
+#ckqqjrnyih .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1697,15 +1770,15 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   padding-right: 4px;
 }
 
-#cjzyyebwef .gt_column_spanner_outer:first-child {
+#ckqqjrnyih .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cjzyyebwef .gt_column_spanner_outer:last-child {
+#ckqqjrnyih .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cjzyyebwef .gt_column_spanner {
+#ckqqjrnyih .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1717,11 +1790,11 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   width: 100%;
 }
 
-#cjzyyebwef .gt_spanner_row {
+#ckqqjrnyih .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#cjzyyebwef .gt_group_heading {
+#ckqqjrnyih .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1747,7 +1820,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   text-align: left;
 }
 
-#cjzyyebwef .gt_empty_group_heading {
+#ckqqjrnyih .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1762,15 +1835,15 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   vertical-align: middle;
 }
 
-#cjzyyebwef .gt_from_md > :first-child {
+#ckqqjrnyih .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cjzyyebwef .gt_from_md > :last-child {
+#ckqqjrnyih .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cjzyyebwef .gt_row {
+#ckqqjrnyih .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1789,7 +1862,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   overflow-x: hidden;
 }
 
-#cjzyyebwef .gt_stub {
+#ckqqjrnyih .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1802,7 +1875,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   padding-right: 5px;
 }
 
-#cjzyyebwef .gt_stub_row_group {
+#ckqqjrnyih .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1816,15 +1889,15 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   vertical-align: top;
 }
 
-#cjzyyebwef .gt_row_group_first td {
+#ckqqjrnyih .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#cjzyyebwef .gt_row_group_first th {
+#ckqqjrnyih .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#cjzyyebwef .gt_summary_row {
+#ckqqjrnyih .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1834,16 +1907,16 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   padding-right: 5px;
 }
 
-#cjzyyebwef .gt_first_summary_row {
+#ckqqjrnyih .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_first_summary_row.thick {
+#ckqqjrnyih .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#cjzyyebwef .gt_last_summary_row {
+#ckqqjrnyih .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1853,7 +1926,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_grand_summary_row {
+#ckqqjrnyih .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1863,7 +1936,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   padding-right: 5px;
 }
 
-#cjzyyebwef .gt_first_grand_summary_row {
+#ckqqjrnyih .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1873,7 +1946,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_last_grand_summary_row_top {
+#ckqqjrnyih .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1883,11 +1956,11 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_striped {
+#ckqqjrnyih .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cjzyyebwef .gt_table_body {
+#ckqqjrnyih .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1896,7 +1969,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_footnotes {
+#ckqqjrnyih .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1910,7 +1983,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_footnote {
+#ckqqjrnyih .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1919,7 +1992,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   padding-right: 5px;
 }
 
-#cjzyyebwef .gt_sourcenotes {
+#ckqqjrnyih .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1933,7 +2006,7 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#cjzyyebwef .gt_sourcenote {
+#ckqqjrnyih .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1941,89 +2014,101 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
   padding-right: 5px;
 }
 
-#cjzyyebwef .gt_left {
+#ckqqjrnyih .gt_left {
   text-align: left;
 }
 
-#cjzyyebwef .gt_center {
+#ckqqjrnyih .gt_center {
   text-align: center;
 }
 
-#cjzyyebwef .gt_right {
+#ckqqjrnyih .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cjzyyebwef .gt_font_normal {
+#ckqqjrnyih .gt_font_normal {
   font-weight: normal;
 }
 
-#cjzyyebwef .gt_font_bold {
+#ckqqjrnyih .gt_font_bold {
   font-weight: bold;
 }
 
-#cjzyyebwef .gt_font_italic {
+#ckqqjrnyih .gt_font_italic {
   font-style: italic;
 }
 
-#cjzyyebwef .gt_super {
+#ckqqjrnyih .gt_super {
   font-size: 65%;
 }
 
-#cjzyyebwef .gt_footnote_marks {
+#ckqqjrnyih .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#cjzyyebwef .gt_asterisk {
+#ckqqjrnyih .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#cjzyyebwef .gt_indent_1 {
+#ckqqjrnyih .gt_indent_1 {
   text-indent: 5px;
 }
 
-#cjzyyebwef .gt_indent_2 {
+#ckqqjrnyih .gt_indent_2 {
   text-indent: 10px;
 }
 
-#cjzyyebwef .gt_indent_3 {
+#ckqqjrnyih .gt_indent_3 {
   text-indent: 15px;
 }
 
-#cjzyyebwef .gt_indent_4 {
+#ckqqjrnyih .gt_indent_4 {
   text-indent: 20px;
 }
 
-#cjzyyebwef .gt_indent_5 {
+#ckqqjrnyih .gt_indent_5 {
   text-indent: 25px;
 }
+
+#ckqqjrnyih .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ckqqjrnyih div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
 </style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_heading">
-      <td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">Labor Force Participation Rates in Texas</td>
-    </tr>
-    
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Gender">Gender</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Labor Force Participation Rate">Labor Force Participation Rate</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SE">SE</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="gender" class="gt_row gt_left">Female</td>
-<td headers="lf_part_rate" class="gt_row gt_right">0.674</td>
-<td headers="lf_part_rate_se" class="gt_row gt_right">0.002</td></tr>
-    <tr><td headers="gender" class="gt_row gt_left">Male</td>
-<td headers="lf_part_rate" class="gt_row gt_right">0.797</td>
-<td headers="lf_part_rate_se" class="gt_row gt_right">0.002</td></tr>
-  </tbody>
-  
-  
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border">Labor Force Participation Rates in Texas</td>
+</tr>
+<tr class="gt_col_headings even">
+<th id="gender" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Gender</th>
+<th id="lf_part_rate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Labor Force Participation Rate</th>
+<th id="lf_part_rate_se" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SE</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="gender">Female</td>
+<td class="gt_row gt_right" headers="lf_part_rate">0.674</td>
+<td class="gt_row gt_right" headers="lf_part_rate_se">0.002</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="gender">Male</td>
+<td class="gt_row gt_right" headers="lf_part_rate">0.797</td>
+<td class="gt_row gt_right" headers="lf_part_rate_se">0.002</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -2034,37 +2119,35 @@ F = 1955.4, ndf = 1, ddf = 172976, p-value &lt; 0.00000000000000022</code></pre>
 <p>The Demographic and Health Survey (DHS) data have been collected since the mid 1980’s in over 90 countries around the world, and the DHS provides a public model data set that represents data on real households, without a specific national context. These data are provided to let people learn how to use the data before applying for access. The model data can be downloaded freely from the DHS[^surveydata-3] as a SAS or STATA format, or from my Github site[^surveydata-4] for this book. Below, I will read in the data from Github and recode child growth stunting relative to the WHO standard as an outcome[^surveydata-5] , and child age, rural residence and gender as predictors.</p>
 <p>The DHS household file is arrayed with a column for every child, so we must reshape the data from wide to long format using <code>pivot_longer</code> for the variables for child height relative to the WHO standard (<code>hc70</code>), child gender <code>hc27</code>, and child age <code>hc1</code>. The other variables are common to the household, so we do not have to reshape them (per the <code>cols=</code> line below). We then recode the outcome and the predictors for our regression example.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>dhs_model_hh <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">url</span>(<span class="st">"https://github.com/coreysparks/data/blob/master/dhs_model_hh.rds?raw=true"</span>)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>dhs_model_hh_sub <span class="ot">&lt;-</span> dhs_model_hh<span class="sc">%&gt;%</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hc27_01<span class="sc">:</span>hc27_20, </span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>         hc70_01<span class="sc">:</span>hc70_20, </span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>         hc1_01<span class="sc">:</span>hc1_20,</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>         hv021, hv025, hv270, hv005, hv021, hv022)<span class="sc">%&gt;%</span></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>hv021, <span class="sc">-</span>hv025, <span class="sc">-</span>hv270, <span class="sc">-</span>hv005, <span class="sc">-</span>hv021, <span class="sc">-</span>hv022), </span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to  =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"child"</span>),</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stunting =</span> car<span class="sc">::</span><span class="fu">Recode</span>(hc70, <span class="at">recodes =</span> <span class="st">"-900:-200 = 1; 9996:9999 = NA; else = 0"</span>),</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">ifelse</span>(<span class="at">test =</span> hc27 <span class="sc">==</span> <span class="dv">1</span>, <span class="at">yes =</span> <span class="st">"male"</span>, <span class="at">no =</span> <span class="st">"female"</span>),</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">hh_wealth =</span> <span class="fu">as.factor</span>(hv270),</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">age =</span> hc1,</span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">age2 =</span> hc1<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">rural =</span> <span class="fu">ifelse</span>(<span class="at">test =</span> hv025 <span class="sc">==</span><span class="dv">2</span>, <span class="at">yes =</span> <span class="st">"rural"</span>, <span class="at">no =</span> <span class="st">"urban"</span>),</span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">wt =</span> hv005<span class="sc">/</span><span class="dv">1000000</span>,</span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">psu =</span> hv021,</span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">strata =</span> hv022)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>dhs_model_hh <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(<span class="st">"data/dhs_model_hh.parquet"</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>dhs_model_hh_sub <span class="ot">&lt;-</span> dhs_model_hh<span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hc27_01<span class="sc">:</span>hc27_20, </span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>         hc70_01<span class="sc">:</span>hc70_20, </span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>         hc1_01<span class="sc">:</span>hc1_20,</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>         hv021, hv025, hv270, hv005, hv021, hv022)<span class="sc">%&gt;%</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>hv021, <span class="sc">-</span>hv025, <span class="sc">-</span>hv270, <span class="sc">-</span>hv005, <span class="sc">-</span>hv021, <span class="sc">-</span>hv022), </span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to  =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"child"</span>),</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stunting =</span> car<span class="sc">::</span><span class="fu">Recode</span>(hc70, <span class="at">recodes =</span> <span class="st">"-900:-200 = 1; 9996:9999 = NA; else = 0"</span>),</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">ifelse</span>(<span class="at">test =</span> hc27 <span class="sc">==</span> <span class="dv">1</span>, <span class="at">yes =</span> <span class="st">"male"</span>, <span class="at">no =</span> <span class="st">"female"</span>),</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">hh_wealth =</span> <span class="fu">as.factor</span>(hv270),</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">age =</span> hc1,</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">age2 =</span> hc1<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">rural =</span> <span class="fu">ifelse</span>(<span class="at">test =</span> hv025 <span class="sc">==</span><span class="dv">2</span>, <span class="at">yes =</span> <span class="st">"rural"</span>, <span class="at">no =</span> <span class="st">"urban"</span>),</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">wt =</span> hv005<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">psu =</span> hv021,</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">strata =</span> hv022)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>dhs_model_des<span class="ot">&lt;-</span> dhs_model_hh_sub<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>dhs_model_des<span class="ot">&lt;-</span> dhs_model_hh_sub<span class="sc">%&gt;%</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">cluster =</span> psu,</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">strata =</span> strata,</span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">weights =</span> wt,</span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nest =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dhs_model_des)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dhs_model_des)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Stratified Independent Sampling design (with replacement)
 Called via srvyr
@@ -2088,7 +2171,7 @@ Data variables:
 </div>
 <p>Just for completeness, I create a bar chart showing the percent stunted by the two main variables, gender and rural residence.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>dhs_model_des<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>dhs_model_des<span class="sc">%&gt;%</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender, rural)<span class="sc">%&gt;%</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">stunting =</span> <span class="fu">survey_mean</span>( stunting,<span class="at">design =</span>.,</span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">na.rm=</span>T) )<span class="sc">%&gt;%</span></span>
@@ -2100,20 +2183,24 @@ Data variables:
 <span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Percent Stunted"</span>, </span>
 <span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Percent Stunted by Gender and Rural Residence"</span>,</span>
 <span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"DHS Model Data"</span>)<span class="sc">+</span></span>
-<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<p><img src="survey_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="survey_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Now I estimate two logistic regression models for the stunting outcome. The first assumes random sampling and the second includes the full survey design information.</p>
 <p>For the unweighted regular logistic regression, we use the <code>glm()</code> function with <code>family = binomial (link = "logit")</code>. The<code>glm()</code> function will be used extensivley in the chapters that follow.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>m1<span class="ot">&lt;-</span><span class="fu">glm</span>(stunting <span class="sc">~</span> age <span class="sc">+</span> age2 <span class="sc">+</span> rural <span class="sc">+</span> gender,</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dhs_model_hh_sub,</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>m1<span class="sc">%&gt;%</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
   term        estimate std.error statistic  p.value
@@ -2127,15 +2214,15 @@ Data variables:
 </div>
 <p>For the survey design model, you specify the design versus the data set name, otherwise the same code works just fine.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> dhs_model_des<span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> dhs_model_des<span class="sc">%&gt;%</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">svyglm</span>(stunting <span class="sc">~</span> age <span class="sc">+</span> age2 <span class="sc">+</span>rural <span class="sc">+</span> gender,</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">design =</span> .,</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">family =</span> binomial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">family =</span> binomial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>m2<span class="sc">%&gt;%</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>m2<span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
   term        estimate std.error statistic  p.value
@@ -2148,14 +2235,14 @@ Data variables:
 </div>
 </div>
 <p>There are lots of ways to make a table from a regression model, but <code>stargazer</code> <span class="citation" data-cites="stargazer">(<a href="#ref-stargazer" role="doc-biblioref">Hlavac 2018</a>)</span> is a simple way to present multiple models side by side.</p>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>stargazer<span class="sc">::</span><span class="fu">stargazer</span>(m1, m2,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>stargazer<span class="sc">::</span><span class="fu">stargazer</span>(m1, m2,</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">keep.stat =</span> <span class="st">"n"</span>,</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">model.names =</span> F,</span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">"Unweighted model"</span>, <span class="st">"Weighted Model"</span>),</span>
 <span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">type =</span> <span class="st">"latex"</span>,</span>
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">header =</span> <span class="cn">FALSE</span>, </span>
 <span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">style =</span> <span class="st">"demography"</span>,</span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">title =</span> <span class="st">"Output from Unweighted and Weighted Regression Models"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">title =</span> <span class="st">"Output from Unweighted and Weighted Regression Models"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this case, we see that the coefficient estimates are very similar between the two models, but the coefficient standard errors are all smaller in the unweighted model. This is commonly what you see in this situation, because the survey deign model is actually using <em>clustered standard errors</em> instead of asymptotic standard errors <span class="citation" data-cites="cameron_practitioners_2015">Ibragimov and Müller (<a href="#ref-ibragimov_inference_2016" role="doc-biblioref">2016</a>)</span>. While this example does not show an extreme difference, it is commonplace for t-statistics generated from clustered standard errors to have higher p-values than those using asymptotic standard errors. As a result, if the t-statistic is lower, and the p-value higher, you can easily get differences in your hypothesis tests for regression parameters. This is always something to be aware of as you analyze survey data.</p>
 <p>[^surveydata-3] https://dhsprogram.com/data/model-datasets.cfm [^surveydata-4] https://github.com/coreysparks/dem-stats-book [^surveydata-4] Per the <a href="https://dhsprogram.com/data/Guide-to-DHS-Statistics/index.cfm">guide to DHS statistics</a></p>
 </section>
@@ -2173,10 +2260,10 @@ Data variables:
 Cameron, A. Colin, and Douglas L. Miller. 2015. <span>“A <span>Practitioner</span>’s <span>Guide</span> to <span>Cluster</span>-<span>Robust</span> <span>Inference</span>.”</span> <em>Journal of Human Resources</em> 50 (2): 317–72. <a href="https://doi.org/10.3368/jhr.50.2.317">https://doi.org/10.3368/jhr.50.2.317</a>.
 </div>
 <div id="ref-cdc2020" class="csl-entry" role="listitem">
-CDC. 2020. <span>“Weighting the BRFSS Data.”</span> <a href="https://www.cdc.gov/brfss/annual_data/2019/pdf/weighting-2019-508.pdf">https://www.cdc.gov/brfss/annual_data/2019/pdf/weighting-2019-508.pdf</a>.
+CDC. 2020. <em>Weighting the BRFSS Data</em>. <a href="https://www.cdc.gov/brfss/annual_data/2019/pdf/weighting-2019-508.pdf">https://www.cdc.gov/brfss/annual_data/2019/pdf/weighting-2019-508.pdf</a>.
 </div>
 <div id="ref-stargazer" class="csl-entry" role="listitem">
-Hlavac, Marek. 2018. <em>Stargazer: Well-Formatted Regression and Summary Statistics Tables</em>. Bratislava, Slovakia: Central European Labour Studies Institute (CELSI). <a href="https://CRAN.R-project.org/package=stargazer">https://CRAN.R-project.org/package=stargazer</a>.
+Hlavac, Marek. 2018. <em>Stargazer: Well-Formatted Regression and Summary Statistics Tables</em>. Central European Labour Studies Institute (CELSI). <a href="https://CRAN.R-project.org/package=stargazer">https://CRAN.R-project.org/package=stargazer</a>.
 </div>
 <div id="ref-Iannone2021" class="csl-entry" role="listitem">
 Iannone, Richard, Joe Cheng, and Barret Schloerke. 2021. <em>Gt: Easily Create Presentation-Ready Display Tables</em>. <a href="https://CRAN.R-project.org/package=gt">https://CRAN.R-project.org/package=gt</a>.
@@ -2185,10 +2272,10 @@ Iannone, Richard, Joe Cheng, and Barret Schloerke. 2021. <em>Gt: Easily Create P
 Ibragimov, Rustam, and Ulrich K. Müller. 2016. <span>“Inference with <span>Few</span> <span>Heterogeneous</span> <span>Clusters</span>.”</span> <em>The Review of Economics and Statistics</em> 98 (1): 83–96. <a href="https://doi.org/10.1162/REST_a_00545">https://doi.org/10.1162/REST_a_00545</a>.
 </div>
 <div id="ref-international_demographic_2012" class="csl-entry" role="listitem">
-International, ICF. 2012. <span>“Demographic and <span>Health</span> <span>Survey</span> <span>Sampling</span> and <span>Household</span> <span>Listing</span> <span>Manual</span>.”</span> ICF International.
+International, ICF. 2012. <em>Demographic and <span>Health</span> <span>Survey</span> <span>Sampling</span> and <span>Household</span> <span>Listing</span> <span>Manual</span></em>. ICF International.
 </div>
 <div id="ref-Lohr2019" class="csl-entry" role="listitem">
-Lohr, Shron. 2019. <em>Sampling: Design and Analysis</em>. 2nd ed. Boca Raton: Routledg/CRC Press.
+Lohr, Shron. 2019. <em>Sampling: Design and Analysis</em>. 2nd ed. Routledg/CRC Press.
 </div>
 <div id="ref-lumley2010" class="csl-entry" role="listitem">
 Lumley, Thomas. 2010. <em>Complex <span>Surveys</span>: <span>A</span> <span>Guide</span> to <span>Analysis</span> <span>Using</span> <span>R</span>: <span>A</span> <span>Guide</span> to <span>Analysis</span> <span>Using</span> <span>R</span></em>. John Wiley; Sons.
@@ -2197,10 +2284,10 @@ Lumley, Thomas. 2010. <em>Complex <span>Surveys</span>: <span>A</span> <span>Gui
 Rao, JNK, and AJ Scott. 1984. <span>“On <span>Chi</span>-Squared <span>Tests</span> <span>For</span> <span>Multiway</span> <span>Contigency</span> <span>Tables</span> with <span>Proportions</span> <span>Estimated</span> <span>From</span> <span>Survey</span> <span>Data</span>.”</span> <em>Annals of Statistics</em> 12: 46–60.
 </div>
 <div id="ref-Ruggles2021" class="csl-entry" role="listitem">
-Ruggles, S, S Flood, Josiah Grover, S Foster, R Goeken, Jose Pacas, Erin Schouweiler, and M Sobek. 2021. <span>“Integrated <span>Public</span> <span>Use</span> <span>Microdata</span> <span>Series</span>: <span>Version</span> 11.0 [Machine-Readable Database].”</span> https://doi.org/<a href="https://doi.org/10.18128/D010.V8.0">https://doi.org/10.18128/D010.V8.0</a>.
+Ruggles, S, S Flood, Josiah Grover, et al. 2021. <em>Integrated <span>Public</span> <span>Use</span> <span>Microdata</span> <span>Series</span>: <span>Version</span> 11.0 [Machine-Readable Database]</em>. https://doi.org/<a href="https://doi.org/10.18128/D010.V8.0">https://doi.org/10.18128/D010.V8.0</a>.
 </div>
 <div id="ref-uscensusbureau2014" class="csl-entry" role="listitem">
-US Census Bureau. 2014. <span>“American Community Survey Design and Methodology (January 2014).”</span> <a href="https://www2.census.gov/programs-surveys/acs/methodology/design_and_methodology/acs_design_methodology_report_2014.pdf">https://www2.census.gov/programs-surveys/acs/methodology/design_and_methodology/acs_design_methodology_report_2014.pdf</a>.
+US Census Bureau. 2014. <em>American Community Survey Design and Methodology (January 2014)</em>. <a href="https://www2.census.gov/programs-surveys/acs/methodology/design_and_methodology/acs_design_methodology_report_2014.pdf">https://www2.census.gov/programs-surveys/acs/methodology/design_and_methodology/acs_design_methodology_report_2014.pdf</a>.
 </div>
 <div id="ref-walker21" class="csl-entry" role="listitem">
 Walker, Kyle, and Matt Herman. 2021. <em>Tidycensus: Load US Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://CRAN.R-project.org/package=tidycensus">https://CRAN.R-project.org/package=tidycensus</a>.
@@ -2218,43 +2305,58 @@ Walker, Kyle, and Matt Herman. 2021. <em>Tidycensus: Load US Census Boundary and
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
@@ -2262,207 +2364,360 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
       return codeEl.innerText;
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
       });
     }
-  }
-});
-</script>
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rintro.html" class="pagination-link">
+      <a href="./rintro.html" class="pagination-link" aria-label="Introduction to R">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to R</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./macro.html" class="pagination-link">
+      <a href="./macro.html" class="pagination-link" aria-label="Macrodemographic Analysis of Places">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Macrodemographic Analysis of Places</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

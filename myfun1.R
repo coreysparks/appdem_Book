@@ -1,4 +1,5 @@
 myfun <-
-function(x){
-  exp(x)
+function (x) 
+{
+    exp(x)
 }
