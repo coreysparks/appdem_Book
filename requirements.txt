@@ -1,0 +1,33 @@
+# Core data manipulation and numerics
+numpy
+pandas
+pyarrow          # parquet support for pandas
+scipy
+
+# Statistical modeling
+statsmodels
+samplics         # design-based survey estimation (Taylor series and replicate weights)
+betareg          # Beta regression for proportions
+
+# Geospatial
+geopandas        # spatial data frames (GeoDataFrame)
+pygris           # download US Census TIGER/Line files
+
+# Graphics (ggplot2-style)
+plotnine
+matplotlib       # underlying backend; also used directly for diagnostic plots
+
+# Reading/writing SAS, Stata, SPSS files
+pyreadstat
+
+# Publication-quality tables (Python port of gt)
+great-tables
+
+# Rich DataFrame summaries (similar to skimr)
+skimpy
+
+# Census PUMS microdata downloads via Census API
+pypums
+
+# Environment variable management (.env files)
+python-dotenv

@@ -16,7 +16,9 @@
       "Bash(Rscript.exe -e \":*)",
       "Bash(Rscript.exe convert_ipums.R)",
       "Bash(grep -n \"ipums$\\\\|ipums %>%\\\\|select.*ipums\\\\|ipums\\\\[\" c:/Users/corey/Github/appdem_Book/survey.qmd)",
-      "Bash(grep -Eo '\\\\b[A-Z][A-Z0-9_]{2,}\\\\b' c:/Users/corey/Github/appdem_Book/survey.qmd)"
+      "Bash(grep -Eo '\\\\b[A-Z][A-Z0-9_]{2,}\\\\b' c:/Users/corey/Github/appdem_Book/survey.qmd)",
+      "PowerShell(pip show pypums 2>&1)",
+      "PowerShell(pip index versions pypums 2>&1)"
     ]
   }
 }

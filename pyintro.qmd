@@ -1,0 +1,852 @@
+---
+title: "Introduction to Python"
+---
+
+# Introduction to Python
+
+This chapter is devoted to introducing Python to new users. Python was first released in 1991 by Guido van Rossum and has grown into one of the most widely used programming languages in the world. It is an open source, general-purpose language that has developed a rich ecosystem for statistical analysis, data science, and scientific computing. The Python ecosystem includes hundreds of thousands of user-contributed packages, and the subset used for data analysis is mature, well-documented, and heavily used in academic research and industry alike.
+
+## Welcome to Python
+
+If you're coming to Python from SAS, the mental model is different from the data step and proc world, but the tasks are the same. Instead of writing a DATA step to transform your data, you'll use a `pandas` DataFrame and chain operations together. Instead of PROC REG or PROC FREQ, you'll call functions from `statsmodels` or compute frequency tables directly from a DataFrame. The workflow is more interactive and the feedback loop is faster.
+
+If you're coming from SPSS and have been using the point-and-click interface, be prepared for a learning curve. If you've been writing SPSS syntax, you're already accustomed to code and will find the transition less abrupt. Python requires you to be explicit about what you want, which feels like more work at first but pays off quickly in reproducibility and flexibility.
+
+Stata users will find Python conceptually similar in its interactive, command-driven style. The biggest adjustment is that Python is a general-purpose programming language, not a statistical package, so data analysis tasks are built from composable pieces rather than built-in estimation commands. In practice this gives you far more control.
+
+## Python and VS Code
+
+Python itself is just a language interpreter. To work with it effectively you need an environment that lets you write code, see results, and manage files. Two excellent options are:
+
+**VS Code** is a free, open source code editor from Microsoft with excellent Python support through its Python extension. It provides an integrated terminal, variable inspector, and the ability to run `.py` scripts or interactive `.ipynb` notebook files side by side. This is a good choice if you plan to write Python scripts and want a full IDE experience.
+
+**JupyterLab** is a browser-based interactive environment built around Jupyter notebooks (`.ipynb` files). Each notebook contains a mix of code cells and prose cells, making it ideal for the kind of literate programming this book practices — the same philosophy behind Quarto.
+
+**This book is written in Quarto**, which supports Python code chunks natively using the `jupyter` engine, so you can run Python code directly inside `.qmd` files.
+
+To get started, download Python from [python.org](https://www.python.org/downloads/). On Windows and Mac, installer files are available. Linux users typically install Python through their package manager. The recommended way to manage Python packages for data analysis is to use [Anaconda](https://www.anaconda.com/download), a distribution that bundles Python with the core scientific stack (NumPy, pandas, matplotlib, and hundreds of others) and includes the `conda` package manager.
+
+### Python file types
+
+*.py files* Python uses plain text files with the `.py` extension for scripts. These are useful when you want to write reusable functions or run an analysis without producing formatted output. You run them from the terminal with `python myscript.py`, or execute them cell by cell inside an IDE.
+
+*.ipynb files* Jupyter notebooks use the `.ipynb` format and contain a mix of code cells, markdown prose, and output (including plots and tables). This format is most commonly used for teaching and exploratory analysis. Quarto can also render `.qmd` files that contain Python code chunks directly.
+
+Quarto supports embedded equations:
+
+$$
+{y_i \sim Normal (x'\beta, \sigma^2)}
+$$
+
+and can include table and plot output directly in the rendered document, as shown throughout this chapter.
+
+### Python projects and environments
+
+A **virtual environment** is a self-contained directory that holds a specific version of Python and the packages you've installed for a particular project. This prevents package version conflicts across projects and makes your work reproducible for collaborators.
+
+To create and activate a virtual environment:
+
+```{python, eval = FALSE}
+# In your terminal, not a Python session:
+# python -m venv myenv
+# source myenv/bin/activate    (Mac/Linux)
+# myenv\Scripts\activate       (Windows)
+```
+
+The `conda` environment manager that comes with Anaconda is an alternative that many data scientists prefer:
+
+```{python, eval = FALSE}
+# conda create -n demography python=3.11
+# conda activate demography
+```
+
+Virtual environments keep your project's dependencies isolated and integrate with both VS Code and JupyterLab.
+
+### Saving and loading data in Python
+
+The `pandas` library handles CSV, Excel, Stata, SAS, SPSS, Parquet, JSON, and more.
+
+```{python}
+import numpy as np
+import pandas as pd
+
+# create two simple arrays
+x = [1, 2, 3]
+y = [4, 5, 6]
+
+# save x to a CSV file
+pd.Series(x).to_csv("x.csv", index=False)
+
+# save both to a single CSV
+xy = pd.DataFrame({"x": x, "y": y})
+xy.to_csv("xy.csv", index=False)
+```
+
+Loading them back:
+
+```{python}
+x_loaded = pd.read_csv("x.csv")
+xy_loaded = pd.read_csv("xy.csv")
+print(xy_loaded)
+```
+
+For foreign statistical formats, `pyreadstat` reads and writes SAS (`.sas7bdat`), Stata (`.dta`), and SPSS (`.sav` and `.por`) files:
+
+```{python, eval = FALSE}
+import pyreadstat
+
+# read a Stata file
+prb_stata, meta = pyreadstat.read_dta("data/prb2018.dta")
+
+# read an SPSS file
+prb_spss, meta = pyreadstat.read_sav("data/prb_2018.sav")
+
+# write a SAS file
+pyreadstat.write_sas7bdat(xy, "xy.sas7bdat")
+```
+
+Python also has strong support for Parquet files (via `pyarrow` or `pandas`), HDF5, JSON, Excel (via `openpyxl`), geospatial formats (via `geopandas`), and SQL databases (via `sqlalchemy`).
+
+## Getting help in Python
+
+Every Python session has a built-in help system. Here are the most useful ways to get help:
+
+1. If you know the name of a function and want to see its documentation, use `help()`:
+
+```{python, eval = FALSE}
+import statsmodels.formula.api as smf
+help(smf.ols)
+```
+
+2. In a Jupyter notebook or JupyterLab, placing a `?` after a function name opens the docstring in a side panel:
+
+```{python, eval = FALSE}
+smf.ols?
+```
+
+3. `dir()` lists all methods and attributes of an object — useful for exploring what a DataFrame or model object can do:
+
+```{python, eval = FALSE}
+import pandas as pd
+dir(pd.DataFrame)
+```
+
+4. [Stack Overflow](https://stackoverflow.com/questions/tagged/python) has an enormous archive of Python questions. The quality varies, but searching for `pandas` or `statsmodels` plus a description of your problem almost always turns up something useful.
+
+5. The official documentation for the core packages is excellent. Key links are the [pandas documentation](https://pandas.pydata.org/docs/), the [statsmodels documentation](https://www.statsmodels.org/stable/), and the [plotnine documentation](https://plotnine.org/).
+
+6. Your local Python user group or colleagues. Python has a very large community in data science, and chances are someone nearby is using it for similar work.
+
+There are almost always multiple ways to accomplish a task in Python. If someone tells you there is only one correct approach, they are probably wrong.
+
+## Python packages
+
+Python packages are collections of functions organized around a theme. They are installed from [PyPI](https://pypi.org), the Python Package Index, using the `pip` package manager, or from [conda-forge](https://conda-forge.org) using `conda`.
+
+To install a package from the terminal:
+
+```{python, eval = FALSE}
+# using pip
+# pip install pandas plotnine statsmodels pyreadstat
+
+# using conda
+# conda install pandas plotnine statsmodels
+```
+
+Once installed, you import a package into your Python session with `import`. You typically give the package an alias to save typing:
+
+```{python}
+import numpy as np          # numerical arrays
+import pandas as pd         # data frames
+import plotnine as p9       # grammar of graphics
+import statsmodels.formula.api as smf  # regression models
+```
+
+You only need to install a package once, but you must import it at the start of every session. To update packages:
+
+```{python, eval = FALSE}
+# pip install --upgrade pandas
+# conda update pandas
+```
+
+### Accessing functions within packages
+
+When you import a package with an alias (`import pandas as pd`), you access its functions using dot notation: `pd.read_csv()`, `pd.DataFrame()`. If you only need one or two functions from a package, you can import them directly:
+
+```{python}
+from math import sqrt, log, exp
+sqrt(7.2)
+```
+
+If you import two packages that both define a function with the same name, the one imported last wins — but using the explicit `pd.function()` or `np.function()` syntax avoids this entirely.
+
+### Inspecting function source code
+
+You can inspect the source code of any function using the `inspect` module:
+
+```{python}
+import inspect
+import statistics
+print(inspect.getsource(statistics.median))
+```
+
+You can also write your own simple functions:
+
+```{python}
+def mymean(x, na_rm=False):
+    import numpy as np
+    arr = np.array(x, dtype=float)
+    if na_rm:
+        return np.nanmean(arr)
+    return np.mean(arr)
+
+mymean([1, 2, 3])
+```
+
+This function takes a list `x` and an optional `na_rm` argument that defaults to `False`. To see the full documentation for a function's arguments, use `help(mymean)` or `mymean?` in Jupyter.
+
+You can save a function to a `.py` file for reuse:
+
+```{python, eval = FALSE}
+# save to myfunctions.py, then import it in another script:
+# from myfunctions import mymean
+```
+
+## Your Python working environment
+
+When you start a Python session, you begin in whatever directory your terminal or IDE is pointing to. You can check and change this with the `os` module:
+
+```{python}
+import os
+os.getcwd()
+```
+
+```{python, eval = FALSE}
+os.chdir("/path/to/your/project")
+```
+
+To store API keys and environment variables, use a `.env` file read by the `python-dotenv` package:
+
+```{python, eval = FALSE}
+from dotenv import load_dotenv
+load_dotenv()
+census_key = os.getenv("CENSUS_API_KEY")
+```
+
+## Some simple Python examples
+
+### Python is a calculator
+
+```{python}
+# addition and subtraction
+3 + 7
+```
+
+```{python}
+3 - 7
+```
+
+```{python}
+# multiplication and division
+3 * 7
+```
+
+```{python}
+3 / 7
+```
+
+```{python}
+# powers  (** is the exponent operator)
+3 ** 2
+```
+
+```{python}
+3 ** 3
+```
+
+```{python}
+# common math functions
+import math
+math.log(3 / 7)
+```
+
+```{python}
+math.exp(3 / 7)
+```
+
+```{python}
+math.sin(3 / 7)
+```
+
+Python allows users to write custom functions as well. In general, if you find yourself writing the same code over and over again, you should probably write a function and save it to a module.
+
+For example, a simple function that exponentiates its argument:
+
+```{python}
+def myfun(x):
+    return math.exp(x)
+
+myfun(0.5)
+```
+
+```{python}
+myfun(-0.1)
+```
+
+## Variables and objects
+
+In Python you assign values to variables using `=`. Avoid using names that shadow built-in functions like `sum`, `max`, or `list`.
+
+```{python}
+x = 3
+y = 7
+x + y
+```
+
+```{python}
+x * y
+```
+
+```{python}
+math.log(x * y)
+```
+
+### Arrays and vectorized operations
+
+For vectorized operations — applying an operation across all elements without writing a loop — use `numpy` arrays:
+
+```{python}
+x = np.array([3, 4, 5, 6, 7])
+y = 7
+
+x * y   # element-wise multiplication, no loop needed
+```
+
+Array indexing in Python is 0-based, meaning the first element is at position 0. The third element of `x` is at index `2`:
+
+```{python}
+x[2]    # third element
+```
+
+```{python}
+x[2] == 10
+```
+
+```{python}
+x[2] != 10
+```
+
+```{python}
+x[2] > 3
+```
+
+```{python}
+x > 3   # element-wise comparison, returns boolean array
+```
+
+To inspect an array's structure, use `print()` and the `.dtype` attribute:
+
+```{python}
+print(x)
+print(x.dtype)
+```
+
+Useful characteristics of an array:
+
+```{python}
+len(x)                      # length of x
+```
+
+```{python}
+np.issubdtype(x.dtype, np.floating) or np.issubdtype(x.dtype, np.integer)  # is x numeric?
+```
+
+```{python}
+np.isnan(x)                 # is any element missing?
+```
+
+#### Replacing elements of arrays
+
+Adding a missing value to a NumPy array and replacing it uses `np.where()`, which evaluates a condition and returns one value when `True` and another when `False`:
+
+```{python}
+x = np.array([3, 4, 5, 6, 7, np.nan])
+print(x)
+print(np.isnan(x))
+```
+
+```{python}
+# replace NaN with sqrt(7.2), leave others unchanged
+x = np.where(np.isnan(x), np.sqrt(7.2), x)
+x
+```
+
+## Variable types
+
+Python stores data in different types depending on the content. The main types you will encounter in data analysis are `int`, `float`, `str`, `bool`, and `pd.Categorical`.
+
+```{python}
+type(3)         # integer
+```
+
+```{python}
+type(3.14)      # float
+```
+
+```{python}
+type("hello")   # string
+```
+
+```{python}
+type(True)      # boolean
+```
+
+You can convert between types:
+
+```{python}
+z = np.array([1, 2, 3, 4])
+z.dtype         # integer array
+```
+
+```{python}
+zc = z.astype(str)
+zc
+```
+
+`pd.Categorical` stores categorical variables that can be ordered or unordered and have defined levels (called `categories`):
+
+```{python}
+zf = pd.Categorical(z)
+zf
+```
+
+```{python}
+print(zf.categories)
+print(zf.ordered)
+```
+
+```{python}
+# ordered categorical
+zfo = pd.Categorical(z, ordered=True)
+zfo
+```
+
+Boolean arrays are very useful for data checking and filtering:
+
+```{python}
+x = np.array([3, 4, 5, 6, 7, np.nan])
+z = np.isnan(x)
+print(z)
+print(z.dtype)
+```
+
+Boolean expressions evaluate to `True` or `False` and can be passed anywhere a condition is needed:
+
+```{python}
+x = np.array([3, 4, 5, 6, 7])
+x >= 5
+```
+
+```{python}
+pd.Series(x >= 5).value_counts()
+```
+
+## DataFrames
+
+A `pandas` DataFrame organizes variables into a table-like structure with named columns. Columns can hold data of different types.
+
+```{python}
+mydat = pd.DataFrame({
+    "x":     [1, 2, 3, 4, 5, 6, 7, 8],
+    "y":     [10, 20, 35, 57, 37, 21, 23, 25],
+    "group": pd.Categorical(["A","A","A","B","B","C","C","C"])
+})
+
+mydat.shape     # rows, columns
+```
+
+```{python}
+print(mydat)
+```
+
+### Accessing columns in DataFrames
+
+There are several ways to access a column:
+
+```{python}
+mydat["group"]          # by column name using brackets
+```
+
+```{python}
+mydat.group             # dot notation
+```
+
+```{python}
+mydat.iloc[:, 2]        # by integer position (0-based)
+```
+
+```{python}
+mydat.columns           # list all column names
+```
+
+Previewing data uses `.head()` and `.tail()`:
+
+```{python}
+mydat.head()
+```
+
+```{python}
+mydat.head(2)
+```
+
+```{python}
+mydat.tail()
+```
+
+```{python}
+mydat.tail(2)
+```
+
+### Nicer looking tables
+
+The `great_tables` package produces highly customizable publication-quality tables:
+
+```{python}
+from great_tables import GT
+
+GT(mydat).tab_header(
+    title="My simple table",
+    subtitle="With a subtitle"
+)
+```
+
+For LaTeX output compatible with PDF rendering, `pandas` has a built-in `.to_latex()` method:
+
+```{python, eval = FALSE}
+print(mydat.to_latex(index=False, caption="My basic table"))
+```
+
+## Real data example
+
+Now let's open a real data file. This is the 2018 World Population Data Sheet from the [Population Reference Bureau](http://www.prb.org). It contains summary information on many demographic and population-level characteristics of nations around the world in 2018.
+
+```{python}
+prb = pd.read_csv("data/2018_WPDS_Data_Table_FINAL.csv")
+prb.columns = prb.columns.str.lower()   # lowercase all column names
+```
+
+Reading from other statistical software formats uses `pyreadstat`:
+
+```{python, eval = FALSE}
+import pyreadstat
+prb_stata, meta = pyreadstat.read_dta("data/prb2018.dta")
+prb_spss, meta  = pyreadstat.read_sav("data/prb_2018.sav")
+```
+
+## Basic descriptive analysis of data
+
+### DataFrame summaries
+
+The `.describe()` method returns the count, mean, standard deviation, minimum, quartiles, and maximum for numeric variables.
+
+```{python}
+prb["tfr"].describe()
+```
+
+For a categorical-like column, `value_counts()` returns a frequency table:
+
+```{python}
+prb["continent"].value_counts()
+```
+
+For a richer summary of an entire DataFrame, the `skimpy` package is very useful:
+
+```{python, eval = FALSE}
+from skimpy import skim
+skim(prb.iloc[:, :8])
+```
+
+The `.describe()` method can also summarize multiple columns at once:
+
+```{python}
+prb.iloc[:, :8].describe()
+```
+
+From this summary, we see that the mean TFR is `{python} round(prb["tfr"].mean(), 2)`, there is at least one country missing the total fertility rate variable. The minimum is 1 and the maximum is 7.2 children per woman.
+
+### Frequency tables
+
+`value_counts()` computes frequency tables for a single column. For cross-tabulations, use `pd.crosstab()`:
+
+```{python}
+# frequency table: number of countries by continent
+prb["continent"].value_counts()
+```
+
+```{python}
+# cross-tabulation of high TFR by continent
+pd.crosstab(prb["tfr"] > 3, prb["continent"])
+```
+
+Boolean expressions evaluate to `True` or `False` and can be counted directly:
+
+```{python}
+x = np.array([1, 3, 4, 5, 7, 19])
+x > 5
+```
+
+```{python}
+pd.Series(x > 5).value_counts()
+```
+
+### Measures of central tendency
+
+We can use graphical methods to describe what data look like visually, but graphical methods are rarely useful for comparative purposes. Numerical summaries are what allow comparisons.
+
+```{python}
+prb["tfr"].mean()
+```
+
+By default, `.mean()` skips missing values. To control this explicitly:
+
+```{python}
+prb["tfr"].mean(skipna=True)
+```
+
+```{python}
+prb["tfr"].median()
+```
+
+### Measures of variation
+
+```{python}
+# five-number summary
+prb["tfr"].describe()[["min", "25%", "50%", "75%", "max"]]
+```
+
+```{python}
+prb["tfr"].var()    # variance
+```
+
+```{python}
+prb["tfr"].std()    # standard deviation
+```
+
+```{python}
+import math
+math.sqrt(prb["tfr"].var())   # same result as .std()
+```
+
+The sections above have shown some basic ways to summarize data in Python, along with many functions that will recur throughout the rest of this book. The pandas ecosystem is large and evolving, and there is almost always more than one way to do things.
+
+## pandas for data manipulation
+
+The `pandas` library is Python's primary data manipulation tool. Rather than a named set of verbs, pandas uses **method chaining** — you call methods one after another on a DataFrame, and the result of each method is a new DataFrame that the next method acts on. The core operations and their pandas methods are:
+
+| Operation | pandas method |
+|---|---|
+| Create new columns | `.assign()` |
+| Filter rows | `.query()` or boolean indexing |
+| Select columns | `[["col1","col2"]]` or `.loc[:, cols]` |
+| Group and summarize | `.groupby().agg()` |
+| Sort | `.sort_values()` |
+| Rename columns | `.rename(columns={...})` |
+
+Here is a workflow that creates a high/low TFR group, then summarizes male life expectancy by group:
+
+```{python}
+(prb
+ .assign(high_tfr=lambda df: df["tfr"].apply(lambda v: "high" if v > 3 else "low"))
+ .groupby("high_tfr")["e0male"]
+ .mean()
+)
+```
+
+The `.assign()` method creates a new column. The `lambda df:` syntax is Python's inline anonymous function — a small function defined on the fly. The `.groupby()` followed by `.mean()` aggregates by group.
+
+To summarize multiple variables at once, use `.agg()` with a dictionary:
+
+```{python}
+(prb
+ .assign(high_tfr=lambda df: df["tfr"].apply(lambda v: "high" if v > 3 else "low"))
+ .groupby("high_tfr")
+ .agg(
+     n=("e0male", "count"),
+     e0male=("e0male", "mean"),
+     e0female=("e0female", "mean"),
+     gnigdp=("gnigdp", "mean"),
+     imr=("imr", "mean")
+ )
+ .reset_index()
+)
+```
+
+The `.reset_index()` call converts the group keys back into regular columns after aggregation.
+
+## Basic plotnine
+
+The `plotnine` package implements the Grammar of Graphics in Python. A plotnine plot is built from three components:
+
+1. A `ggplot()` call specifying the data and the aesthetic mapping (`aes()`).
+2. One or more `geom_*()` layers defining the plot geometry.
+3. Optional annotations: titles, axis labels, themes.
+
+Layers are combined with `+`, and the whole expression is wrapped in parentheses when written across multiple lines.
+
+```{python}
+from plotnine import (
+    ggplot, aes, geom_histogram, geom_density, geom_boxplot,
+    geom_point, geom_smooth, facet_wrap, coord_flip,
+    ggtitle, xlab, ylab, labs, theme_classic
+)
+```
+
+### Histogram
+
+```{python}
+(ggplot(prb, aes(x="tfr"))
+ + geom_histogram()
+ + ggtitle("Distribution of the Total Fertility Rate, 2018")
+ + xlab("TFR")
+)
+```
+
+We can chain a pandas transformation directly into the plot call using `.pipe()`, which passes a DataFrame into any function:
+
+```{python}
+(prb
+ .assign(high_tfr=lambda df: df["tfr"].apply(lambda v: "high" if v > 3 else "low"))
+ .pipe(lambda df: ggplot(df, aes(x="imr", fill="high_tfr"))
+       + geom_histogram()
+       + facet_wrap("high_tfr")
+       + ggtitle("Distribution of the Infant Mortality Rate, 2018",
+                 "Low and High Fertility Countries")
+       + xlab("Infant Mortality Rate")
+ )
+)
+```
+
+### Density plot
+
+```{python}
+(ggplot(prb, aes(x="tfr", color="continent"))
+ + geom_density()
+ + ggtitle("Distribution of the Total Fertility Rate by Continent",
+           "2018 Estimates")
+ + xlab("TFR")
+)
+```
+
+### Box and whisker plots
+
+```{python}
+(ggplot(prb, aes(x="continent", y="tfr"))
+ + geom_boxplot()
+ + ggtitle("Distribution of the Total Fertility Rate by Continent",
+           "2018 Estimates")
+)
+```
+
+Adding `coord_flip()` swaps the axes:
+
+```{python}
+(ggplot(prb, aes(x="continent", y="tfr"))
+ + geom_boxplot()
+ + ggtitle("Distribution of the Total Fertility Rate by Continent",
+           "2018 Estimates")
+ + coord_flip()
+)
+```
+
+To color the boxes by a variable and combine two string columns into a label, Python uses `+` on string Series:
+
+```{python}
+(prb
+ .assign(newname=lambda df: df["continent"] + "-" + df["region"])
+ .pipe(lambda df: ggplot(df, aes(x="newname", y="tfr", fill="continent"))
+       + geom_boxplot()
+       + coord_flip()
+       + ggtitle("Distribution of the Total Fertility Rate by Continent",
+                 "2018 Estimates")
+ )
+)
+```
+
+### X-Y Scatter plots
+
+```{python}
+(ggplot(prb, aes(x="tfr", y="imr"))
+ + geom_point()
+ + ggtitle("Relationship between Total Fertility and Infant Mortality",
+           "2018 Estimates")
+ + xlab("TFR")
+ + ylab("IMR")
+)
+```
+
+`geom_smooth()` overlays a fitted line. Use `method="lm"` for a linear fit and `method="loess"` for a local smoother:
+
+```{python}
+(ggplot(prb, aes(x="tfr", y="imr"))
+ + geom_point()
+ + geom_smooth(method="lm", color="black", se=False)
+ + geom_smooth(method="loess", color="blue", se=False)
+ + ggtitle("Relationship between Total Fertility and Infant Mortality",
+           "2018 Estimates")
+ + xlab("TFR")
+ + ylab("IMR")
+)
+```
+
+Coloring points by a grouping variable:
+
+```{python}
+(ggplot(prb, aes(x="tfr", y="imr", color="continent"))
+ + geom_point()
+ + geom_smooth(method="lm", se=False)
+ + ggtitle("Relationship between Total Fertility and Infant Mortality",
+           "2018 Estimates")
+ + xlab("TFR")
+ + ylab("IMR")
+)
+```
+
+### Facet plots
+
+`facet_wrap()` creates a separate panel for each level of a grouping variable, passed as a string column name:
+
+```{python}
+(ggplot(prb, aes(x="tfr", y="imr", color="continent"))
+ + geom_point()
+ + geom_smooth(method="lm", se=False, color="black")
+ + facet_wrap("continent")
+ + ggtitle("Relationship between Total Fertility and Infant Mortality",
+           "2018 Estimates")
+ + xlab("TFR")
+ + ylab("IMR")
+)
+```
+
+An example showing a nonlinear relationship that a linear smoother handles poorly:
+
+```{python}
+(ggplot(prb, aes(x="tfr", y="pctlt15_2018"))
+ + geom_point()
+ + geom_smooth(method="lm", color="black", se=False)
+ + geom_smooth(method="loess", color="blue", se=False)
+ + ggtitle("Relationship between Total Fertility and Percent under age 15",
+           "2018 Estimates — Linear & Loess fit")
+ + xlab("Percent under age 15")
+ + ylab("Percent under age 15")
+)
+```
+
+## Chapter summary
+
+In this chapter, Python and VS Code/JupyterLab were introduced as the working environment, along with the `pandas` library for data manipulation and `plotnine` for visualization. The `pandas` method-chaining workflow allows for succinct, readable data transformation, and `plotnine`'s Grammar of Graphics syntax makes it straightforward to build and extend plots layer by layer. In the chapters that follow, these tools will be used on macro-level place data and micro-level complex survey data, building toward the full analytic toolkit a demographer needs.
+
+## References
+
+```{python, include = FALSE}
+# package citations are handled in references.qmd
+```
