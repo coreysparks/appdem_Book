@@ -19,7 +19,7 @@ from pathlib import Path
 # Census API constants
 # ---------------------------------------------------------------------------
 
-BASE_URL = "https://api.census.gov/data/{year}/acs/acspums{span}y"
+BASE_URL = "https://api.census.gov/data/{year}/acs/acs{span}/pums"
 
 # Maximum variables the Census API will return in one call.
 _BATCH_SIZE = 48  # leave headroom under the 50-var limit; SERIALNO always added
@@ -112,12 +112,7 @@ def download_pums(
 
     base = BASE_URL.format(year=year, span=span)
 
-    # record_type maps to the PUMS 'for' clause geography code
-    if record_type == "person":
-        for_clause = "person:*"
-    elif record_type == "housing":
-        for_clause = "housing unit:*"
-    else:
+    if record_type not in ("person", "housing"):
         raise ValueError("record_type must be 'person' or 'housing'")
 
     # Resolve state list
@@ -135,7 +130,6 @@ def download_pums(
 
     for state_fips in state_list:
         print(f"  Fetching {record_type} records for state FIPS {state_fips} ...")
-        in_clause = f"state:{state_fips}"
 
         state_frames: list[pd.DataFrame] = []
 
@@ -153,8 +147,7 @@ def download_pums(
         for batch in batches:
             params = {
                 "get": ",".join(batch),
-                "for": for_clause,
-                "in": in_clause,
+                "for": f"state:{state_fips}",
                 "key": key,
             }
             resp = requests.get(base, params=params, timeout=60)
@@ -180,6 +173,14 @@ def download_pums(
         time.sleep(pause_between_requests)
 
     df = pd.concat(all_chunks, ignore_index=True)
+
+    # The PUMS API returns all records; filter to the requested record type.
+    # Person records have SPORDER >= 1; housing-unit records have SPORDER == 0 or null.
+    if "SPORDER" in df.columns:
+        if record_type == "person":
+            df = df[pd.to_numeric(df["SPORDER"], errors="coerce") >= 1].reset_index(drop=True)
+        else:
+            df = df[pd.to_numeric(df["SPORDER"], errors="coerce").fillna(0) == 0].reset_index(drop=True)
 
     out_path = output_dir / output_file
     df.to_parquet(out_path, index=False)
