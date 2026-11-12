@@ -167,7 +167,7 @@ The IPUMS NHGIS project [^macrodem-3] is also a great source for demographic dat
 
 ```{r}
 library(sf)
-ipums_co <- read_sf("data/US_county_2020.shp")
+ipums_co <- readRDS("data/US_county_2020.rds")
 
 
 im_dat <- readr::read_csv("data/nhgis0025_ds231_2005_county.csv")
@@ -312,7 +312,7 @@ tm_shape(ahrf_m)+
              main.title="US Low Birth Weight Rate by County",
             legend.position =  c("left", "bottom"),
             main.title.position =c("center"))+
-  tm_scale_bar(position = c(.1,0))+
+  tm_scalebar(position = c(.1,0))+
   tm_compass()+
 tm_shape(sts)+
   tm_lines( col = "black")
@@ -1330,12 +1330,14 @@ summary(glm_beta_o)
 ```
 
 The AIC can be used to determine if the dispersion model is preferred to the regular beta regression.
+
 ```{r}
-AIC(glm_beta, glm_beta_o)
+aic_beta<-AIC(glm_beta, glm_beta_o)
+aic_beta
 
 ```
 
-In this case, the dispersion model is preferred since the AIC is `r round(abs(diff(AIC(glm_beta, glm_beta_o)[,2])),2)` points lower for the dispersion model.
+In this case, the dispersion model is preferred since the AIC is `r round(abs(diff(aic_beta[,2])),2)` points lower for the dispersion model.
 
 ### Negative binomial model
 

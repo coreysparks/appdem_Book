@@ -122,7 +122,7 @@ The IPUMS NHGIS project[^macrodem-3] is also a great source for demographic data
 ```{python}
 import geopandas as gpd
 
-ipums_co = gpd.read_file("data/US_county_2020.shp")
+ipums_co = gpd.read_file("data/US_county_2020.gpkg")
 
 im_dat = pd.read_csv("data/nhgis0025_ds231_2005_county.csv",
                      encoding="latin1")

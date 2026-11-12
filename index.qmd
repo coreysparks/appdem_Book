@@ -47,3 +47,8 @@ As a demographer, writing code is essential for several reasons:
 
 5. **Integration**: Writing code allows demographers to integrate various data sources and analytical tools, enhancing the overall analysis process.
 
+
+
+### How to cite this book
+
+Sparks, C. S. *Applied Demographic Data Analysis*. Zenodo. [https://doi.org/10.5281/zenodo.24168445](https://doi.org/10.5281/zenodo.24168445)

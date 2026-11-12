@@ -8,6 +8,9 @@ book:
   date: last-modified
   #cover-image: images/coverpage.png
   date-format: "[Last Updated on] DD MMMM, YYYY"
+  repo-url: https://github.com/coreysparks/appdem_Book
+  page-footer:
+    center: "Cite as: Sparks, C. S. Applied Demographic Data Analysis. Zenodo. [https://doi.org/10.5281/zenodo.24168445](https://doi.org/10.5281/zenodo.24168445)"
   chapters:
     - index.qmd
     - preface.qmd
@@ -17,6 +20,14 @@ book:
     - micro.qmd
 
 bibliography: book.bib
+
+citation:
+  type: book
+  title: "Applied Demographic Data Analysis"
+  author: "Corey S. Sparks"
+  publisher: Zenodo
+  doi: 10.5281/zenodo.24168445
+  url: https://coreysparks.github.io/appdem_Book
 
 format:
   html:

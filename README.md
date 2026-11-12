@@ -12,6 +12,8 @@ Department of Demography, University of Texas at San Antonio
 
 The book is written for researchers who work with real-world data: stratified samples, hierarchically structured observations, categorical and count outcomes, and survival-time data. It is explicitly applied in orientation, grounding every method in worked examples with publicly available demographic datasets.
 
+DOI: [10.5281/zenodo.24168445](https://doi.org/10.5281/zenodo.24168445)
+
 The rendered book is available at: **[https://coreysparks.github.io/appdem_Book](https://coreysparks.github.io/appdem_Book)**
 
 ---
